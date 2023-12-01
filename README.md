@@ -8,5 +8,5 @@ Berikut adalah daftar file yang bisa Anda unduh:
 
 1. [File .en (Euler Maths Toolbox)](File en.zip)
 2. [File .pdf](File PDF.zip)
-3. [File .tex (LaTeX)](File LaTeX.zip)
+3. [File .tex (LaTeX)](https://github.com/idigidaw/Aplikasi-Komputer/blob/main/File%20LaTeX.zip)
 4. [Kompilasi menggunakan LaTeX (Overleaf)]()
