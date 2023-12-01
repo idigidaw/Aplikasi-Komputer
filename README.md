@@ -9,4 +9,6 @@ Berikut adalah daftar file yang bisa Anda unduh:
 1. [File .en (Euler Maths Toolbox)](https://github.com/idigidaw/Aplikasi-Komputer/blob/main/File%20en.zip)
 2. [File .pdf](https://github.com/idigidaw/Aplikasi-Komputer/blob/main/File%20PDF.zip)
 3. [File .tex (LaTeX)](https://github.com/idigidaw/Aplikasi-Komputer/blob/main/File%20LaTeX.zip)
-4. [Kompilasi menggunakan LaTeX (Overleaf)]()
+4. [Kompilasi menggunakan LaTeX (Overleaf)](https://github.com/idigidaw/Aplikasi-Komputer/blob/main/Kompilasi%20menggunakan%20LaTeX%20-%20Anisah%20Daffa%20Citra%20Nareswari.pdf)
+
+Terima kasih!（。＾▽＾）
