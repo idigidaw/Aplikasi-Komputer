@@ -1,0 +1,936 @@
+﻿% * Identitas Diri
+% Nama  : Anisah Daffa Citra Nareswari
+%% Kelas : Matematika E 2022
+%% NIM   : 22305141044
+% 
+% * Kalkulus dengan EMT
+% 
+% Materi Kalkulus mencakup di antaranya:
+% 
+% - Fungsi (fungsi aljabar, trigonometri, eksponensial, logaritma,
+% komposisi fungsi)
+%% - Limit Fungsi,
+%% - Turunan Fungsi,
+%% - Integral Tak Tentu,
+%% - Integral Tentu dan Aplikasinya,
+%% - Barisan dan Deret (kekonvergenan barisan dan deret).
+% 
+% EMT (bersama Maxima) dapat digunakan untuk melakukan semua perhitungan
+% di dalam kalkulus, baik secara numerik maupun analitik (eksak).
+% 
+% ** Mendefinisikan Fungsi
+% 
+% Terdapat beberapa cara mendefinisikan fungsi pada EMT, yakni:
+% 
+% - Menggunakan format nama_fungsi := rumus fungsi (untuk fungsi
+% numerik),
+%% - Menggunakan format nama_fungsi &= rumus fungsi (untuk fungsi
+% simbolik, namun dapat dihitung secara numerik),
+%% - Menggunakan format nama_fungsi &&= rumus fungsi (untuk fungsi
+% simbolik murni, tidak dapat dihitung langsung),
+%% - Fungsi sebagai program EMT.
+% 
+% Setiap format harus diawali dengan perintah function (bukan sebagai
+% ekspresi).
+% 
+% Berikut adalah adalah beberapa contoh cara mendefinisikan fungsi.
+>function f(x) := 2*x^2+exp(sin(x)) // fungsi numerik
+>f(0), f(1), f(pi)
+1
+4.31977682472
+20.7392088022
+>function g(x) := sqrt(x^2-3*x)/(x+1)
+>g(3)
+0
+>g(0)
+0
+>g(1)
+Floating point error!
+Error in sqrt
+Try "trace errors" to inspect local variables after errors.
+g:
+    useglobal; return sqrt(x^2-3*x)/(x+1) 
+Error in:
+g(1) ...
+    ^
+>f(g(5)) // komposisi fungsi
+2.20920171961
+>g(f(5))
+0.950898070639
+>f(0:10) // nilai-nilai f(1), f(2), ..., f(10)
+[1,  4.31978,  10.4826,  19.1516,  32.4692,  50.3833,  72.7562,
+99.929,  130.69,  163.51,  200.58]
+>fmap(0:10) // sama dengan f(0:10), berlaku untuk semua fungsi
+[1,  4.31978,  10.4826,  19.1516,  32.4692,  50.3833,  72.7562,
+99.929,  130.69,  163.51,  200.58]
+>
+% Misalkan kita akan mendefinisikan fungsi
+% 
+% latex: f(x) = \begin{cases} x^3 & x>0 \\ x^2 & x\le 0. \end{cases}
+% 
+% Fungsi tersebut tidak dapat didefinisikan sebagai fungsi numerik
+% secara "inline" menggunakan format :=, melainkan didefinisikan sebagai
+% program. Perhatikan, kata "map" digunakan agar fungsi dapat menerima
+% vektor sebagai input, dan hasilnya berupa vektor. Jika tanpa kata
+% "map" fungsinya hanya dapat menerima input satu nilai.
+>function map f(x) ...
+$  if x>0 then return x^3
+$  else return x^2
+$  endif;
+$endfunction
+>f(1)
+1
+>f(-2)
+4
+>f(-5:5)
+[25,  16,  9,  4,  1,  0,  1,  8,  27,  64,  125]
+>aspect(1.5); plot2d("f(x)",-5,5):
+ %image% Kalkulus_Anisah Daffa Citra Nareswari_22305141044-001.png
+>function f(x) &= 2*E^x // fungsi simbolik
+
+                                    x
+                                 2 E
+
+>function g(x) &= 3*x+1
+
+                               3 x + 1
+
+>function h(x) &= f(g(x)) // komposisi fungsi
+
+                                 3 x + 1
+                              2 E
+
+% * Latihan
+% 
+% Bukalah buku Kalkulus. Cari dan pilih beberapa (paling sedikit 5
+% fungsi berbeda tipe/bentuk/jenis) fungsi dari buku tersebut, kemudian
+% definisikan di EMT pada baris-baris perintah berikut (jika perlu
+% tambahkan lagi). Untuk setiap fungsi, hitung beberapa nilainya, baik
+% untuk satu nilai maupun vektor. Gambar grafik tersebut.
+% 
+% Juga, carilah fungsi beberapa (dua) variabel. Lakukan hal sama seperti
+% di atas.
+% 
+% ** Fungsi 1 Variabel
+%% 1. Fungsi 1
+>function p(x) := 2*x^2-5x-2
+>p(0), p(1), p(2)
+-2
+-5
+-4
+>pmap(0:3)
+[-2,  -5,  -4,  1]
+>plot2d("p(x)"):
+ %image% Kalkulus_Anisah Daffa Citra Nareswari_22305141044-002.png
+>
+% 2. Fungsi 2
+>function a(x) := x^2-4x-7
+>a(1), a(5), a(-2)
+-10
+-2
+5
+>amap(-5:5) 
+[38,  25,  14,  5,  -2,  -7,  -10,  -11,  -10,  -7,  -2]
+>plot2d("a(x)"):
+ %image% Kalkulus_Anisah Daffa Citra Nareswari_22305141044-003.png
+% 3. Fungsi 3
+>function b(x) := (x+3)/(x-2)
+>b(-3), b(1), b(10)
+0
+-4
+1.625
+>bmap(1:50) 
+Floating point error!
+Try "trace errors" to inspect local variables after errors.
+b:
+    useglobal; return (x+3)/(x-2) 
+Error in map.
+Error in:
+bmap(1:50)  ...
+          ^
+>plot2d("b(x)"):
+ %image% Kalkulus_Anisah Daffa Citra Nareswari_22305141044-004.png
+>      
+% 4.Fungsi 4
+> function c(x) := 3*x^2-7x-17
+>c(0), c(-1), c(1)
+-17
+-7
+-21
+>cmap(-5:5)
+[93,  59,  31,  9,  -7,  -17,  -21,  -19,  -11,  3,  23]
+>plot2d("c(x)",-5,5,-50,100):
+ %image% Kalkulus_Anisah Daffa Citra Nareswari_22305141044-005.png
+% 5. Fungsi 5
+>function d(x) := (sin(x))*(cos(x))
+>d(0), d(pi/5), d(pi/10)
+0
+0.475528258148
+0.293892626146
+>dmap(0:5pi)
+[0,  0.454649,  -0.378401,  -0.139708,  0.494679,  -0.272011,
+-0.268286,  0.495304,  -0.143952,  -0.375494,  0.456473,  -0.00442565,
+-0.452789,  0.381279,  0.135453,  -0.494016]
+>plot2d("d(x)"):
+ %image% Kalkulus_Anisah Daffa Citra Nareswari_22305141044-006.png
+% ** Fungsi 2 Variabel
+>       
+% 1. Fungsi 1
+>function e(x,y) ...
+$return x^3+y^2
+$endfunction
+>e(0,2), e(1,4), e(2,1)
+4
+17
+9
+>emap(0:3,5:8)
+[25,  37,  57,  91]
+>aspect=1.5; plot3d("e(x,y)",a=-100,b=100,c=-80,d=80,angle=40°,height=20°,r=pi,n=100):
+ %image% Kalkulus_Anisah Daffa Citra Nareswari_22305141044-007.png
+% 2. Fungsi 2
+>function f(x,y) ...
+$return sqrt(x^2+y^2)
+$endfunction
+>f(1,5), f(4,6), f(-1,4)
+5.09901951359
+7.21110255093
+4.12310562562
+>fmap(-3:0,1:4)
+[3.16228,  2.82843,  3.16228,  4]
+>aspect=1.5; plot3d("f(x,y)",a=-100,b=100,c=-80,d=80,angle=40°,height=20°,r=pi,n=100):
+ %image% Kalkulus_Anisah Daffa Citra Nareswari_22305141044-008.png
+>
+% * Menghitung Limit
+% 
+% Perhitungan limit pada EMT dapat dilakukan dengan menggunakan fungsi Maxima, yakni "limit".
+% Fungsi "limit" dapat digunakan untuk menghitung limit fungsi dalam bentuk ekspresi maupun
+% fungsi yang sudah didefinisikan sebelumnya. Nilai limit dapat dihitung pada sebarang nilai
+% atau pada tak hingga (-inf, minf, dan inf). Limit kiri dan limit kanan juga dapat dihitung,
+% dengan cara memberi opsi "plus" atau "minus". Hasil limit dapat berupa nilai, "und' (tak
+% definisi), "ind" (tak tentu namun terbatas), "infinity" (kompleks tak hingga).
+% 
+% Perhatikan beberapa contoh berikut. Perhatikan cara menampilkan perhitungan secara lengkap,
+% tidak hanya menampilkan hasilnya saja.
+>$showev('limit(1/(2*x-1),x,0))
+ %image% Kalkulus_Anisah Daffa Citra Nareswari_22305141044-009.png
+% // latex: \lim_{x\rightarrow 0}{\frac{1}{2\,x-1}}=-1
+>$showev('limit((x^2-3*x-10)/(x-5),x,5))
+ %image% Kalkulus_Anisah Daffa Citra Nareswari_22305141044-010.png
+% // latex: \lim_{x\rightarrow 5}{\frac{x^2-3\,x-10}{x-5}}=7
+>$showev('limit(sin(x)/x,x,0))
+ %image% Kalkulus_Anisah Daffa Citra Nareswari_22305141044-011.png
+% // latex: \lim_{x\rightarrow 0}{\frac{\sin x}{x}}=1
+>plot2d("sin(x)/x",-pi,pi):
+ %image% Kalkulus_Anisah Daffa Citra Nareswari_22305141044-012.png
+>$showev('limit(sin(x^3)/x,x,0))
+ %image% Kalkulus_Anisah Daffa Citra Nareswari_22305141044-013.png
+% // latex: \lim_{x\rightarrow 0}{\frac{\sin x^3}{x}}=0
+>$showev('limit(log(x), x, minf))
+ %image% Kalkulus_Anisah Daffa Citra Nareswari_22305141044-014.png
+% // latex: \lim_{x\rightarrow  -\infty }{\log x}={\it infinity}
+>$showev('limit((-2)^x,x, inf))
+ %image% Kalkulus_Anisah Daffa Citra Nareswari_22305141044-015.png
+% // latex: \lim_{x\rightarrow \infty }{\left(-2\right)^{x}}={\it infinity}
+>$showev('limit(t-sqrt(2-t),t,2,minus))
+ %image% Kalkulus_Anisah Daffa Citra Nareswari_22305141044-016.png
+% // latex: \lim_{t\uparrow 2}{t-\sqrt{2-t}}=2
+>$showev('limit(t-sqrt(2-t),t,5,plus)) // Perhatikan hasilnya
+ %image% Kalkulus_Anisah Daffa Citra Nareswari_22305141044-017.png
+% // latex: \lim_{t\downarrow 5}{t-\sqrt{2-t}}=5-\sqrt{3}\,i
+>plot2d("x-sqrt(2-x)",-2,5):
+ %image% Kalkulus_Anisah Daffa Citra Nareswari_22305141044-018.png
+>$showev('limit((x^2-9)/(2*x^2-5*x-3),x,3))
+ %image% Kalkulus_Anisah Daffa Citra Nareswari_22305141044-019.png
+% // latex: \lim_{x\rightarrow 3}{\frac{x^2-9}{2\,x^2-5\,x-3}}=\frac{6}{7}
+>$showev('limit((1-cos(x))/x,x,0))
+ %image% Kalkulus_Anisah Daffa Citra Nareswari_22305141044-020.png
+% // latex: \lim_{x\rightarrow 0}{\frac{1-\cos x}{x}}=0
+>$showev('limit((x^2+abs(x))/(x^2-abs(x)),x,0))
+ %image% Kalkulus_Anisah Daffa Citra Nareswari_22305141044-021.png
+% // latex: \lim_{x\rightarrow 0}{\frac{\left| x\right| +x^2}{x^2-\left| x  \right| }}=-1
+>$showev('limit((1+1/x)^x,x,inf))
+ %image% Kalkulus_Anisah Daffa Citra Nareswari_22305141044-022.png
+% // latex: \lim_{x\rightarrow \infty }{\left(\frac{1}{x}+1\right)^{x}}=e
+>$showev('limit((1+k/x)^x,x,inf))
+ %image% Kalkulus_Anisah Daffa Citra Nareswari_22305141044-023.png
+% // latex: \lim_{x\rightarrow \infty }{\left(\frac{k}{x}+1\right)^{x}}=e^{k}
+>$showev('limit((1+x)^(1/x),x,0))
+ %image% Kalkulus_Anisah Daffa Citra Nareswari_22305141044-024.png
+% // latex: \lim_{x\rightarrow 0}{\left(x+1\right)^{\frac{1}{x}}}=e
+>$showev('limit((x/(x+k))^x,x,inf))
+ %image% Kalkulus_Anisah Daffa Citra Nareswari_22305141044-025.png
+% // latex: \lim_{x\rightarrow \infty }{\left(\frac{x}{x+k}\right)^{x}}=e^ {- k   }
+>
+>$showev('limit(sin(1/x),x,0))
+ %image% Kalkulus_Anisah Daffa Citra Nareswari_22305141044-026.png
+% // latex: \lim_{x\rightarrow 0}{\sin \left(\frac{1}{x}\right)}={\it ind}
+>$showev('limit(sin(1/x),x,inf))
+ %image% Kalkulus_Anisah Daffa Citra Nareswari_22305141044-027.png
+% // latex: \lim_{x\rightarrow \infty }{\sin \left(\frac{1}{x}\right)}=0
+>plot2d("sin(1/x)",-5,5):
+ %image% Kalkulus_Anisah Daffa Citra Nareswari_22305141044-028.png
+% * Latihan
+% 
+% Bukalah buku Kalkulus. Cari dan pilih beberapa (paling sedikit 5 fungsi berbeda
+% tipe/bentuk/jenis) fungsi dari buku tersebut, kemudian definisikan di EMT pada
+% baris-baris perintah berikut (jika perlu tambahkan lagi). Untuk setiap fungsi, hitung
+% nilai limit fungsi tersebut di beberapa nilai dan di tak hingga. Gambar grafik fungsi
+% tersebut untuk mengkonfirmasi nilai-nilai limit tersebut.
+>
+% 1. Fungsi 1
+%% latex: \text{$f(x)=\frac{x^2-9}{x^2-x-6}$
+>$showev('limit((3*x-6)/(x+2),x,3))
+ %image% Kalkulus_Anisah Daffa Citra Nareswari_22305141044-029.png
+% // latex: \lim_{x\rightarrow 3}{\frac{3\,x-6}{x+2}}=\frac{3}{5}
+> plot2d("(3*x-6)/(x+2)",-2,10,-1,5):
+ %image% Kalkulus_Anisah Daffa Citra Nareswari_22305141044-030.png
+% 2. Fungsi 2
+%% latex: \text{$f(x)=\frac{x^2+2*x-3}{2x-3}$
+>$showev('limit((x^2+2)/(2*x-3),x,2))
+ %image% Kalkulus_Anisah Daffa Citra Nareswari_22305141044-031.png
+% // latex: \lim_{x\rightarrow 2}{\frac{x^2+2}{2\,x-3}}=6
+>plot2d("(x^2+2)/(2*x-3)",-5,5):
+ %image% Kalkulus_Anisah Daffa Citra Nareswari_22305141044-032.png
+>
+% 3. Fungsi 3
+%% latex: \text{$f(x)=\frac{x3^3-2x^2+3x^3}{x^3-2x^2}$}
+>$showev('limit((2*x),x,inf))
+ %image% Kalkulus_Anisah Daffa Citra Nareswari_22305141044-033.png
+% // latex: 2\,\left(\lim_{x\rightarrow \infty }{x}\right)=2\,\infty 
+>plot2d("2x",1,10,-1,22):
+ %image% Kalkulus_Anisah Daffa Citra Nareswari_22305141044-034.png
+>
+% 4. Fungsi 4
+%% latex: \text{$f(x)=\frac{\sin x-1}{x}$}
+>$showev('limit((sin(x)-1)/x,x,1))
+ %image% Kalkulus_Anisah Daffa Citra Nareswari_22305141044-035.png
+% // latex: \lim_{x\rightarrow 1}{\frac{\sin x-1}{x}}=\sin 1-1
+>plot2d("(sin(x)-1)/x",-2,2):
+ %image% Kalkulus_Anisah Daffa Citra Nareswari_22305141044-036.png
+% 5. Fungsi 5
+%% latex: \text{$f(x)=\frac{sin x}{x-1}$}
+>$showev('limit((sin(x))/x-1,x,0))
+ %image% Kalkulus_Anisah Daffa Citra Nareswari_22305141044-037.png
+% // latex: \lim_{x\rightarrow 0}{\frac{\sin x}{x}-1}=0
+>plot2d("sin(x)/x-1",-5,5):
+ %image% Kalkulus_Anisah Daffa Citra Nareswari_22305141044-038.png
+> 
+% * Turunan Fungsi
+% 
+% Definisi turunan:
+% 
+% latex: f'(x) = \lim_{h\to 0} \frac{f(x+h)-f(x)}{h}
+% 
+% Berikut adalah contoh-contoh menentukan turunan fungsi dengan
+% menggunakan definisi turunan (limit).
+>$showev('limit(((x+h)^n-x^n)/h,h,0)) // turunan x^n
+ %image% Kalkulus_Anisah Daffa Citra Nareswari_22305141044-039.png
+% // latex: \lim_{h\rightarrow 0}{\frac{\left(x+h\right)^{n}-x^{n}}{h}}=n\,x^{n  -1}
+% Mengapa hasilnya seperti itu? Tuliskan atau tunjukkan bahwa hasil limit tersebut
+% benar, sehingga benar turunan fungsinya benar.  Tulis penjelasan Anda di komentar
+% ini.
+% 
+% Sebagai petunjuk, ekspansikan (x+h)^n dengan menggunakan teorema binomial.
+>$showev('limit((sin(x+h)-sin(x))/h,h,0)) // turunan sin(x)
+ %image% Kalkulus_Anisah Daffa Citra Nareswari_22305141044-040.png
+% // latex: \lim_{h\rightarrow 0}{\frac{\sin \left(x+h\right)-\sin x}{h}}=\cos   x
+% Mengapa hasilnya seperti itu? Tuliskan atau tunjukkan bahwa hasil limit tersebut
+%% benar, sehingga benar turunan fungsinya benar.  Tulis penjelasan Anda di komentar
+% ini.
+% 
+% Sebagai petunjuk, ekspansikan sin(x+h) dengan menggunakan rumus jumlah dua sudut.
+>$showev('limit((log(x+h)-log(x))/h,h,0)) // turunan log(x)
+ %image% Kalkulus_Anisah Daffa Citra Nareswari_22305141044-041.png
+% // latex: \lim_{h\rightarrow 0}{\frac{\log \left(x+h\right)-\log x}{h}}=  \frac{1}{x}
+% Mengapa hasilnya seperti itu? Tuliskan atau tunjukkan bahwa hasil limit tersebut
+%% benar, sehingga benar turunan fungsinya benar.  Tulis penjelasan Anda di komentar
+% ini.
+% 
+% Sebagai petunjuk, gunakan sifat-sifat logaritma dan hasil limit pada bagian
+% sebelumnya di atas.
+>$showev('limit((1/(x+h)-1/x)/h,h,0)) // turunan 1/x
+ %image% Kalkulus_Anisah Daffa Citra Nareswari_22305141044-042.png
+% // latex: \lim_{h\rightarrow 0}{\frac{\frac{1}{x+h}-\frac{1}{x}}{h}}=-\frac{1  }{x^2}
+>$showev('limit((E^(x+h)-E^x)/h,h,0)) // turunan f(x)=e^x
+Answering "Is x an integer?" with "integer"
+Answering "Is x an integer?" with "integer"
+Answering "Is x an integer?" with "integer"
+Answering "Is x an integer?" with "integer"
+Answering "Is x an integer?" with "integer"
+Maxima is asking
+Acceptable answers are: yes, y, Y, no, n, N, unknown, uk
+Is x an integer?
+
+Use assume!
+Error in:
+ $showev('limit((E^(x+h)-E^x)/h,h,0)) // turunan f(x)=e^x ...
+                                     ^
+% Maxima bermasalah dengan limit:
+% 
+% latex: \lim_{h\to 0}\frac{e^{x+h}-e^x}{h}.
+% 
+% Oleh karena itu diperlukan trik khusus agar hasilnya benar.
+>$showev('limit((E^h-1)/h,h,0))
+ %image% Kalkulus_Anisah Daffa Citra Nareswari_22305141044-043.png
+% // latex: \lim_{h\rightarrow 0}{\frac{e^{h}-1}{h}}=1
+>$factor(E^(x+h)-E^x)
+ %image% Kalkulus_Anisah Daffa Citra Nareswari_22305141044-044.png
+% // latex: \left(e^{h}-1\right)\,e^{x}
+>$showev('limit(factor((E^(x+h)-E^x)/h),h,0)) // turunan f(x)=e^x
+ %image% Kalkulus_Anisah Daffa Citra Nareswari_22305141044-045.png
+% // latex: \left(\lim_{h\rightarrow 0}{\frac{e^{h}-1}{h}}\right)\,e^{x}=e^{x}
+>function f(x) &= x^x
+
+                                   x
+                                  x
+
+>$showev('limit((f(x+h)-f(x))/h,h,0)) // turunan f(x)=x^x
+ %image% Kalkulus_Anisah Daffa Citra Nareswari_22305141044-046.png
+% // latex: \lim_{h\rightarrow 0}{\frac{\left(x+h\right)^{x+h}-x^{x}}{h}}=  {\it infinity}
+% Di sini Maxima juga bermasalah terkait limit:
+% 
+% latex: \lim_{h\to 0} \frac{(x+h)^{x+h}-x^x}{h}.
+% 
+% Dalam hal ini diperlukan asumsi nilai x.
+>&assume(x>0); $showev('limit((f(x+h)-f(x))/h,h,0)) // turunan f(x)=x^x
+ %image% Kalkulus_Anisah Daffa Citra Nareswari_22305141044-047.png
+% // latex: \lim_{h\rightarrow 0}{\frac{\left(x+h\right)^{x+h}-x^{x}}{h}}=x^{x}  \,\left(\log x+1\right)
+>&forget(x>0) // jangan lupa, lupakan asumsi untuk kembali ke semula
+
+                               [x > 0]
+
+>&forget(x<0)
+
+                               [x < 0]
+
+>&facts()
+
+                                  []
+
+>$showev('limit((asin(x+h)-asin(x))/h,h,0)) // turunan arcsin(x)
+ %image% Kalkulus_Anisah Daffa Citra Nareswari_22305141044-048.png
+% // latex: \lim_{h\rightarrow 0}{\frac{\arcsin \left(x+h\right)-\arcsin x}{h}}=  \frac{1}{\sqrt{1-x^2}}
+>$showev('limit((tan(x+h)-tan(x))/h,h,0)) // turunan tan(x)
+ %image% Kalkulus_Anisah Daffa Citra Nareswari_22305141044-049.png
+% // latex: \lim_{h\rightarrow 0}{\frac{\tan \left(x+h\right)-\tan x}{h}}=  \frac{1}{\cos ^2x}
+>function f(x) &= sinh(x) // definisikan f(x)=sinh(x)
+
+                               sinh(x)
+
+>function df(x) &= limit((f(x+h)-f(x))/h,h,0); $df(x) // df(x) = f'(x)
+ %image% Kalkulus_Anisah Daffa Citra Nareswari_22305141044-050.png
+% // latex: \frac{e^ {- x }\,\left(e^{2\,x}+1\right)}{2}
+% Hasilnya adalah cosh(x), karena
+% 
+% latex: \frac{e^x+e^{-x}}{2}=\cosh(x).
+>
+>plot2d(["f(x)","df(x)"],-pi,pi,color=[blue,red]):
+ %image% Kalkulus_Anisah Daffa Citra Nareswari_22305141044-051.png
+% * Latihan
+% 
+% Bukalah buku Kalkulus. Cari dan pilih beberapa (paling sedikit 5
+% fungsi berbeda tipe/bentuk/jenis) fungsi dari buku tersebut, kemudian
+% definisikan di EMT pada baris-baris perintah berikut (jika perlu
+% tambahkan lagi). Untuk setiap fungsi, tentukan turunannya dengan
+% menggunakan definisi turunan (limit), seperti contoh-contoh tersebut.
+% Gambar grafik fungsi asli dan fungsi turunannya pada sumbu koordinat
+% yang sama. 
+%% 1. Fungsi 1
+>function f(x) := (x^5)
+>$showev('limit((((x+h)^5)-x^5)/h,h,0)) // Turunan x^5
+ %image% Kalkulus_Anisah Daffa Citra Nareswari_22305141044-052.png
+% // latex: \lim_{h\rightarrow 0}{\frac{\left(x+h\right)^5-x^5}{h}}=5\,x^4
+>function df(x) &= limit((((x+h)^5)-x^5)/h,h,0): $df(x)// df(x) = f'(x)
+
+                            - x   2 x
+                           E    (E    + 1)
+                           ---------------
+                                  2
+
+>plot2d(["f(x)","df(x)"],-pi,pi,color=[blue,red]):
+ %image% Kalkulus_Anisah Daffa Citra Nareswari_22305141044-053.png
+>
+% 2. Fungsi 2
+>function f(x) := cos(x)
+>$showev('limit((cos(x+h)-cos(x))/h,h,0))
+ %image% Kalkulus_Anisah Daffa Citra Nareswari_22305141044-054.png
+% // latex: \lim_{h\rightarrow 0}{\frac{\cos \left(x+h\right)-\cos x}{h}}=-  \sin x
+>function df(x) &= limit((cos(x+h)-cos(x))/h,h,0);  $df(x)// df(x) = f'(x)
+ %image% Kalkulus_Anisah Daffa Citra Nareswari_22305141044-055.png
+% // latex: -\sin x
+>plot2d(["f(x)","df(x)"],-pi,pi,color=[blue,red]):
+ %image% Kalkulus_Anisah Daffa Citra Nareswari_22305141044-056.png
+>
+% 3. Fungsi 3
+>function f(x) := sin(x)*cos(x)
+>$showev('limit((sin(x+h)*cos(x+h)-sin(x)*cos(x))/h,h,0))
+ %image% Kalkulus_Anisah Daffa Citra Nareswari_22305141044-057.png
+% // latex: \lim_{h\rightarrow 0}{\frac{\cos \left(x+h\right)\,\sin \left(x+h  \right)-\cos x\,\sin x}{h}}=\cos ^2x-\sin ^2x
+>function df(x) &= limit((sin(x+h)*cos(x+h)-sin(x)*cos(x))/h,h,0);  $df(x)// df(x) = f'(x)
+ %image% Kalkulus_Anisah Daffa Citra Nareswari_22305141044-058.png
+% // latex: \cos ^2x-\sin ^2x
+>plot2d(["f(x)","df(x)"],-pi,pi,color=[blue,red]):
+ %image% Kalkulus_Anisah Daffa Citra Nareswari_22305141044-059.png
+>
+% 4. Fungsi 4
+>function f(x) := sin(1/x)
+>$showev('limit((sin(1/(x+h))-sin(1/x))/h,h,0))
+ %image% Kalkulus_Anisah Daffa Citra Nareswari_22305141044-060.png
+% // latex: \lim_{h\rightarrow 0}{\frac{\sin \left(\frac{1}{x+h}\right)-\sin   \left(\frac{1}{x}\right)}{h}}=-\frac{\cos \left(\frac{1}{x}\right)}{  x^2}
+>function df(x) &= limit((atan(1/(x+h))-atan(1/x))/h,h,0);$df(x)// df(x) = f'(x)
+ %image% Kalkulus_Anisah Daffa Citra Nareswari_22305141044-061.png
+% // latex: -\frac{1}{x^2+1}
+>plot2d(["f(x)","df(x)"],-pi,pi,color=[blue,red]):
+ %image% Kalkulus_Anisah Daffa Citra Nareswari_22305141044-062.png
+>
+% 5. Fungsi 5
+>function f(x) := tan(x^2)
+>$showev('limit(((tan((x+h)^2))-tan(x^2))/h,h,0))
+ %image% Kalkulus_Anisah Daffa Citra Nareswari_22305141044-063.png
+% // latex: \lim_{h\rightarrow 0}{\frac{\tan \left(x+h\right)^2-\tan x^2}{h}}=  \frac{2\,x}{\cos ^2x^2}
+>function df(x) &= limit((tan((x+h)^2)-tan(x^2))/h,h,0); $df(x)// df(x) = f'(x)
+ %image% Kalkulus_Anisah Daffa Citra Nareswari_22305141044-064.png
+% // latex: \frac{2\,x}{\cos ^2x^2}
+>
+>plot2d(["f(x)","df(x)"],-50,50,color=[blue,red]):
+ %image% Kalkulus_Anisah Daffa Citra Nareswari_22305141044-065.png
+>
+% * Integral
+% 
+% EMT dapat digunakan untuk menghitung integral, baik integral tak tentu maupun
+% integral tentu. Untuk integral tak tentu (simbolik) sudah tentu EMT menggunakan
+% Maxima, sedangkan untuk perhitungan integral tentu EMT sudah menyediakan beberapa
+% fungsi yang mengimplementasikan algoritma kuadratur (perhitungan integral tentu
+% menggunakan metode numerik).
+% 
+% Pada notebook ini akan ditunjukkan perhitungan integral tentu dengan menggunakan
+% Teorema Dasar Kalkulus:
+% 
+% latex: \int_a^b f(x)\ dx = F(b)-F(a), \quad \text{ dengan  } F'(x) = f(x).
+% 
+% Fungsi untuk menentukan integral adalah integrate. Fungsi ini dapat digunakan untuk
+% menentukan, baik integral tentu maupun tak tentu (jika fungsinya memiliki
+% antiderivatif). Untuk perhitungan integral tentu fungsi integrate menggunakan metode
+% numerik (kecuali fungsinya tidak integrabel, kita tidak akan menggunakan metode ini).
+>$showev('integrate(x^n,x))
+Answering "Is n equal to -1?" with "no"
+ %image% Kalkulus_Anisah Daffa Citra Nareswari_22305141044-066.png
+% // latex: \int {x^{n}}{\;dx}=\frac{x^{n+1}}{n+1}
+>$showev('integrate(1/(1+x),x))
+ %image% Kalkulus_Anisah Daffa Citra Nareswari_22305141044-067.png
+% // latex: \int {\frac{1}{x+1}}{\;dx}=\log \left(x+1\right)
+>$showev('integrate(1/(1+x^2),x))
+ %image% Kalkulus_Anisah Daffa Citra Nareswari_22305141044-068.png
+% // latex: \int {\frac{1}{x^2+1}}{\;dx}=\arctan x
+>$showev('integrate(1/sqrt(1-x^2),x))
+ %image% Kalkulus_Anisah Daffa Citra Nareswari_22305141044-069.png
+% // latex: \int {\frac{1}{\sqrt{1-x^2}}}{\;dx}=\arcsin x
+>$showev('integrate(sin(x),x,0,pi))
+ %image% Kalkulus_Anisah Daffa Citra Nareswari_22305141044-070.png
+% // latex: \int_{0}^{\pi}{\sin x\;dx}=2
+>$showev('integrate(sin(x),x,a,b))
+ %image% Kalkulus_Anisah Daffa Citra Nareswari_22305141044-071.png
+% // latex: \int_{a}^{b}{\sin x\;dx}=\cos a-\cos b
+>$showev('integrate(x^n,x,a,b))
+Answering "Is n positive, negative or zero?" with "positive"
+ %image% Kalkulus_Anisah Daffa Citra Nareswari_22305141044-072.png
+% // latex: \int_{a}^{b}{x^{n}\;dx}=\frac{b^{n+1}}{n+1}-\frac{a^{n+1}}{n+1}
+>$showev('integrate(x^2*sqrt(2*x+1),x))
+ %image% Kalkulus_Anisah Daffa Citra Nareswari_22305141044-073.png
+% // latex: \int {x^2\,\sqrt{2\,x+1}}{\;dx}=\frac{\left(2\,x+1\right)^{\frac{7  }{2}}}{28}-\frac{\left(2\,x+1\right)^{\frac{5}{2}}}{10}+\frac{\left(  2\,x+1\right)^{\frac{3}{2}}}{12}
+>$showev('integrate(x^2*sqrt(2*x+1),x,0,2))
+ %image% Kalkulus_Anisah Daffa Citra Nareswari_22305141044-074.png
+% // latex: \int_{0}^{2}{x^2\,\sqrt{2\,x+1}\;dx}=\frac{2\,5^{\frac{5}{2}}}{21}-  \frac{2}{105}
+>$ratsimp(%)
+ %image% Kalkulus_Anisah Daffa Citra Nareswari_22305141044-075.png
+% // latex: \int_{0}^{2}{x^2\,\sqrt{2\,x+1}\;dx}=\frac{2\,5^{\frac{7}{2}}-2}{  105}
+>$showev('integrate((sin(sqrt(x)+a)*E^sqrt(x))/sqrt(x),x,0,pi^2))
+ %image% Kalkulus_Anisah Daffa Citra Nareswari_22305141044-076.png
+% // latex: \int_{0}^{\pi^2}{\frac{\sin \left(\sqrt{x}+a\right)\,e^{\sqrt{x}}}{  \sqrt{x}}\;dx}=\left(-e^{\pi}-1\right)\,\sin a+\left(e^{\pi}+1  \right)\,\cos a
+>$factor(%)
+ %image% Kalkulus_Anisah Daffa Citra Nareswari_22305141044-077.png
+% // latex: \int_{0}^{\pi^2}{\frac{\sin \left(\sqrt{x}+a\right)\,e^{\sqrt{x}}}{  \sqrt{x}}\;dx}=\left(-e^{\pi}-1\right)\,\left(\sin a-\cos a\right)
+>function map f(x) &= E^(-x^2)
+
+                                    2
+                                 - x
+                                E
+
+>$showev('integrate(f(x),x))
+ %image% Kalkulus_Anisah Daffa Citra Nareswari_22305141044-078.png
+% // latex: \int {e^ {- x^2 }}{\;dx}=\frac{\sqrt{\pi}\,\mathrm{erf}\left(x  \right)}{2}
+% Fungsi f tidak memiliki antiturunan, integralnya masih memuat integral lain.
+% 
+% latex: erf(x) = \int \frac{e^{-x^2}}{\sqrt{\pi}} \ dx.
+% 
+% Kita tidak dapat menggunakan teorema Dasar kalkulus untuk menghitung integral tentu
+% fungsi tersebut jika semua batasnya berhingga. Dalam hal ini dapat digunakan metode
+% numerik (rumus kuadratur).
+% 
+% Misalkan kita akan menghitung:
+% 
+% maxima: 'integrate(f(x),x,0,pi)
+>x=0:0.1:pi-0.1; plot2d(x,f(x+0.1),>bar); plot2d("f(x)",0,pi,>add):
+ %image% Kalkulus_Anisah Daffa Citra Nareswari_22305141044-079.png
+% Integral tentu
+% 
+% maxima: 'integrate(f(x),x,0,pi)
+% 
+% dapat dihampiri dengan jumlah luas persegi-persegi panjang di bawah kurva y=f(x)
+% tersebut. Langkah-langkahnya adalah sebagai berikut.
+>t &= makelist(a,a,0,pi-0.1,0.1); // t sebagai list untuk menyimpan nilai-nilai x
+>fx &= makelist(f(t[i]+0.1),i,1,length(t)); // simpan nilai-nilai f(x)
+>// jangan menggunakan x sebagai list, kecuali Anda pakar Maxima!
+% Hasilnya adalah:
+% 
+% maxima: 'integrate(f(x),x,0,pi) = 0.1*sum(fx[i],i,1,length(fx))
+% 
+% Jumlah tersebut diperoleh dari hasil kali lebar sub-subinterval (=0.1) dan jumlah
+% nilai-nilai f(x) untuk x = 0.1, 0.2, 0.3, ..., 3.2.
+>0.1*sum(f(x+0.1)) // cek langsung dengan perhitungan numerik EMT
+0.836219610253
+% Untuk mendapatkan nilai integral tentu yang mendekati nilai sebenarnya, lebar
+% sub-intervalnya dapat diperkecil lagi, sehingga daerah di bawah kurva tertutup
+% semuanya, misalnya dapat digunakan lebar subinterval 0.001. (Silakan dicoba!)
+% 
+% Meskipun Maxima tidak dapat menghitung integral tentu fungsi tersebut untuk
+% batas-batas yang berhingga, namun integral tersebut dapat dihitung secara eksak jika
+% batas-batasnya tak hingga. Ini adalah salah satu keajaiban di dalam matematika, yang
+% terbatas tidak dapat dihitung secara eksak, namun yang tak hingga malah dapat
+% dihitung secara eksak.
+>$showev('integrate(f(x),x,0,inf))
+ %image% Kalkulus_Anisah Daffa Citra Nareswari_22305141044-080.png
+% // latex: \int_{0}^{\infty }{e^ {- x^2 }\;dx}=\frac{\sqrt{\pi}}{2}
+% Berikut adalah contoh lain fungsi yang tidak memiliki antiderivatif, sehingga
+% integral tentunya hanya dapat dihitung dengan metode numerik.
+>function f(x) &= x^x
+
+                                   x
+                                  x
+
+>$showev('integrate(f(x),x,0,1))
+ %image% Kalkulus_Anisah Daffa Citra Nareswari_22305141044-081.png
+% // latex: \int_{0}^{1}{x^{x}\;dx}=\int_{0}^{1}{x^{x}\;dx}
+>x=0:0.1:1-0.01; plot2d(x,f(x+0.01),>bar); plot2d("f(x)",0,1,>add):
+ %image% Kalkulus_Anisah Daffa Citra Nareswari_22305141044-082.png
+% Maxima gagal menghitung integral tentu tersebut secara langsung menggunakan perintah
+% integrate. Berikut kita lakukan seperti contoh sebelumnya untuk mendapat hasil atau
+% pendekatan nilai integral tentu tersebut.
+>t &= makelist(a,a,0,1-0.01,0.01);
+>fx &= makelist(f(t[i]+0.01),i,1,length(t));
+% maxima: 'integrate(f(x),x,0,1) = 0.01*sum(fx[i],i,1,length(fx))
+% 
+% Apakah hasil tersebut cukup baik? perhatikan gambarnya.
+>
+% * Latihan
+% 
+% - Bukalah buku Kalkulus.
+%% - Cari dan pilih beberapa (paling sedikit 5 fungsi berbeda
+% tipe/bentuk/jenis) fungsi dari buku tersebut, kemudian definisikan di
+% EMT pada baris-baris perintah berikut (jika perlu tambahkan lagi).
+%% - Untuk setiap fungsi, tentukan anti turunannya (jika ada), hitunglah
+% integral tentu dengan batas-batas yang menarik (Anda tentukan
+% sendiri), seperti contoh-contoh tersebut.
+%% - Lakukan hal yang sama untuk fungsi-fungsi yang tidak dapat
+% diintegralkan (cari sedikitnya 3 fungsi).
+%% - Gambar grafik fungsi dan daerah integrasinya pada sumbu koordinat
+% yang sama.
+%% - Gunakan integral tentu untuk mencari luas daerah yang dibatasi oleh
+% dua kurva yang berpotongan di dua titik. (Cari dan gambar kedua kurva
+% dan arsir (warnai) daerah yang dibatasi oleh keduanya.)
+%% - Gunakan integral tentu untuk menghitung volume benda putar kurva y=
+% f(x) yang diputar mengelilingi sumbu x dari x=a sampai x=b, yakni
+% 
+% latex: V = \int_a^b \pi (f(x)^2\ dx.
+% 
+% (Pilih fungsinya dan gambar kurva dan benda putar yang dihasilkan.
+% Anda dapat mencari contoh-contoh bagaimana cara menggambar benda hasil
+% perputaran suatu kurva.)
+%% - Gunakan integral tentu untuk menghitung panjang kurva y=f(x) dari
+% x=a sampai x=b dengan menggunakan rumus:
+% 
+% latex: S = \int_a^b \sqrt{1+(f'(x))^2} \ dx.
+% 
+% (Pilih fungsi dan gambar kurvanya.)
+% 
+% 1. Fungsi 1
+>
+>function f(x) &= x^2-2*x; $f(x)
+ %image% Kalkulus_Anisah Daffa Citra Nareswari_22305141044-083.png
+% // latex: x^2-2\,x
+>$showev('integrate(f(x),x))
+ %image% Kalkulus_Anisah Daffa Citra Nareswari_22305141044-084.png
+% // latex: \int {x^2-2\,x}{\;dx}=\frac{x^3}{3}-x^2
+>$showev('integrate(f(x),x,0,5))
+ %image% Kalkulus_Anisah Daffa Citra Nareswari_22305141044-085.png
+% // latex: \int_{0}^{5}{x^2-2\,x\;dx}=\frac{50}{3}
+>x=0:0.1:4; plot2d(x,f(x+0.01),>bar); plot2d("f(x)",0,5,>add):
+ %image% Kalkulus_Anisah Daffa Citra Nareswari_22305141044-086.png
+> 
+% 2. Fungsi 2
+>function f(x) &= (cos(x))^2+1; $f(x)
+ %image% Kalkulus_Anisah Daffa Citra Nareswari_22305141044-087.png
+% // latex: \cos ^2x+1
+>$showev('integrate(f(x),x))
+ %image% Kalkulus_Anisah Daffa Citra Nareswari_22305141044-088.png
+% // latex: \int {\cos ^2x+1}{\;dx}=\frac{\frac{\sin \left(2\,x\right)}{2}+x}{2  }+x
+>$showev('integrate(f(x),x,0,pi/2))
+ %image% Kalkulus_Anisah Daffa Citra Nareswari_22305141044-089.png
+% // latex: \int_{0}^{\frac{\pi}{2}}{\cos ^2x+1\;dx}=\frac{3\,\pi}{4}
+>x=0:0.1:pi-0.1; plot2d(x,f(x+0.02),>bar); plot2d("f(x)",0,pi,>add):
+ %image% Kalkulus_Anisah Daffa Citra Nareswari_22305141044-090.png
+>
+% 3. Fungsi 3
+>function f(x) &= sqrt(x^2+5); $f(x)
+ %image% Kalkulus_Anisah Daffa Citra Nareswari_22305141044-091.png
+% // latex: \sqrt{x^2+5}
+>$showev('integrate(f(x),x))
+ %image% Kalkulus_Anisah Daffa Citra Nareswari_22305141044-092.png
+% // latex: \int {\sqrt{x^2+5}}{\;dx}=\frac{5\,{\rm asinh}\; \left(\frac{x}{  \sqrt{5}}\right)}{2}+\frac{x\,\sqrt{x^2+5}}{2}
+>$showev('integrate(f(x),x,-1,1))
+ %image% Kalkulus_Anisah Daffa Citra Nareswari_22305141044-093.png
+% // latex: \int_{-1}^{1}{\sqrt{x^2+5}\;dx}=5\,{\rm asinh}\; \left(\frac{1}{  \sqrt{5}}\right)+\sqrt{6}
+>x=0:0.04:3; plot2d(x,f(x+0.01),>bar); plot2d("f(x)",-pi,pi,>add):
+ %image% Kalkulus_Anisah Daffa Citra Nareswari_22305141044-094.png
+>
+% 4. Fungsi 4
+>function f(x) &= (x+5); $f(x)
+ %image% Kalkulus_Anisah Daffa Citra Nareswari_22305141044-095.png
+% // latex: x+5
+>$showev('integrate(f(x),x))
+ %image% Kalkulus_Anisah Daffa Citra Nareswari_22305141044-096.png
+% // latex: \int {x+5}{\;dx}=\frac{x^2}{2}+5\,x
+>$showev('integrate(f(x),x,-2,5))
+ %image% Kalkulus_Anisah Daffa Citra Nareswari_22305141044-097.png
+% // latex: \int_{-2}^{5}{x+5\;dx}=\frac{91}{2}
+>x=0:0.09:1; plot2d(x,f(x+0.02),>bar); plot2d("f(x)",-2,5,>add):
+ %image% Kalkulus_Anisah Daffa Citra Nareswari_22305141044-098.png
+>
+% 5. Fungsi 5
+>
+>function f(x) &= (sin(x))^2*-3; $f(x)
+ %image% Kalkulus_Anisah Daffa Citra Nareswari_22305141044-099.png
+% // latex: -3\,\sin ^2x
+>$showev('integrate(f(x),x))
+ %image% Kalkulus_Anisah Daffa Citra Nareswari_22305141044-100.png
+% // latex: -3\,\int {\sin ^2x}{\;dx}=-\frac{3\,\left(x-\frac{\sin \left(2\,x  \right)}{2}\right)}{2}
+>$showev('integrate(f(x),x,-pi,pi))
+ %image% Kalkulus_Anisah Daffa Citra Nareswari_22305141044-101.png
+% // latex: -3\,\int_{-\pi}^{\pi}{\sin ^2x\;dx}=-3\,\pi
+>x=-pi:0.04:pi; plot2d(x,f(x+0.01),>bar); plot2d("f(x)",-pi,pi,>add):
+ %image% Kalkulus_Anisah Daffa Citra Nareswari_22305141044-102.png
+>
+% 6. Fungsi 6
+>t &= makelist(a,a,0,1-0.01,0.01);
+>fx &= makelist(f(t[i]+0.01),i,1,length(t));
+>function f(x) &= x^2+5; $f(x)
+ %image% Kalkulus_Anisah Daffa Citra Nareswari_22305141044-103.png
+% // latex: x^2+5
+>x=0:0.1:pi-0.01; plot2d(x,f(x+0.01),>bar); plot2d("f(x)",0,pi,>add):
+ %image% Kalkulus_Anisah Daffa Citra Nareswari_22305141044-104.png
+>0.01*sum(f(x+0.01))
+2.651552
+>
+% 7. Fungsi 7
+>t &= makelist(a,a,0,1-0.01,0.01);
+>fx &= makelist(f(t[i]+0.01),i,1,length(t));
+>function f(x) &= (x^2+x+6); $f(x)
+ %image% Kalkulus_Anisah Daffa Citra Nareswari_22305141044-105.png
+% // latex: x^2+x+6
+>x=0:0.1:pi-0.01; plot2d(x,f(x+0.01),>bar); plot2d("f(x)",0,pi,>add):
+ %image% Kalkulus_Anisah Daffa Citra Nareswari_22305141044-106.png
+>0.01*sum(f(x+0.01))
+3.470752
+>
+% 8. Fungsi 8
+>t &= makelist(a,a,0,1-0.01,0.01);
+>fx &= makelist(f(t[i]+0.01),i,1,length(t));
+>function f(x) &= 2*x^2+3*x+6; $f(x)
+ %image% Kalkulus_Anisah Daffa Citra Nareswari_22305141044-107.png
+% // latex: 2\,x^2+3\,x+6
+>x=-pi:0.06:pi-0.01; plot2d(x,f(x+0.01),>bar); plot2d("f(x)",-pi,pi,>add):
+ %image% Kalkulus_Anisah Daffa Citra Nareswari_22305141044-108.png
+>0.01*sum(f(x+0.01))
+13.2088853594
+>
+% * Luas Dibatasi 2 Kurva
+>
+% 1. Fungsi 1
+>function f(x) &= -x^2; $f(x)
+ %image% Kalkulus_Anisah Daffa Citra Nareswari_22305141044-109.png
+% // latex: -x^2
+>function g(x) &= x^5; $g(x)
+ %image% Kalkulus_Anisah Daffa Citra Nareswari_22305141044-110.png
+% // latex: x^5
+>plot2d(["-x^2","x^5"],-3,3,-1,2):
+ %image% Kalkulus_Anisah Daffa Citra Nareswari_22305141044-111.png
+>function h(x) &= f(x)-g(x); $h(x)
+ %image% Kalkulus_Anisah Daffa Citra Nareswari_22305141044-112.png
+% // latex: -x^5-x^2
+>$&solve(f(x)=g(x))
+ %image% Kalkulus_Anisah Daffa Citra Nareswari_22305141044-113.png
+% // latex: \left[ x=\frac{1-\sqrt{3}\,i}{2} , x=\frac{\sqrt{3}\,i+1}{2} , x=-1   , x=0 \right] 
+>$showev('integrate(h(x),x,0,1))
+ %image% Kalkulus_Anisah Daffa Citra Nareswari_22305141044-114.png
+% // latex: \int_{0}^{1}{-x^5-x^2\;dx}=-\frac{1}{2}
+>
+>x=0:0.01:1; plot2d(x,f(x),>bar,>filled,style="-",fillcolor=red,>grid); plot2d(x,g(x),>bar,>add,>filled,style="-",fillcolor=white); label("f(x)",0.5,0.38); label("g(x)",0.7,0.38):
+ %image% Kalkulus_Anisah Daffa Citra Nareswari_22305141044-115.png
+% 2. Fungsi 2
+>
+>function f(x) &= x+2; $f(x)
+ %image% Kalkulus_Anisah Daffa Citra Nareswari_22305141044-116.png
+% // latex: x+2
+>function g(x) &= x^3; $g(x)
+ %image% Kalkulus_Anisah Daffa Citra Nareswari_22305141044-117.png
+% // latex: x^3
+>plot2d(["x+2","x^3"],-5,5,-3,3):
+ %image% Kalkulus_Anisah Daffa Citra Nareswari_22305141044-118.png
+>function h(x) &= f(x)-g(x); $h(x)
+ %image% Kalkulus_Anisah Daffa Citra Nareswari_22305141044-119.png
+% // latex: -x^3+x+2
+>$&solve(f(x)=g(x))
+ %image% Kalkulus_Anisah Daffa Citra Nareswari_22305141044-120.png
+% // latex: \left[ x=\frac{\frac{\sqrt{3}\,i}{2}-\frac{1}{2}}{3\,\left(\frac{  \sqrt{26}}{3^{\frac{3}{2}}}+1\right)^{\frac{1}{3}}}+\left(\frac{  \sqrt{26}}{3^{\frac{3}{2}}}+1\right)^{\frac{1}{3}}\,\left(-\frac{  \sqrt{3}\,i}{2}-\frac{1}{2}\right) , x=\left(\frac{\sqrt{26}}{3^{  \frac{3}{2}}}+1\right)^{\frac{1}{3}}\,\left(\frac{\sqrt{3}\,i}{2}-  \frac{1}{2}\right)+\frac{-\frac{\sqrt{3}\,i}{2}-\frac{1}{2}}{3\,  \left(\frac{\sqrt{26}}{3^{\frac{3}{2}}}+1\right)^{\frac{1}{3}}} , x=  \left(\frac{\sqrt{26}}{3^{\frac{3}{2}}}+1\right)^{\frac{1}{3}}+  \frac{1}{3\,\left(\frac{\sqrt{26}}{3^{\frac{3}{2}}}+1\right)^{\frac{  1}{3}}} \right] 
+>$showev('integrate(h(x),x,-1,1))
+ %image% Kalkulus_Anisah Daffa Citra Nareswari_22305141044-121.png
+% // latex: \int_{-1}^{1}{-x^3+x+2\;dx}=4
+>x=-1:0.01:1; plot2d(x,f(x),>bar,>filled,style="-",fillcolor=yellow,>grid); plot2d(x,g(x),>bar,>add,>filled,style="-",fillcolor=white); label("f(x)",0,2.1); label("g(x)",0.5,0.1):
+ %image% Kalkulus_Anisah Daffa Citra Nareswari_22305141044-122.png
+>
+% * Volume Benda Putar
+% Menghitung volume hasil perputaran kurva
+%% latex: m(x)=x^2+2
+%% dari x=0 sampai x=1. Diputar terhadap sumbu-x.
+%% Jawab:
+>function m(x) &= x^2+2; $m(x)
+ %image% Kalkulus_Anisah Daffa Citra Nareswari_22305141044-123.png
+% // latex: x^2+2
+>$showev('integrate(m(x),x,-1,1))
+ %image% Kalkulus_Anisah Daffa Citra Nareswari_22305141044-124.png
+% // latex: \int_{-1}^{1}{x^2+2\;dx}=\frac{14}{3}
+>plot2d("m(x)",-1,0,-1,2,grid=7,>filled, style="/\"): 
+ %image% Kalkulus_Anisah Daffa Citra Nareswari_22305141044-125.png
+>plot3d("m(x)",-1,1,-1,1,>rotate,angle=6.3,>hue,>contour,color=redgreen,height=10):
+ %image% Kalkulus_Anisah Daffa Citra Nareswari_22305141044-126.png
+>
+% * Barisan dan Deret
+% 
+% (Catatan: bagian ini belum lengkap. Anda dapat membaca contoh-contoh pengguanaan EMT dan
+% Maxima untuk menghitung limit barisan, rumus jumlah parsial suatu deret, jumlah tak hingga
+% suatu deret konvergen, dan sebagainya. Anda dapat mengeksplor contoh-contoh di EMT atau
+% perbagai panduan penggunaan Maxima di software Maxima atau dari Internet.)
+% 
+% Barisan dapat didefinisikan dengan beberapa cara di dalam EMT, di antaranya:
+% 
+% - dengan cara yang sama seperti mendefinisikan vektor dengan elemen-elemen beraturan
+% (menggunakan titik dua ":");
+%% - menggunakan perintah "sequence" dan rumus barisan (suku ke -n);
+%% - menggunakan perintah "iterate" atau "niterate";
+%% - menggunakan fungsi Maxima "create_list" atau "makelist" untuk menghasilkan barisan
+% simbolik;
+%% - menggunakan fungsi biasa yang inputnya vektor atau barisan;
+%% - menggunakan fungsi rekursif.
+% 
+% EMT menyediakan beberapa perintah (fungsi) terkait barisan, yakni:
+% 
+% - sum: menghitung jumlah semua elemen suatu barisan
+%% - cumsum: jumlah kumulatif suatu barisan
+%% - differences: selisih antar elemen-elemen berturutan
+% 
+% EMT juga dapat digunakan untuk menghitung jumlah deret berhingga maupun deret tak hingga,
+% dengan menggunakan perintah (fungsi) "sum". Perhitungan dapat dilakukan secara numerik
+% maupun simbolik dan eksak.
+% 
+% Berikut adalah beberapa contoh perhitungan barisan dan deret menggunakan EMT.
+>1:10 // barisan sederhana
+[1,  2,  3,  4,  5,  6,  7,  8,  9,  10]
+>1:2:30
+[1,  3,  5,  7,  9,  11,  13,  15,  17,  19,  21,  23,  25,  27,  29]
+>sum(1:2:30), sum(1/(1:2:30))
+225
+2.33587263431
+>
+>
+>$'sum(k, k, 1, n) = factor(ev(sum(k, k, 1, n),simpsum=true)) // simpsum:menghitung deret secara simbolik
+ %image% Kalkulus_Anisah Daffa Citra Nareswari_22305141044-127.png
+% // latex: \sum_{k=1}^{n}{k}=\frac{n\,\left(n+1\right)}{2}
+>$'sum(1/(3^k+k), k, 0, inf) = factor(ev(sum(1/(3^k+k), k, 0, inf),simpsum=true))
+ %image% Kalkulus_Anisah Daffa Citra Nareswari_22305141044-128.png
+% // latex: \sum_{k=0}^{\infty }{\frac{1}{3^{k}+k}}=\sum_{k=0}^{\infty }{\frac{  1}{3^{k}+k}}
+% Di sini masih gagal, hasilnya tidak dihitung.
+>
+>$'sum(1/x^2, x, 1, inf)= ev(sum(1/x^2, x, 1, inf),simpsum=true) // ev: menghitung nilai ekspresi
+ %image% Kalkulus_Anisah Daffa Citra Nareswari_22305141044-129.png
+% // latex: \sum_{x=1}^{\infty }{\frac{1}{x^2}}=\frac{\pi^2}{6}
+>$'sum((-1)^(k-1)/k, k, 1, inf) = factor(ev(sum((-1)^(x-1)/x, x, 1, inf),simpsum=true))
+ %image% Kalkulus_Anisah Daffa Citra Nareswari_22305141044-130.png
+% // latex: \sum_{k=1}^{\infty }{\frac{\left(-1\right)^{k-1}}{k}}=-\sum_{x=1}^{  \infty }{\frac{\left(-1\right)^{x}}{x}}
+% Di sini masih gagal, hasilnya tidak dihitung.
+>$'sum((-1)^k/(2*k-1), k, 1, inf) = factor(ev(sum((-1)^k/(2*k-1), k, 1, inf),simpsum=true))
+ %image% Kalkulus_Anisah Daffa Citra Nareswari_22305141044-131.png
+% // latex: \sum_{k=1}^{\infty }{\frac{\left(-1\right)^{k}}{2\,k-1}}=\sum_{k=1  }^{\infty }{\frac{\left(-1\right)^{k}}{2\,k-1}}
+>$ev(sum(1/n!, n, 0, inf),simpsum=true)
+ %image% Kalkulus_Anisah Daffa Citra Nareswari_22305141044-132.png
+% // latex: \sum_{n=0}^{\infty }{\frac{1}{n!}}
+% Di sini masih gagal, hasilnya tidak dihitung, harusnya hasilnya e.
+>&assume(abs(x)<1); $'sum(a*x^k, k, 0, inf)=ev(sum(a*x^k, k, 0, inf),simpsum=true), &forget(abs(x)<1);
+ %image% Kalkulus_Anisah Daffa Citra Nareswari_22305141044-133.png
+% // latex: a\,\sum_{k=0}^{\infty }{x^{k}}=\frac{a}{1-x}
+% Deret geometri tak hingga, dengan asumsi rasional antara -1 dan 1.
+>
+>
+% * Deret Taylor
+% 
+% Deret Taylor suatu fungsi f yang diferensiabel sampai tak hingga di sekitar x=a adalah:
+% 
+% latex: f(x) = \sum_{k=0}^\infty \frac{(x-a)^k f^{(k)}(a)}{k!}.
+>$'e^x =taylor(exp(x),x,0,10) // deret Taylor e^x di sekitar x=0, sampai suku ke-11
+ %image% Kalkulus_Anisah Daffa Citra Nareswari_22305141044-134.png
+% // latex: e^{x}=\frac{x^{10}}{3628800}+\frac{x^9}{362880}+\frac{x^8}{40320}+  \frac{x^7}{5040}+\frac{x^6}{720}+\frac{x^5}{120}+\frac{x^4}{24}+  \frac{x^3}{6}+\frac{x^2}{2}+x+1
+>$'log(x)=taylor(log(x),x,1,10)// deret log(x) di sekitar x=1
+ %image% Kalkulus_Anisah Daffa Citra Nareswari_22305141044-135.png
+% // latex: \log x=x-\frac{\left(x-1\right)^{10}}{10}+\frac{\left(x-1\right)^9  }{9}-\frac{\left(x-1\right)^8}{8}+\frac{\left(x-1\right)^7}{7}-  \frac{\left(x-1\right)^6}{6}+\frac{\left(x-1\right)^5}{5}-\frac{  \left(x-1\right)^4}{4}+\frac{\left(x-1\right)^3}{3}-\frac{\left(x-1  \right)^2}{2}-1
+>
+>
+>
+>
+>
+>
+>
+>
+>
+>
+>
+>
+>
+>
+>
+>
+>
+>
+>
+>
+>
+>
+>
+>
+>
+>
+>
+>
+>
+>
+>
+>
+>
+>
+>
+>
+>
+>
+>
+>
+>
+>
+>

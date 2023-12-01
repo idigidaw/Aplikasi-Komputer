@@ -1,0 +1,3315 @@
+﻿% * MATERI GEOMETRI KELAS MATEMATIKA E 2022 
+% ** Anggota Kelompok
+%% 1. Anisah Daffa Citra Nareswari (22305141044/sub bab 1 dan 2)
+%% 2. Abigail Dianingtyas Paramitha (22305141018/sub bab 3 dan 10)
+%% 3. Aulina Mafazaturrahmah (22305144043/sub bab 4)
+%% 4. Shinta Nailil Mufida Rahayu (22305141006/sub bab 5)
+%% 5. Rizqi Amallia Rahma Dani (22305141035/sub bab 6 dan 7)
+%% 6. Muhammad Nurcahyo Eko Saputra (22305141043/sub bab 8 dan 11)
+%% 7. Hilyatun Nafida Badari (22305144035/sub bab 9)
+% 
+% * Materi 1 
+% ** Memanggil Program "geometry.e" untuk Menggunakan Perintah-perintah
+% ** atau Fungsi-fungsi Geometri
+% 
+% Pada Euler kita dapat melakukan visualisasi dan perhitungan geometri
+% secara numerik dan secara analitik dengan menggunakan Maxima.
+% 
+% Untuk melakukan visualisasi dan perhitungan geometri, kita harus
+% memanggil program "geometry.e" terlebih dahulu agar perhitungan dan
+% visualisasi dapat tereksekusi.
+>load geometry
+Numerical and symbolic geometry.
+% Terdapat fungsi-fungsi geometri pada Euler sebagai berikut:
+% 
+% ** Fungsi-fungsi Geometri
+% 
+% Berikut adalah fungsi-fungsi untuk menggambar objek geometri:
+% 
+% Fungsi yang digunakan untuk membuat bidang koordinat adalah sebagai
+% berikut:
+% 
+%   setPlotRange(x1,x2,y1,y2): menentukan rentang x dan y pada bidang
+% koordinat. Keterangan:
+%%      x1 adalah batas terkecil sumbu-x
+%%      x2 adalah batas terbesar sumbu-x
+%%      y1 adalah batas terkecil sumbu-y
+%%      y2 adalah batas terbesar sumbu-y
+%%   setPlotRange(m): pusat bidang koordinat (0,0) dan batas-batas
+% sumbu-x dan sumbu-y adalah -m sampai dengan m.
+>setPlotRange(-4,5,0,5)
+[-4,  5,  0,  5]
+>setPlotRange(5):
+ %image% KELOMPOK 5_MAT E 2022_GEOMETRI-001.png
+%   plotPoint (A, "A"): menggambarkan titik P dan diberi label "A".
+% Sebelum itu, kita harus mendefinisikan A sebagai suatu titik koordinat
+% terlebih dahulu atau dapat dituliskan dengan A=[x,y]
+>A=[-4,-1]; B=[-2,-4]; C=[1,1];
+>plotPoint(A, "A"); plotPoint(B, "B"); plotPoint(C, "C"):
+ %image% KELOMPOK 5_MAT E 2022_GEOMETRI-002.png
+%   plotSegment (A,B, "AB", d): menggambar ruas garis AB, diberi label
+% "AB" sejauh nilai d. Sebelum menggambar ruas garis AB, kita harus
+% mendefinisikan titik A dan B terlebih dahulu.
+%%   
+>plotSegment(A,B, "AB", 30):
+ %image% KELOMPOK 5_MAT E 2022_GEOMETRI-003.png
+% plotLine (n, "n", d): menggambar garis n diberi label "n" sejauh d
+>n=middlePerpendicular(A,B);
+>plotLine(n, "n", 15):
+ %image% KELOMPOK 5_MAT E 2022_GEOMETRI-004.png
+%   plotCircle (c,"c",v,d): Menggambar lingkaran c dan diberi label "c"
+>D=[-2,1]; plotPoint(D,"D");
+>c=circleThrough(A,B,D);
+>plotCircle(c,"lingkaran c"):
+ %image% KELOMPOK 5_MAT E 2022_GEOMETRI-005.png
+% plotLabel (label, P, V, d): menuliskan label pada posisi P
+>plotLabel("Citra", D, [-2,2], 30):
+ %image% KELOMPOK 5_MAT E 2022_GEOMETRI-006.png
+% ** Fungsi-fungsi Geometri Analitik (numerik maupun simbolik)
+% 
+% norm(A-B): jarak antara titik A dan titik B
+%% turn(v, phi): memutar vektor v sejauh phi
+%% turnLeft(v): memutar vektor v ke kiri
+%% turnRight(v): memutar vektor v ke kanan
+%% normalize(v): normal vektor v
+%% crossProduct(v, w): hasil kali silang vektor v dan w.
+%% lineThrough(A, B): garis melalui A dan B, hasilnya [a,b,c] sdh.
+% ax+by=c.
+%% lineWithDirection(A,v): garis melalui A searah vektor v
+>norm(A-C)
+5.38516480713
+>sqrt(29)
+5.38516480713
+>lineThrough(A,D)
+[-2,  2,  6]
+>v=[-1,-1]
+[-1,  -1]
+>lineWithDirection(A,v)
+[1,  -1,  -3]
+% getLineDirection(v): vektor arah (gradien) garis v
+%% getNormal(v): vektor normal (tegak lurus) garis v
+>getLineDirection(v)
+[-1,  1]
+>getNormal(v)
+-1
+% getPointOnLine(g): titik pada garis g
+%% perpendicular(A, g): garis melalui A tegak lurus garis g
+%% parallel (A, g): garis melalui A sejajar garis g
+%% lineIntersection(g, h): titik potong garis g dan h
+>h=perpendicular(A, lineThrough(A,B)); // garis melalui A dan tegak lurus AB
+>plotLine(h, "H", 10):
+ %image% KELOMPOK 5_MAT E 2022_GEOMETRI-007.png
+%   projectToLine(A, g):   proyeksi titik A pada garis g
+%%   distance(A, B):  jarak titik A dan B
+%%   distanceSquared(A, B):  kuadrat jarak A dan B
+%%   quadrance(A, B): kuadrat jarak A dan B
+>distance(A, C)
+5.38516480713
+>distanceSquared(A, C)
+29
+>quadrance(A, C)
+29
+%   areaTriangle(A, B, C):  luas segitiga ABC
+%%   computeAngle(A, B, C):   besar sudut <ABC
+%%   angleBisector(A, B, C): garis bagi sudut <ABC
+%%   circleWithCenter (A, r): lingkaran dengan pusat A dan jari-jari r
+>areaTriangle(A, B, C)
+9.5
+>c1=circleWithCenter(C, 3);
+>color(5); plotCircle(c1, "C1"):
+ %image% KELOMPOK 5_MAT E 2022_GEOMETRI-008.png
+%   getCircleCenter(c):  pusat lingkaran c
+%%   getCircleRadius(c):  jari-jari lingkaran c
+%%   circleThrough(A,B,C):  lingkaran melalui A, B, C
+>getCircleCenter(c1)
+[1,  1]
+>getCircleRadius(c1)
+3
+>c2=circleThrough(A, D, C);
+>color(3); plotCircle(c2, "C2"):
+ %image% KELOMPOK 5_MAT E 2022_GEOMETRI-009.png
+%   middlePerpendicular(A, B): titik tengah AB
+%%   lineCircleIntersections(g, c): titik potong garis g dan lingkran c
+%%   circleCircleIntersections (c1, c2):  titik potong lingkaran c1 dan
+% c2
+%%   planeThrough(A, B, C):  bidang melalui titik A, B, C
+>m=circleCircleIntersections(c1,c2);
+>plotPoint(m,"m"):
+ %image% KELOMPOK 5_MAT E 2022_GEOMETRI-010.png
+% ** Fungsi-fungsi Khusus Untuk Geometri Simbolik:
+%%   getLineEquation (g,x,y): persamaan garis g dinyatakan dalam x dan y
+%%   getHesseForm (g,x,y,A): bentuk Hesse garis g dinyatakan dalam x dan
+% y dengan titik A pada sisi positif (kanan/atas) garis. Bentuk hesse
+% garis merupakan cara untuk menyatakan garis dalam bentuk matematika
+% yang lebih umum.
+>M &= [1,1]; N &= [2,2];
+>g &= lineThrough(M,N)
+
+                             [- 1, 1, 0]
+
+>&getLineEquation(g,x,y)
+
+                              y - x = 0
+
+%   quad(A,B): kuadrat jarak AB
+%%   spread(a,b,c): Spread segitiga dengan panjang sisi-sisi a,b,c, yakni
+% sin(alpha)^2 dengan alpha sudut yang menghadap sisi a.
+%%   crosslaw(a,b,c,sa): persamaan 3 quads dan 1 spread pada segitiga
+% dengan panjang sisi a, b, c.
+%%   triplespread(sa,sb,sc): persamaan 3 spread sa,sb,sc yang memebntuk
+% suatu segitiga
+%%   doublespread(sa): Spread sudut rangkap Spread 2*phi, dengan
+% sa=sin(phi)^2 spread a.
+>a &= 8^2; b &= 15^2; c &= 17^2; &a+b=c
+
+                              289 = 289
+
+>&spread(a,b,c)
+
+                                 64
+                                 ---
+                                 289
+
+% * Materi 2 ** Mengatur Luas Bidang Koordinat untuk Menggambar
+% ** Objek-objek Geometri
+% 
+% Untuk menggambarkan objek geometri yang diinginkan pada Euler, kita
+% harus menggambarkan luas bidang koordinat dengan menentukan rentang
+% sumbu-sumbu koordinatnya terlebih dahulu. Seluruh objek geometri yang
+% kita gambarkan, nantinya dapat muncul pada satu bidang koordinat yang
+% sama sampai kita mendefinisikan bidang koordinat yang baru.
+% 
+% Untuk mengatur luas bidang koordinat dapat menggunakan fungsi
+% setPlotRange.
+%% ** setPlotRange(n):
+%% merupakan fungsi yang menggambarkan luas bidang koordinat dengan pusat
+% bidang koordinat (0,0) dan batas-batas sumbu-x dan sumbu-y adalah -n
+% sampai dengan n.
+%% ** setPlotRange(x1,x2,y1,y2):
+%% Keterangan:
+%%      x1 adalah batas terkecil sumbu-x
+%%      x2 adalah batas terbesar sumbu-x
+%%      y1 adalah batas terkecil sumbu-y
+%%      y2 adalah batas terbesar sumbu-y
+% 
+>setPlotRange(5);
+>setPlotRange(-1,1,2,3):
+ %image% KELOMPOK 5_MAT E 2022_GEOMETRI-011.png
+% * Bonus alias Latihan!
+% ** Latihan soal berisi dari penggabungan
+%% ** Materi 1 dan Materi 2
+% 
+% Kita akan menghitung luas segitiga ABC dan lingkaran luar ABC. Sebelum
+% itu, kita perlu menggambarkan objek segitiga ABC pada bidang koordinat
+% terlebih dahulu.
+% 
+% Berikut adalah langkah-langkah menggambarkan segitiga siku-siku.
+% 
+% Langkah 1: Menentukan luas bidang koordinat
+% 
+% Langkah 1: Menghitung panjang ruas garis BC sebagai alas segitiga
+>setPlotRange(5):
+ %image% KELOMPOK 5_MAT E 2022_GEOMETRI-012.png
+>setPlotRange(5):
+ %image% KELOMPOK 5_MAT E 2022_GEOMETRI-013.png
+% Langkah 2: Menentukan titik-titik pada bidang koordinat
+>A=[2,4]; plotPoint(A,"A");
+>B=[-3,0]; plotPoint(B,"B");
+>C=[2,0]; plotPoint(C,"C"):
+ %image% KELOMPOK 5_MAT E 2022_GEOMETRI-014.png
+% Langkah 3: Menggambarkan ruas garis pada titik A, B, dan C
+>plotSegment(A,B,"c",-30);
+>plotSegment(B,C,"a");
+>plotSegment(A,C,"b"):
+ %image% KELOMPOK 5_MAT E 2022_GEOMETRI-015.png
+% Setelah menggambarkan objek geometri yang diiingikan, kita akan
+% menghitung luas dari segitiga siku-siku tersebut menggunakan fungsi
+% geometri yang terdapat pada Euler.
+>areaTriangle(A,B,C)
+10
+% Untuk membuktikan hitungan menggunakan fungsi geometri Euler bernilai
+% benar, kita akan membandingkannya dengan hasil luas segitiga siku-siku
+% yang dihitung secara manual.
+% 
+% Rumus Luas Segitiga:
+% 
+% latex: L_{\triangle ABC}= \frac{1}{2}BC.AC
+% %image% KELOMPOK 5_MAT E 2022_GEOMETRI-016.png
+% // latex: L_{\triangle ABC}= \frac{1}{2}BC.AC
+>norm(B-C)
+5
+% Langkah 2: Menghitung panjang ruas garis AC sebagai tinggi segitiga
+>norm(A-C)
+4
+% Langkah 3: Menghitung luas segitiga siku-siku menggunakan rumus luas
+% segitiga
+>norm(B-C)*norm(A-C)/2
+10
+% Jadi, hasil dari perhitungan secara manual dan menggunakan fungsi
+% areaTriangle(A,B,C) bernilai sama. Luas segitiga ABC bernilai 10
+% satuan.
+% 
+% Selanjutnya, kita akan menggambarkan suatu lingkaran yang mengelilingi
+% segitiga siku-siku ABC. Lingkaran tersebut kita beri nama lingkaran
+% luar m.
+>m=circleThrough(A,B,C);
+>R=getCircleRadius(m);
+>O=getCircleCenter(m);
+>plotPoint(O,"O");
+>color(2); plotCircle(m,"Lingkaran Luar m"):
+ %image% KELOMPOK 5_MAT E 2022_GEOMETRI-017.png
+% Untuk menghitung luas lingkaran, kita akan mencari jari-jari dari
+% lingkaran luar m.
+>O, R
+[-0.5,  2]
+3.20156211872
+% Selanjutnya, kita akan menghitung luas lingkaran luar m secara manual
+% menggunakan rumus:
+% 
+% latex: L_{m}= \pi \times r^2
+% %image% KELOMPOK 5_MAT E 2022_GEOMETRI-018.png
+% // latex: L_{m}= \pi \times r^2
+>pi*(3.20156211872)^2
+32.2013246994
+>
+% * Materi 3 
+% ** Menggambar titik, ruas garis, garis, segi banyak, lingkaran, 
+%% ** ellips, parabola, hiperbola, dll.
+% 
+% Menggambarkan titik pada bidang koordinat.
+>setPlotRange(-5,5,-5,5);
+>S=[2.5,4]; plotPoint(S,"S");
+>V=[-3.5,2]; plotPoint(V,"V");
+>T=[1,2]; plotPoint(T,"T"):
+ %image% KELOMPOK 5_MAT E 2022_GEOMETRI-019.png
+>color(3); plotSegment(S,T,"ST"):
+ %image% KELOMPOK 5_MAT E 2022_GEOMETRI-020.png
+% Menggambar ruas garis.
+>color(3); plotSegment(S,V,"SV");
+>color(3); plotSegment(T,V,"TV"):
+ %image% KELOMPOK 5_MAT E 2022_GEOMETRI-021.png
+>u=angleBisector(S,V,T); color(2); plotLine(u):
+ %image% KELOMPOK 5_MAT E 2022_GEOMETRI-022.png
+% Menggambar garis. 
+>n=angleBisector(T,A,S); color(5); plotLine(n):
+ %image% KELOMPOK 5_MAT E 2022_GEOMETRI-023.png
+% Menggambarkan titik potong garis u dan garis n.
+>t=lineIntersection(u,n); plotPoint(t):
+ %image% KELOMPOK 5_MAT E 2022_GEOMETRI-024.png
+% Menggambar segibanyak.
+%% Berikut ini adalah penggambaran objek geometri berupa segi-4:
+% 
+% ## Persegi
+% 
+% Langkah 1: Menggambarkan titik-titik koordinat Q, R, S, T.
+>setPlotRange(-5,5,-5,5);
+>Q=[-4,5]; plotPoint(Q,"Q");
+>R=[-1,5]; plotPoint(R, "R");
+>S=[-1,2]; plotPoint(S, "S");
+>T=[-4,2]; plotPoint(T, "T"):
+ %image% KELOMPOK 5_MAT E 2022_GEOMETRI-025.png
+% Menghubungkan titik-titik koordinat Q, R, S, T dengan ruas garis.
+>plotSegment(Q,R,"a");
+>plotSegment(R,S,"b");
+>plotSegment(S,T,"c");
+>plotSegment(T,Q,"d"):
+ %image% KELOMPOK 5_MAT E 2022_GEOMETRI-026.png
+% ## Trapesium Sama Kaki
+% 
+% Digambarkan enam titik, yaitu Q, R, S, T, M, N. Keenam titik ini jika
+% dihubungkan dapat membentuk dua bangun datar, yaitu trapesium sama
+% kaki dan segienam.
+>setPlotRange(-5,5,-5,5);
+>Q=[-2,4]; plotPoint(Q,"Q");
+>R=[1,4]; plotPoint(R, "R");
+>S=[2,2]; plotPoint(S, "S");
+>T=[-3,2]; plotPoint(T, "T"); 
+>M=[-2,0]; plotPoint(M, "M");
+>N=[1,0]; plotPoint(N, "N"):
+ %image% KELOMPOK 5_MAT E 2022_GEOMETRI-027.png
+>color(2); plotSegment(Q,R," "); plotSegment(S,R," ");  plotSegment(S,T," ");  plotSegment(Q,T," "):
+ %image% KELOMPOK 5_MAT E 2022_GEOMETRI-028.png
+>color(5); plotSegment(Q,R," "); plotSegment(R,S," ");  plotSegment(S,N," ");  plotSegment(N,M," "); plotSegment(M,T," "); plotSegment(T,Q," "):
+ %image% KELOMPOK 5_MAT E 2022_GEOMETRI-029.png
+% Menggambarkan lingkaran dengan pusat titik P. (Lingkaran akan digambar
+% menggunakan fungsi geometri yang disediakan oleh Euler)
+% 
+% P adalah titik pusat lingkaran.
+%% PL adalah jari-jari lingkaran.
+>setPlotRange(-10,10,-10,10);
+>P=[1,3]; plotPoint(P,"P");
+>L=[-1,-3]; plotPoint(L,"L"):
+ %image% KELOMPOK 5_MAT E 2022_GEOMETRI-030.png
+>c1=circleWithCenter(P,distance(P,L)); plotCircle(c1);
+>plotSegment(P,L," "):
+ %image% KELOMPOK 5_MAT E 2022_GEOMETRI-031.png
+% Sekarang kita akan menggambarkan lingkaran menggunakan Plot 2D dengan
+% menggunakan rumus umum lingkaran, yaitu:
+% 
+% latex: x^2+y^2=r^2
+% %image% KELOMPOK 5_MAT E 2022_GEOMETRI-032.png
+% // latex: x^2+y^2=r^2
+>aspect(1);
+>plot2d("x^2+y^2-4",r=3,level=1):
+ %image% KELOMPOK 5_MAT E 2022_GEOMETRI-033.png
+>aspect(2);
+>plot2d("((x^2)/4)+((y^2)/4)-1",r=10,level=2,contourcolor=red):
+ %image% KELOMPOK 5_MAT E 2022_GEOMETRI-034.png
+>aspect(1);
+>plot3d("4x^2-9y^2-36"): //hiperbola
+ %image% KELOMPOK 5_MAT E 2022_GEOMETRI-035.png
+>aspect(1);
+>plot2d("x^2-2x-2y+5"): //parabola
+ %image% KELOMPOK 5_MAT E 2022_GEOMETRI-036.png
+>
+% * Materi 4 
+% a. Menentukan titik tengah suatu ruas garis 
+%% b. Menentukan titik potong dua garis
+%% c. Menentukan titik potong garis dan lingkaran
+%% d. Menentukan titik potong dua lingkaran
+% 
+% ** Menentukan Titik Tengah Suatu Ruas Garis
+%% Titik tengah suatu garis adalah titik yang berada tepat di tengah
+% garis tersebut, sehingga jarak dari titik ini ke ujung-ujung garis
+% tersebut adalah sama. Dalam Matematika, untuk menemukan titik tengah
+% suatu garis, kita dapat menggunakan formula berikut:
+% 
+% Jika kita memiliki dua koordinat ujung garis (x1,y1) maka koordinat
+% titik tengahnya (x,y) dapat dihitung sebagai berikut:
+% 
+% latex: ({x,y})
+% %image% KELOMPOK 5_MAT E 2022_GEOMETRI-037.png
+% // latex: ({x,y})
+%% dengan
+%% latex: x = {(x1+x2)\over 2}
+% %image% KELOMPOK 5_MAT E 2022_GEOMETRI-038.png
+% // latex: x = {(x1+x2)\over 2}
+%% dan
+%% latex: y = {(y1+y2)\over 2}
+% %image% KELOMPOK 5_MAT E 2022_GEOMETRI-039.png
+% // latex: y = {(y1+y2)\over 2}
+%% maka dapat dituliskan
+%% latex: ({(x1+x2)\over 2} , {(y1+y2)\over 2})
+% %image% KELOMPOK 5_MAT E 2022_GEOMETRI-040.png
+% // latex: ({(x1+x2)\over 2} , {(y1+y2)\over 2})
+% 
+% Ini berarti Kita menjumlahkan koordinat x dari kedua ujung garis dan
+% kemudian membaginya dengan 2 untuk menemukan koordinat x titik tengah.
+%% Demikian juga, Kita menjumlahkan koordinat y dari kedua ujung garis
+% dan membaginya dengan 2 untuk menemukan koordinat y titik tengah.
+% 
+% Titik tengah suatu garis juga dapat ditemukan dengan metode geometri.
+% Kita dapat menggambar dua garis diagonal dari sudut-sudut yang
+% berlawanan pada segiempat yang dibentuk oleh garis tersebut. Titik
+% pertemuan kedua diagonal ini adalah titik tengah garis.
+% 
+% Jadi, titik tengah suatu garis adalah titik yang terletak persis di
+% tengah garis tersebut, dengan jarak yang sama dari kedua ujung
+% garisnya. Ini adalah konsep dasar dalam geometri dan matematika yang
+% sering digunakan dalam berbagai konteks, seperti pembuatan grafik,
+% pemodelan geometri, dan banyak aplikasi lainnya.
+% 
+% CONTOH :
+%% Diberikan ruas garis AB yang melalui dua titik A dan titik B. Dengan
+% koordinat titik A dan titik B berturut-turut (2,4) dan (6,4). Tentukan
+% koordinat titik tengah ruas garis AB
+>setPlotRange(8):
+ %image% KELOMPOK 5_MAT E 2022_GEOMETRI-041.png
+% Selanjutnya buat ruas garis yang melalui 2 titik A dan B yang akan
+% kita cari titik tengahnya pada bidang kartesius
+>A=[2,4]; plotPoint(A,"A"); 
+>B=[6,4]; plotPoint(B,"B"):
+ %image% KELOMPOK 5_MAT E 2022_GEOMETRI-042.png
+>plotSegment(A,B,"c"):
+ %image% KELOMPOK 5_MAT E 2022_GEOMETRI-043.png
+% Berikutnya buat garis h yang tegak lurus ruas garis AB dan memotong
+% tepat di tengah ruas garis AB
+>h = middlePerpendicular(A,B):
+ %image% KELOMPOK 5_MAT E 2022_GEOMETRI-044.png
+% kemudian kita menentukan koordinat titik D yaitu perpotongan garis h
+% dan ruas garis AB. titik D adalah titik tengah ruas garis AB
+>plotLine(h):
+ %image% KELOMPOK 5_MAT E 2022_GEOMETRI-045.png
+>D=lineIntersection(h,lineThrough(A,B)): 
+ %image% KELOMPOK 5_MAT E 2022_GEOMETRI-046.png
+>plotPoint(D,value=1): 
+ %image% KELOMPOK 5_MAT E 2022_GEOMETRI-047.png
+% Pembuktian menggunakan rumus matematika
+%% latex: (\frac{x1 + x2}{2} , \frac{y1 + y2}{2})
+% %image% KELOMPOK 5_MAT E 2022_GEOMETRI-048.png
+% // latex: (\frac{x1 + x2}{2} , \frac{y1 + y2}{2})
+%% latex: =(\frac{2 + 6}{2} , \frac{4 + 4}{2})
+% %image% KELOMPOK 5_MAT E 2022_GEOMETRI-049.png
+% // latex: =(\frac{2 + 6}{2} , \frac{4 + 4}{2})
+%% latex: =(\frac{8}{2} , \frac{8}{2})
+% %image% KELOMPOK 5_MAT E 2022_GEOMETRI-050.png
+% // latex: =(\frac{8}{2} , \frac{8}{2})
+%% latex: =(4 , 4)
+% %image% KELOMPOK 5_MAT E 2022_GEOMETRI-051.png
+% // latex: =(4 , 4)
+%% Jadi, terbukti benar bahwa titik tengah ruas garis AB adalah(4,4)
+% 
+% ** Latihan
+%% 1. Diberikan ruas garis l yang melalui dua titik F dan titik G. Dengan
+% koordinat titik F dan titik G berturut-turut (2,0) dan (2,6). tentukan
+% koordinat titik tengah ruas garis l
+> 
+>setPlotRange(8):
+ %image% KELOMPOK 5_MAT E 2022_GEOMETRI-052.png
+>G=[2,0]; plotPoint(G,"G"):
+ %image% KELOMPOK 5_MAT E 2022_GEOMETRI-053.png
+>F=[2,6]; plotPoint(F,"F"):
+ %image% KELOMPOK 5_MAT E 2022_GEOMETRI-054.png
+>plotSegment(G,F,"l"):
+ %image% KELOMPOK 5_MAT E 2022_GEOMETRI-055.png
+>h= middlePerpendicular(G,F):
+ %image% KELOMPOK 5_MAT E 2022_GEOMETRI-056.png
+>plotLine(h):
+ %image% KELOMPOK 5_MAT E 2022_GEOMETRI-057.png
+>R=lineIntersection(h,lineThrough(G,F)):
+ %image% KELOMPOK 5_MAT E 2022_GEOMETRI-058.png
+>plotPoint(R,value=1):
+ %image% KELOMPOK 5_MAT E 2022_GEOMETRI-059.png
+% Pembuktian menggunakan rumus matematika
+%% latex: (\frac{x1 + x2}{2} , \frac{y1 + y2}{2})
+% %image% KELOMPOK 5_MAT E 2022_GEOMETRI-060.png
+% // latex: (\frac{x1 + x2}{2} , \frac{y1 + y2}{2})
+%% latex: =(\frac{2 + 2}{2} , \frac{0 + 6}{2})
+% %image% KELOMPOK 5_MAT E 2022_GEOMETRI-061.png
+% // latex: =(\frac{2 + 2}{2} , \frac{0 + 6}{2})
+%% latex: =(\frac{4}{2} , \frac{6}{2})
+% %image% KELOMPOK 5_MAT E 2022_GEOMETRI-062.png
+% // latex: =(\frac{4}{2} , \frac{6}{2})
+%% latex: =(2,3)
+% %image% KELOMPOK 5_MAT E 2022_GEOMETRI-063.png
+% // latex: =(2,3)
+%% Jadi, terbukti benar bahwa titik tengah ruas garis FG adalah(2,3)
+>
+% 2. Diberikan ruas garis k yang melalui dua titik S dan titik R. Dengan
+% koordinat titik S dan titik R berturut-turut (5,0) dan (3,6). Tentukan
+% koordinat titik tengah ruas garis k
+>setPlotRange(10):
+ %image% KELOMPOK 5_MAT E 2022_GEOMETRI-064.png
+>S=[5,0]; plotPoint(S,"S"):
+ %image% KELOMPOK 5_MAT E 2022_GEOMETRI-065.png
+>R=[3,6]; plotPoint(R,"R"):
+ %image% KELOMPOK 5_MAT E 2022_GEOMETRI-066.png
+>plotSegment(S,R,"k"):
+ %image% KELOMPOK 5_MAT E 2022_GEOMETRI-067.png
+>h = middlePerpendicular(S,R);
+>plotLine(h):
+ %image% KELOMPOK 5_MAT E 2022_GEOMETRI-068.png
+>D=lineIntersection(h,lineThrough(S,R)):
+ %image% KELOMPOK 5_MAT E 2022_GEOMETRI-069.png
+>plotPoint(D,value=1):
+ %image% KELOMPOK 5_MAT E 2022_GEOMETRI-070.png
+% Pembuktian menggunakan rumus matematika
+%% latex: (\frac{x1 + x2}{2} , \frac{y1 + y2}{2})
+% %image% KELOMPOK 5_MAT E 2022_GEOMETRI-071.png
+% // latex: (\frac{x1 + x2}{2} , \frac{y1 + y2}{2})
+%% latex: =(\frac{5 + 3}{2} , \frac{0 + 6}{2})
+% %image% KELOMPOK 5_MAT E 2022_GEOMETRI-072.png
+% // latex: =(\frac{5 + 3}{2} , \frac{0 + 6}{2})
+%% latex: =(\frac{8}{2} , \frac{6}{2})
+% %image% KELOMPOK 5_MAT E 2022_GEOMETRI-073.png
+% // latex: =(\frac{8}{2} , \frac{6}{2})
+%% latex: =(4 , 3)
+% %image% KELOMPOK 5_MAT E 2022_GEOMETRI-074.png
+% // latex: =(4 , 3)
+%% Jadi, terbukti benar bahwa titik tengah ruas garis SR adalah(4,3)
+>
+% ** Menentukan titik potong dua garis
+% 
+% Titik potong dua garis adalah titik dimana dua garis lurus berpotongan
+% satu sama lain. Dalam konteks geometri atau matematika, dua garis yang
+% berpotongan akan memiliki satu titik potong, yang merupakan titik yang
+% terletak pada kedua garis tersebut. Titik potong ini memiliki
+% koordinat yang spesifik dalam sistem koordinat yang digunakan.
+% 
+% Dalam geometri Euclidean, jika dua garis sejajar(paralel), maka mereka
+% tidak akan memiliki titik potong. Namun, jika dua garis tidak sejajar,
+% maka mereka akan memiliki satu titik potong yang dapat dihitung atau
+% ditentukan.
+% 
+% Secara matematis, untuk menemukan titik potong dua garis, kita dapat
+% menggunakan sistem persamaan linier. Jika kita memiliki dua persamaan
+% linier yang mewakili dua garis, Kita dapat menyelesaikan sistem
+% persamaan ini untuk menemukan nilai koordinat titik potong. Biasanya,
+% kita akan menggunakan metode substitusi, eliminasi, atau grafik untuk
+% menemukan titik potongnya.
+% 
+% CONTOH :
+%% Diberikan titik A(0,2), B(2,0), C(0,0), dan D(2,2). c merupakan ruas
+% garis AB dan b merupakan Ruas garis CD. tentukan koordinat titik
+% potong dua ruas garis tersebut!
+% 
+% Jawab:
+% 
+% langkah pertama kita menentukan luas bidang kartesius terlebih dahulu
+>setPlotRange(-0.5,2.5,-0.5,2.5): // mendefinisikan bidang koordinat baru
+ %image% KELOMPOK 5_MAT E 2022_GEOMETRI-075.png
+>A=[0,2]; plotPoint(A,"A"):
+ %image% KELOMPOK 5_MAT E 2022_GEOMETRI-076.png
+>B=[2,0]; plotPoint(B,"B"):
+ %image% KELOMPOK 5_MAT E 2022_GEOMETRI-077.png
+>C=[0,0]; plotPoint(C,"C"):
+ %image% KELOMPOK 5_MAT E 2022_GEOMETRI-078.png
+>D=[2,2]; plotPoint(D,"D"):
+ %image% KELOMPOK 5_MAT E 2022_GEOMETRI-079.png
+>plotSegment(A,B,"c"): // c=AB
+ %image% KELOMPOK 5_MAT E 2022_GEOMETRI-080.png
+>plotSegment(C,D,"b"): // b=CD
+ %image% KELOMPOK 5_MAT E 2022_GEOMETRI-081.png
+% berikutnya kita akan menentukan koordinat titik potongnya
+>lineThrough(A,B): // garis yang melalui A dan B
+ %image% KELOMPOK 5_MAT E 2022_GEOMETRI-082.png
+>lineThrough(C,D): // garis yang melalui C dan D
+ %image% KELOMPOK 5_MAT E 2022_GEOMETRI-083.png
+>E=lineIntersection(lineThrough(A,B),lineThrough(C,D)); // E adalah titik potong c dan b
+>plotPoint(E,value=1): // koordinat E ditampilkan
+ %image% KELOMPOK 5_MAT E 2022_GEOMETRI-084.png
+% Pembuktian dengan rumus matematika:
+%% 1. Mencari persamaan garis AB
+%% latex: \frac {y-y_1}{y_2-y_1}= \frac {x-x_1}{x_2-x_1}
+% %image% KELOMPOK 5_MAT E 2022_GEOMETRI-085.png
+% // latex: \frac {y-y_1}{y_2-y_1}= \frac {x-x_1}{x_2-x_1}
+%% latex: \frac {y-2}{0-2}= \frac {x-0}{2-0}
+% %image% KELOMPOK 5_MAT E 2022_GEOMETRI-086.png
+% // latex: \frac {y-2}{0-2}= \frac {x-0}{2-0}
+%% latex: \frac {y-2}{-2}= \frac {x}{2}
+% %image% KELOMPOK 5_MAT E 2022_GEOMETRI-087.png
+% // latex: \frac {y-2}{-2}= \frac {x}{2}
+%% latex: 2y-4=-2x
+% %image% KELOMPOK 5_MAT E 2022_GEOMETRI-088.png
+% // latex: 2y-4=-2x
+%% latex: y=-x+2
+% %image% KELOMPOK 5_MAT E 2022_GEOMETRI-089.png
+% // latex: y=-x+2
+% 
+% 2. Mencari persamaan garis CD
+%% latex: \frac {y-y_1}{y_2-y_1}= \frac {x-x_1}{x_2-x_1}
+% %image% KELOMPOK 5_MAT E 2022_GEOMETRI-090.png
+% // latex: \frac {y-y_1}{y_2-y_1}= \frac {x-x_1}{x_2-x_1}
+%% latex: \frac {y-0}{2-0}= \frac {x-0}{2-0}
+% %image% KELOMPOK 5_MAT E 2022_GEOMETRI-091.png
+% // latex: \frac {y-0}{2-0}= \frac {x-0}{2-0}
+%% latex: \frac {y}{2}= \frac {x}{2}
+% %image% KELOMPOK 5_MAT E 2022_GEOMETRI-092.png
+% // latex: \frac {y}{2}= \frac {x}{2}
+%% latex: 2y=2x
+% %image% KELOMPOK 5_MAT E 2022_GEOMETRI-093.png
+% // latex: 2y=2x
+%% latex: y=x
+% %image% KELOMPOK 5_MAT E 2022_GEOMETRI-094.png
+% // latex: y=x
+% 
+% 3. Subsitusi y pada CD dengan -x+2 pada AB
+%% latex: y=-x+2
+% %image% KELOMPOK 5_MAT E 2022_GEOMETRI-095.png
+% // latex: y=-x+2
+%% latex: x=-x+2
+% %image% KELOMPOK 5_MAT E 2022_GEOMETRI-096.png
+% // latex: x=-x+2
+%% latex: 2x=2
+% %image% KELOMPOK 5_MAT E 2022_GEOMETRI-097.png
+% // latex: 2x=2
+%% latex: x=1
+% %image% KELOMPOK 5_MAT E 2022_GEOMETRI-098.png
+% // latex: x=1
+% 
+% 4. Subsitusi x=1 ke persamaan CD
+%% latex: y=x
+% %image% KELOMPOK 5_MAT E 2022_GEOMETRI-099.png
+% // latex: y=x
+%% latex: y=1
+% %image% KELOMPOK 5_MAT E 2022_GEOMETRI-100.png
+% // latex: y=1
+% 
+% Jadi, titik koordinatnya (1,1)
+%% Terbukti
+>
+% ** Latihan
+% 
+% 1. Diberikan dua garis yang melewati titik koordinat sebagai berikut:
+%% garis AB : titik A(2,3)dan titik B(0,1)
+%% garis CD : titik C(0,3) dan titik D(3,0)
+%% tentukan koordinat titik potong kedua garis tersebut!
+>
+>setPlotRange(5): 
+ %image% KELOMPOK 5_MAT E 2022_GEOMETRI-101.png
+>A=[2,3]; plotPoint(A,"A"):
+ %image% KELOMPOK 5_MAT E 2022_GEOMETRI-102.png
+>B=[0,1]; plotPoint(B,"B"):
+ %image% KELOMPOK 5_MAT E 2022_GEOMETRI-103.png
+>C=[0,3]; plotPoint(C,"C"):
+ %image% KELOMPOK 5_MAT E 2022_GEOMETRI-104.png
+>D=[3,0]; plotPoint(D,"D"):
+ %image% KELOMPOK 5_MAT E 2022_GEOMETRI-105.png
+>plotSegment(A,B,"c"): // c=AB
+ %image% KELOMPOK 5_MAT E 2022_GEOMETRI-106.png
+>plotSegment(C,D,"b"): // b=CD
+ %image% KELOMPOK 5_MAT E 2022_GEOMETRI-107.png
+>lineThrough(A,B):
+ %image% KELOMPOK 5_MAT E 2022_GEOMETRI-108.png
+>lineThrough(C,D):
+ %image% KELOMPOK 5_MAT E 2022_GEOMETRI-109.png
+>E=lineIntersection(lineThrough(A,B),lineThrough(C,D));
+>plotPoint(E,value=1):
+ %image% KELOMPOK 5_MAT E 2022_GEOMETRI-110.png
+>
+% ** Menentukan titik potong garis dan lingkaran
+% 
+% Titik potong antara garis dan lingkaran adalah titik di mana sebuah
+% garis lurus memotong lingkaran. Untuk memahami konsep ini secara
+% lengkap, perlu dipahami beberapa hal terkait dengan garis dan
+% lingkaran.
+% 
+% Garis: Garis adalah himpunan tak terbatas titik yang terletak
+% sepanjang jalur yang sama, dan garis ini dapat dinyatakan dalam
+% berbagai bentuk persamaan matematis, seperti persamaan linier. Sebuah
+% garis memiliki kemiringan (gradien) dan titik potong sumbu y
+% (intersep) yang memungkinkan kita untuk menggambarkannya atau
+% menganalisanya dalam sistem koordinat.
+% 
+% Lingkaran: Lingkaran adalah himpunan semua titik yang berjarak sama
+% dari satu titik tertentu yang disebut sebagai pusat lingkaran. Jarak
+% ini disebut sebagai jari-jari lingkaran. Persamaan matematis dari
+% lingkaran adalah
+% 
+% latex: (x - a)^2 + (y - b)^2 = r^2
+% %image% KELOMPOK 5_MAT E 2022_GEOMETRI-111.png
+% // latex: (x - a)^2 + (y - b)^2 = r^2
+% 
+% di mana (a, b) adalah koordinat pusat lingkaran dan r adalah jari-jari
+% lingkaran.
+% 
+% Ketika kita berbicara tentang titik potong antara garis dan lingkaran,
+% ada beberapa kemungkinan:
+% 
+% Tidak Ada Titik Potong: Garis tersebut mungkin tidak memotong
+% lingkaran sama sekali jika jarak antara garis dan pusat lingkaran
+% lebih besar dari jari-jari lingkaran.
+% 
+% Satu Titik Potong: Garis mungkin hanya memotong lingkaran di satu
+% titik jika garis tersebut menyentuh lingkaran secara tepat pada satu
+% titik, dengan jarak antara garis dan pusat lingkaran sama dengan
+% jari-jari lingkaran.
+% 
+% Dua Titik Potong: Garis bisa memotong lingkaran di dua titik berbeda
+% jika garis melintasi lingkaran.
+% 
+% 
+% Untuk menentukan titik potong antara garis dan lingkaran, kita perlu
+% menyelesaikan sistem persamaan antara persamaan garis (yang bisa
+% berupa persamaan linier) dan persamaan lingkaran. Ini bisa
+% menghasilkan titik potong yang merupakan koordinat di mana garis
+% memotong lingkaran. Dalam kasus lingkaran, ini sering digunakan dalam
+% masalah geometri dan trigonometri untuk menemukan titik potong dan
+% berbagai sifat lainnya dari bangun geometri.
+% 
+>
+>setPlotRange(5):
+ %image% KELOMPOK 5_MAT E 2022_GEOMETRI-112.png
+>A=[0,1]; plotPoint(A,"A"); B=[-4,1]; plotPoint(B,"B"):
+ %image% KELOMPOK 5_MAT E 2022_GEOMETRI-113.png
+>c=circleWithCenter(A,distance(A,B)); plotCircle(c):
+ %image% KELOMPOK 5_MAT E 2022_GEOMETRI-114.png
+>A
+[0,  1]
+>distance(A,B)
+4
+>C=[4,4]; plotPoint(C,"C"); D=[4,-3]; plotPoint(D,"D"):
+ %image% KELOMPOK 5_MAT E 2022_GEOMETRI-115.png
+>l=lineThrough(C,D); plotLine(l,"l"):
+ %image% KELOMPOK 5_MAT E 2022_GEOMETRI-116.png
+>q=lineCircleIntersections(l,c); plotPoint(q, value=1):
+ %image% KELOMPOK 5_MAT E 2022_GEOMETRI-117.png
+>C&=[4,4]
+
+                                [4, 4]
+
+>D&=[4,-3]
+
+                               [4, - 3]
+
+% Pembuktian dengan matematika:
+%% Diketahui:
+%% latex: r=4, A(0,1),
+% %image% KELOMPOK 5_MAT E 2022_GEOMETRI-118.png
+% // latex: r=4, A(0,1),
+%% latex: C(4,4),D(4,-3)
+% %image% KELOMPOK 5_MAT E 2022_GEOMETRI-119.png
+% // latex: C(4,4),D(4,-3)
+%% Penyelesaian:
+%% 1. Cari persamaan lingkarannya
+%% latex: (x-a)^2+(y-b)^2=r^2
+% %image% KELOMPOK 5_MAT E 2022_GEOMETRI-120.png
+% // latex: (x-a)^2+(y-b)^2=r^2
+%% latex: (x-0)^2+(y-1)^2=4^2
+% %image% KELOMPOK 5_MAT E 2022_GEOMETRI-121.png
+% // latex: (x-0)^2+(y-1)^2=4^2
+%% latex: x^2+y^2-2y+1=16
+% %image% KELOMPOK 5_MAT E 2022_GEOMETRI-122.png
+% // latex: x^2+y^2-2y+1=16
+%% latex: x^2+y^2-2y-15=0
+% %image% KELOMPOK 5_MAT E 2022_GEOMETRI-123.png
+% // latex: x^2+y^2-2y-15=0
+% 
+% 2. Cari persamaan garis
+%% latex: \frac {y-4}{(-3)-4}= \frac {x-4}{4-4}
+% %image% KELOMPOK 5_MAT E 2022_GEOMETRI-124.png
+% // latex: \frac {y-4}{(-3)-4}= \frac {x-4}{4-4}
+%% latex: \frac {y-4}{-7}= \frac {x-4}{0}
+% %image% KELOMPOK 5_MAT E 2022_GEOMETRI-125.png
+% // latex: \frac {y-4}{-7}= \frac {x-4}{0}
+%% latex: -7x+28
+% %image% KELOMPOK 5_MAT E 2022_GEOMETRI-126.png
+% // latex: -7x+28
+%% latex: x=4
+% %image% KELOMPOK 5_MAT E 2022_GEOMETRI-127.png
+% // latex: x=4
+% 
+% 3. Subsitusi x=4 ke persamaan lingkaran
+%% latex: (4)^2+y^2-2y-15=0
+% %image% KELOMPOK 5_MAT E 2022_GEOMETRI-128.png
+% // latex: (4)^2+y^2-2y-15=0
+%% latex: 16+y^2-2y-15=0
+% %image% KELOMPOK 5_MAT E 2022_GEOMETRI-129.png
+% // latex: 16+y^2-2y-15=0
+%% latex: y^2-2y+1=0
+% %image% KELOMPOK 5_MAT E 2022_GEOMETRI-130.png
+% // latex: y^2-2y+1=0
+%% latex: (y-1)(y-1)=0
+% %image% KELOMPOK 5_MAT E 2022_GEOMETRI-131.png
+% // latex: (y-1)(y-1)=0
+%% latex: y=1
+% %image% KELOMPOK 5_MAT E 2022_GEOMETRI-132.png
+% // latex: y=1
+% 
+% Jadi, titik koordinat perpotongan garis dengan lingkarannya (4,1)
+%% Terbukti
+>
+% ** Latihan
+%% 1. Diberikan lingkaran berjari jari 5 dengan titik pusat di J(1,0).
+% diberikan dua titik M dan N dengan koordinat berturut-turut (-1,2) dan
+% (3,-2). Apabila dibuat garis yang melalui titik M dan N serta memotong
+% lingkran,tentukan koordinat titik potong tersebut!
+>
+>J &:= [1,0]; plotPoint(J,"J"); c=circleWithCenter(J,5);
+>M &:= [-1,2]; N &:= [3,-2]; l=lineThrough(M,N);
+>setPlotRange(7); plotCircle(c); plotLine(l):
+ %image% KELOMPOK 5_MAT E 2022_GEOMETRI-133.png
+>{P1,P2,f}=lineCircleIntersections(l,c):
+ %image% KELOMPOK 5_MAT E 2022_GEOMETRI-134.png
+>P1; P2;
+>plotPoint(P1, value=1):
+ %image% KELOMPOK 5_MAT E 2022_GEOMETRI-135.png
+>plotPoint(P2, value=1):
+ %image% KELOMPOK 5_MAT E 2022_GEOMETRI-136.png
+>
+% ** Menentukan titik potong dua lingkaran
+% 
+% Titik potong dua lingkaran adalah titik atau titik-titik di mana dua
+% lingkaran berpotongan, yang berarti bahwa titik-titik tersebut
+% terletak pada kedua lingkaran sekaligus. Titik potong ini dapat
+% ditemukan jika dua lingkaran saling bersilangan, menyilangi, atau
+% bersinggungan satu sama lain.
+% 
+% Dalam kasus titik potong dua lingkaran, ada beberapa skenario yang
+% mungkin terjadi:
+% 
+% Dua Lingkaran Saling Bersilangan: Ini berarti bahwa dua lingkaran
+% sepenuhnya tumpang tindih satu sama lain, dan titik potongnya akan ada
+% di setiap titik tumpang tindih.
+% 
+% Dua Lingkaran Saling Menyilangi: Dalam situasi ini, dua lingkaran
+% saling melintasi satu sama lain, tetapi tidak sepenuhnya tumpang
+% tindih. Oleh karena itu, akan ada dua titik potong yang berbeda di
+% mana kedua lingkaran berpotongan.
+% 
+% Dua Lingkaran Bersinggungan: Jika dua lingkaran bersinggungan, maka
+% mereka hanya memiliki satu titik potong yang merupakan titik sentuh
+% antara kedua lingkaran. Jika lingkaran tersebut bersinggungan di
+% dalam, maka mereka akan memiliki satu titik potong di dalam satu
+% lingkaran, dan jika bersinggungan di luar, maka titik potongnya berada
+% di luar kedua lingkaran.
+% 
+% Untuk menentukan titik potong antara dua lingkaran, kita dapat
+% menggunakan prinsip geometri dan aljabar. Secara matematis, kita dapat
+% menyelesaikan sistem persamaan antara persamaan lingkaran pertama dan
+% lingkaran kedua. Persamaan umum lingkaran adalah
+% 
+% latex: (x - h)^2 + (y - k)^2 = r^2
+% %image% KELOMPOK 5_MAT E 2022_GEOMETRI-137.png
+% // latex: (x - h)^2 + (y - k)^2 = r^2
+% 
+% di mana (h, k) adalah pusat lingkaran dan r adalah jari-jari
+% lingkaran. Dengan menggabungkan persamaan lingkaran pertama dan kedua,
+% kita dapat menemukan titik potongnya.
+% 
+% Dalam beberapa kasus, bisa tidak ada titik potong jika kedua lingkaran
+% berada pada posisi yang tidak saling bersilangan, menyilangi, atau
+% bersinggungan. Pemahaman tentang titik potong dua lingkaran penting
+% dalam berbagai aplikasi matematika dan ilmu pengetahuan, terutama
+% dalam geometri dan rekayasa.
+>
+% CONTOH:
+% 
+% Diberikan 2 lingkaran berjari jari sepanjang ruas garis AB dengan
+% titik A(2,2) merupakan titik pusat lingkaran petama dan titik B
+% (-1,-2) merupakan titik pusat lingkaran kedua.kedua lingkaran tersebut
+% berpotongan pada dua titik p1 dan p2. tentukan koordinat p1 dan p2!
+% 
+% langkah pertama, kita membuat 2 lingkaran tersebut
+>
+>A=[2,2]; B=[-1,-2];
+>c1=circleWithCenter(A,distance(A,B)); //lingkaran 1 dengan titik pusat di A dan berjari-jari AB
+>c2=circleWithCenter(B,distance(A,B)); // lingkaran 2 dengan titik pusat di B dan berjari-jari AB
+% Berikutnya kita menggambar garis yang melalui perpotongan dua
+% lingkaran tersebut
+>{P1,P2,f}=circleCircleIntersections(c1,c2);
+>l=lineThrough(P1,P2);
+>setPlotRange(5); plotCircle(c1); plotCircle(c2);  plotLine(l):
+ %image% KELOMPOK 5_MAT E 2022_GEOMETRI-138.png
+>plotPoint(A); plotPoint(B); plotSegment(A,B); plotLine(l):
+ %image% KELOMPOK 5_MAT E 2022_GEOMETRI-139.png
+>plotPoint(P1,value=1); plotPoint(P2,value=1): // koordinat titik potong 2 lingkaran
+ %image% KELOMPOK 5_MAT E 2022_GEOMETRI-140.png
+>distance(A,B)
+5
+% Pembuktian dengan rumus matematika:
+%% 1. Cari persamaan lingkaran 1
+%% latex: (x-2)^2+(y-2)^2=5^2
+% %image% KELOMPOK 5_MAT E 2022_GEOMETRI-141.png
+% // latex: (x-2)^2+(y-2)^2=5^2
+%% latex: x^2-4x+4+y^2-4y+4=25
+% %image% KELOMPOK 5_MAT E 2022_GEOMETRI-142.png
+% // latex: x^2-4x+4+y^2-4y+4=25
+%% latex: x^2+y^2-4x-4y-17=0
+% %image% KELOMPOK 5_MAT E 2022_GEOMETRI-143.png
+% // latex: x^2+y^2-4x-4y-17=0
+% 
+% 2. Cari persamaan lingkaran 2
+%% (-1,-2)
+%% latex: (x-(-1))^2+(y-(-2))^2=5^2
+% %image% KELOMPOK 5_MAT E 2022_GEOMETRI-144.png
+% // latex: (x-(-1))^2+(y-(-2))^2=5^2
+%% latex: (x+1)^2+(y+2)^2=5^2
+% %image% KELOMPOK 5_MAT E 2022_GEOMETRI-145.png
+% // latex: (x+1)^2+(y+2)^2=5^2
+%% latex: x^2+2x+1+y^2+4y+4=25
+% %image% KELOMPOK 5_MAT E 2022_GEOMETRI-146.png
+% // latex: x^2+2x+1+y^2+4y+4=25
+%% latex: x^2+y^2+2x+4y-20=0
+% %image% KELOMPOK 5_MAT E 2022_GEOMETRI-147.png
+% // latex: x^2+y^2+2x+4y-20=0
+% 
+% 3. Mengurangkan persamaan lingkaran 1 dengan lingkaran 2
+%% latex: (x^2+y^2-4x-4y-17=0) - (x^2+y^2+2x+4y-20=0)
+% %image% KELOMPOK 5_MAT E 2022_GEOMETRI-148.png
+% // latex: (x^2+y^2-4x-4y-17=0) - (x^2+y^2+2x+4y-20=0)
+%% latex: -6x-8y+3=0
+% %image% KELOMPOK 5_MAT E 2022_GEOMETRI-149.png
+% // latex: -6x-8y+3=0
+%% latex: x=-\frac{8}{6}y+ \frac{1}{2}
+% %image% KELOMPOK 5_MAT E 2022_GEOMETRI-150.png
+% // latex: x=-\frac{8}{6}y+ \frac{1}{2}
+% 
+% 4. Subsitusi x ke persamaan lingkaran 2
+%% latex: x^2+y^2-2x+4y-20=0
+% %image% KELOMPOK 5_MAT E 2022_GEOMETRI-151.png
+% // latex: x^2+y^2-2x+4y-20=0
+%% latex: (-\frac{8}{6}y+ \frac{1}{2})^2+y^2-2(-\frac{8}{6}y+ \frac{1}{2})+4y-20=0
+% %image% KELOMPOK 5_MAT E 2022_GEOMETRI-152.png
+% // latex: (-\frac{8}{6}y+ \frac{1}{2})^2+y^2-2(-\frac{8}{6}y+ \frac{1}{2})+4y-20=0
+%% latex: \frac{64}{36}y^2-\frac{16}{12}y+ \frac{1}{4}+y^2+\frac{8}{3}y-1+4y-20=0
+% %image% KELOMPOK 5_MAT E 2022_GEOMETRI-153.png
+% // latex: \frac{64}{36}y^2-\frac{16}{12}y+ \frac{1}{4}+y^2+\frac{8}{3}y-1+4y-20=0
+%% latex: 64y^2 - 48y + 9 + 36y^2 + 96y - 36 + 144y-20 =0
+% %image% KELOMPOK 5_MAT E 2022_GEOMETRI-154.png
+% // latex: 64y^2 - 48y + 9 + 36y^2 + 96y - 36 + 144y-20 =0
+%% latex: 100y^2 + 192y -47 =0
+% %image% KELOMPOK 5_MAT E 2022_GEOMETRI-155.png
+% // latex: 100y^2 + 192y -47 =0
+%% dengan menggunakan rumus ABC:
+%% latex: \frac{b_-^+ \sqrt{b^2 - 4ac}}{2a}
+% %image% KELOMPOK 5_MAT E 2022_GEOMETRI-156.png
+% // latex: \frac{b_-^+ \sqrt{b^2 - 4ac}}{2a}
+%% latex: \frac{192_-^+ \sqrt{192^2 - 4(100)(-47)}}{2(100)}
+% %image% KELOMPOK 5_MAT E 2022_GEOMETRI-157.png
+% // latex: \frac{192_-^+ \sqrt{192^2 - 4(100)(-47)}}{2(100)}
+%% latex: \frac{192_-^+ \sqrt{36864 + 18800}}{200}
+% %image% KELOMPOK 5_MAT E 2022_GEOMETRI-158.png
+% // latex: \frac{192_-^+ \sqrt{36864 + 18800}}{200}
+%% latex: \frac{192_-^+ \sqrt{55664}}{200}
+% %image% KELOMPOK 5_MAT E 2022_GEOMETRI-159.png
+% // latex: \frac{192_-^+ \sqrt{55664}}{200}
+%% latex: \frac{192_-^+ 235,9}{200}
+% %image% KELOMPOK 5_MAT E 2022_GEOMETRI-160.png
+% // latex: \frac{192_-^+ 235,9}{200}
+%% latex: \left[ y1=\frac{192 + 235,9}{200}, y2=\frac{192- 235,9}{200} \right]
+% %image% KELOMPOK 5_MAT E 2022_GEOMETRI-161.png
+% // latex: \left[ y1=\frac{192 + 235,9}{200}, y2=\frac{192- 235,9}{200} \right]
+%% latex: \left[ y1=\frac{427,9}{200}, y2=\frac{-43,9}{200} \right]
+% %image% KELOMPOK 5_MAT E 2022_GEOMETRI-162.png
+% // latex: \left[ y1=\frac{427,9}{200}, y2=\frac{-43,9}{200} \right]
+>
+% ** Latihan
+%% 1. Diberikan 2 lingkaran berjari jari sepanjang ruas garis AB dengan
+% titik A(2,3) dan titik B (-2,-2).kedua lingkaran tersebut berpotongan
+% pada dua titik p1 dan p2. tentukan koordinat p1 dan p2!
+>
+>A=[2,3]; B=[-2,-2];
+>c1=circleWithCenter(A,distance(A,B)); //lingkaran 1 dengan titik pusat di A dan berjari-jari AB
+>c2=circleWithCenter(B,distance(A,B)); // lingkaran 2 dengan titik pusat di B dan berjari-jari AB
+>{P1,P2,f}=circleCircleIntersections(c1,c2);
+>l=lineThrough(P1,P2);
+>setPlotRange(10); plotCircle(c1); plotCircle(c2);  plotLine(l):
+ %image% KELOMPOK 5_MAT E 2022_GEOMETRI-163.png
+>plotPoint(A); plotPoint(B); plotSegment(A,B); plotLine(l):
+ %image% KELOMPOK 5_MAT E 2022_GEOMETRI-164.png
+>plotPoint(P1,value=1); plotPoint(P2,value=1): // koordinat titik potong 2 lingkaran
+ %image% KELOMPOK 5_MAT E 2022_GEOMETRI-165.png
+>
+% * MATERI 5 
+% a. Menentukan persamaan garis yang melalui dua titik 
+%% b. Menentukan persamaan Garis Sumbu suatu ruas garis
+%% c. Menentukan persamaan Garis Bagi sudut
+%% d. Menentukan persamaan Garis Berat
+%% e. Menentukan persamaan Garis Tinggi
+% 
+% ** Menentukan Persamaan Garis yang Melalui Dua Titik
+%% Dengan konsep matematika, persamaan garis yang diketahui dua titiknya
+% misalnya titik
+%% latex: P_1(x_1,y_1) dan P_2(x_2,y_2).
+% %image% KELOMPOK 5_MAT E 2022_GEOMETRI-166.png
+% // latex: P_1(x_1,y_1) dan P_2(x_2,y_2).
+%% Akan dicari persamaa garis l yang melalui dua titik tersebut. Ambil
+% sebarang titik P(x,y) pada l. Maka persamaan garis l dapat ditentukan
+% dari
+%% latex: m PP_1 = m P_1P_2
+% %image% KELOMPOK 5_MAT E 2022_GEOMETRI-167.png
+% // latex: m PP_1 = m P_1P_2
+%% yaitu:
+%% latex: \frac{(y-y_1)}{(x-x_1)} = \frac{(y_2-y_1)}{(x_2-x_1)}
+% %image% KELOMPOK 5_MAT E 2022_GEOMETRI-168.png
+% // latex: \frac{(y-y_1)}{(x-x_1)} = \frac{(y_2-y_1)}{(x_2-x_1)}
+%% atau
+%% latex: \frac{(y-y_1)}{(y_2-y_1)} = \frac{(x-x_1)}{(x_2-x_1)}
+% %image% KELOMPOK 5_MAT E 2022_GEOMETRI-169.png
+% // latex: \frac{(y-y_1)}{(y_2-y_1)} = \frac{(x-x_1)}{(x_2-x_1)}
+% 
+% Dengan EMT persamaan garis yang melalui dua titik dapat dicari dengan
+% cara mendefinisikan kedua titik koordinat kemudian menggunakan fungsi
+% lineThrough(titik1, titik2), lalu menggunakan fungsi perintah
+% getLineEquation(lineThrough(P1,P2),x,y).
+% 
+% Contoh soal :
+%% 1. tentukan persamaan garis yang melalui titik A(0,3) dan B(1,-1)
+>load geometry
+Numerical and symbolic geometry.
+>setPlotRange(-2,4,-2,4); // mendefinisikan bidang koordinat baru
+>A=[0,3]; plotPoint(A,"A");
+>B=[1,-1]; plotPoint(B,"B");
+>AB=lineThrough(A,B); plotLine(AB):
+ %image% KELOMPOK 5_MAT E 2022_GEOMETRI-170.png
+% Mencari persamaan garis AB
+>A&=[0,3]; B&=[1,-1];
+>$getLineEquation(lineThrough(A,B),x,y)
+ %image% KELOMPOK 5_MAT E 2022_GEOMETRI-171.png
+% // latex: y+4\,x=3
+>$solve(%,y)|expand
+ %image% KELOMPOK 5_MAT E 2022_GEOMETRI-172.png
+% // latex: \left[ y=3-4\,x \right] 
+>
+% 
+% Untuk membuktikan hasil tersebut kita dapat menghitung dengan rumus:
+%% latex: \frac{(y-y_1)}{(y_2-y_1)} = \frac{(x-x_1)}{(x_2-x_1)}
+% %image% KELOMPOK 5_MAT E 2022_GEOMETRI-173.png
+% // latex: \frac{(y-y_1)}{(y_2-y_1)} = \frac{(x-x_1)}{(x_2-x_1)}
+%% maka didapatkan
+%% latex: \frac{(y-3)}{(-1-3)} = \frac{(x-0)}{(1-0)}
+% %image% KELOMPOK 5_MAT E 2022_GEOMETRI-174.png
+% // latex: \frac{(y-3)}{(-1-3)} = \frac{(x-0)}{(1-0)}
+%% latex: \frac{(y-3)}{(-4)} = \frac{(x)}{(1)}
+% %image% KELOMPOK 5_MAT E 2022_GEOMETRI-175.png
+% // latex: \frac{(y-3)}{(-4)} = \frac{(x)}{(1)}
+%% latex: (y-3)(1) = (-4)(x)
+% %image% KELOMPOK 5_MAT E 2022_GEOMETRI-176.png
+% // latex: (y-3)(1) = (-4)(x)
+%% latex: y-3 = -4x
+% %image% KELOMPOK 5_MAT E 2022_GEOMETRI-177.png
+% // latex: y-3 = -4x
+%% latex: 4x+y=3
+% %image% KELOMPOK 5_MAT E 2022_GEOMETRI-178.png
+% // latex: 4x+y=3
+%% latex: y+4x=3
+% %image% KELOMPOK 5_MAT E 2022_GEOMETRI-179.png
+% // latex: y+4x=3
+% 
+% jadi terbukti bahwa persamaan garisnya
+%% latex: y+4x=3
+% %image% KELOMPOK 5_MAT E 2022_GEOMETRI-180.png
+% // latex: y+4x=3
+% 
+% ** Latihan A
+%% 1. Tentukan persamaan garis yang melalui P[-3,2] dan Q[4,1]!
+>load geometry
+Numerical and symbolic geometry.
+>setPlotRange(5):
+ %image% KELOMPOK 5_MAT E 2022_GEOMETRI-181.png
+>P=[-3,2]; Q=[4,1]; plotPoint(P,"P"); plotPoint(Q,"Q"):
+ %image% KELOMPOK 5_MAT E 2022_GEOMETRI-182.png
+>plotLine(lineThrough(P,Q),"pq"):
+ %image% KELOMPOK 5_MAT E 2022_GEOMETRI-183.png
+>P&=[-3,2]
+
+                               [- 3, 2]
+
+>Q&=[4,1]
+
+                                [4, 1]
+
+>$getLineEquation(lineThrough(P,Q),x,y)
+ %image% KELOMPOK 5_MAT E 2022_GEOMETRI-184.png
+% // latex: 7\,y+x=11
+>$solve(%,y) | expand
+ %image% KELOMPOK 5_MAT E 2022_GEOMETRI-185.png
+% // latex: \left[ y=\frac{11}{7}-\frac{x}{7} \right] 
+% 2. Tentukan persamaan garis yang melalui
+%% latex: A(5,1) dan B(-2,-7)
+% %image% KELOMPOK 5_MAT E 2022_GEOMETRI-186.png
+% // latex: A(5,1) dan B(-2,-7)
+>A&=[5,1]
+
+                                [5, 1]
+
+>B&=[-2,-7]
+
+                              [- 2, - 7]
+
+>$getLineEquation(lineThrough(A,B),x,y)
+ %image% KELOMPOK 5_MAT E 2022_GEOMETRI-187.png
+% // latex: 8\,x-7\,y=33
+>$solve(%,y) | expand
+ %image% KELOMPOK 5_MAT E 2022_GEOMETRI-188.png
+% // latex: \left[ y=\frac{8\,x}{7}-\frac{33}{7} \right] 
+% 3. Tentukan persamaan garis RS dan TU dengan
+%% latex: R(-5,6) S(6,8) T(2,0) U(8,9)
+% %image% KELOMPOK 5_MAT E 2022_GEOMETRI-189.png
+% // latex: R(-5,6) S(6,8) T(2,0) U(8,9)
+%% Apakah kedua garis tersebut sejajar?
+>R&=[-5,6]
+
+                               [- 5, 6]
+
+>S&=[6,8]
+
+                                [6, 8]
+
+>T&=[2,0]
+
+                                [2, 0]
+
+>U&=[8,9]
+
+                                [8, 9]
+
+>$getLineEquation(lineThrough(R,S),x,y)
+ %image% KELOMPOK 5_MAT E 2022_GEOMETRI-190.png
+% // latex: 11\,y-2\,x=76
+>$solve(%,y) | expand
+ %image% KELOMPOK 5_MAT E 2022_GEOMETRI-191.png
+% // latex: \left[ y=\frac{2\,x}{11}+\frac{76}{11} \right] 
+>$getLineEquation(lineThrough(S,T),x,y)
+ %image% KELOMPOK 5_MAT E 2022_GEOMETRI-192.png
+% // latex: 8\,x-4\,y=16
+>$solve(%,y) | expand
+ %image% KELOMPOK 5_MAT E 2022_GEOMETRI-193.png
+% // latex: \left[ y=2\,x-4 \right] 
+% karena
+%% latex: m(RS)= \frac{2x}{11}
+% %image% KELOMPOK 5_MAT E 2022_GEOMETRI-194.png
+% // latex: m(RS)= \frac{2x}{11}
+%% latex: m(TU)= 2x
+% %image% KELOMPOK 5_MAT E 2022_GEOMETRI-195.png
+% // latex: m(TU)= 2x
+%% maka, garis RS dan garis TU tidak sejajar.
+%% Jadi, persamaan garis RS:
+%% latex: y=\frac{2x}{11} + \frac{76}{11}
+% %image% KELOMPOK 5_MAT E 2022_GEOMETRI-196.png
+% // latex: y=\frac{2x}{11} + \frac{76}{11}
+%% persamaan garis TU:
+%% latex: y=2x-4
+% %image% KELOMPOK 5_MAT E 2022_GEOMETRI-197.png
+% // latex: y=2x-4
+%% dan garis RS dan garis TU tidak sejajar.
+>
+% ** Menentukan persamaan Garis sumbu suatu ruas garis
+% 
+% Garis sumbu dalam sebuah segitiga adalah garis lurus yang
+% menghubungkan satu titik pada segitiga dengan sisi dihadapannya dan
+% membagi sisi tersebut menjadi dua bagian sama panjang secara tegak
+% lurus.
+% 
+% Dengan menggunakan EMT kita dapat mencari persamaan garis sumbu suatu
+% garis dengan cara mendefinisikan titik koordnat, menghubungkan titik
+% sehingga membentuk segitiga, menggunakan middlePerpendicular untuk
+% mencari titik tengah lalu mendefinisikan titik tengah tersebut menjadi
+% garis sumbu kemudian mencari persamaan garis sumbu dengan perintah
+% $getLineEquation(garis sumbu,x,y).
+% 
+% Dengan rumus/konsep matematika, kita dapat memperoleh persamaan Garis
+% sumbu dengan cara mencari persamaan dan gradien garis yang berlawanan,
+% mencari koordinat titik potong, lalu mencari persamaan garis sumbu
+% dengan gradien dan titik koordinatnya.
+% 
+% Contoh terdapat
+%% latex: \triangle ABC, ~{dengan ~ A(2,5); ~B(-5,-4);~ dan~ C(4,-4)},
+% %image% KELOMPOK 5_MAT E 2022_GEOMETRI-198.png
+% // latex: \triangle ABC, ~{dengan ~ A(2,5); ~B(-5,-4);~ dan~ C(4,-4)},
+%% Tentukan persamaan garis sumbu dari ruas garis BC!
+>setPlotRange(5):
+ %image% KELOMPOK 5_MAT E 2022_GEOMETRI-199.png
+>A=[2,5]; B=[-5,4]; C=[4,-4]:
+ %image% KELOMPOK 5_MAT E 2022_GEOMETRI-200.png
+>plotPoint(A,"A"); plotPoint(B,"B"); plotPoint(C,"C"):
+ %image% KELOMPOK 5_MAT E 2022_GEOMETRI-201.png
+>plotSegment(A,B,"c"); plotSegment(B,C,"a"); plotSegment(A,C,"b"):
+ %image% KELOMPOK 5_MAT E 2022_GEOMETRI-202.png
+>s=middlePerpendicular(B,C); plotLine(s,"Garis Sumbu"):
+ %image% KELOMPOK 5_MAT E 2022_GEOMETRI-203.png
+>B&=[-5,4]
+
+                               [- 5, 4]
+
+>C&=[4,-4]
+
+                               [4, - 4]
+
+>s&=middlePerpendicular(B,C)
+
+                                      9
+                             [- 9, 8, -]
+                                      2
+
+>$getLineEquation(s,x,y)
+ %image% KELOMPOK 5_MAT E 2022_GEOMETRI-204.png
+% // latex: 8\,y-9\,x=\frac{9}{2}
+>$solve(%,y) | expand
+ %image% KELOMPOK 5_MAT E 2022_GEOMETRI-205.png
+% // latex: \left[ y=\frac{9\,x}{8}+\frac{9}{16} \right] 
+% Pembuktian dengan menggunakan rumus matematika:
+%% 1. Mencari persamaan garis BC
+%% latex: \frac {y-y_1}{y_2-y_1} = \frac {x-x_1}{x_2-x_1}
+% %image% KELOMPOK 5_MAT E 2022_GEOMETRI-206.png
+% // latex: \frac {y-y_1}{y_2-y_1} = \frac {x-x_1}{x_2-x_1}
+%% latex: \frac {y-4}{(-4)-4} = \frac {x-(-5)}{4-(-5)}
+% %image% KELOMPOK 5_MAT E 2022_GEOMETRI-207.png
+% // latex: \frac {y-4}{(-4)-4} = \frac {x-(-5)}{4-(-5)}
+%% latex: \frac {y-4}{-8} = \frac {x+5}{9}
+% %image% KELOMPOK 5_MAT E 2022_GEOMETRI-208.png
+% // latex: \frac {y-4}{-8} = \frac {x+5}{9}
+%% latex: 9y-36 = -8x-40
+% %image% KELOMPOK 5_MAT E 2022_GEOMETRI-209.png
+% // latex: 9y-36 = -8x-40
+%% latex: 9y=-8x-4
+% %image% KELOMPOK 5_MAT E 2022_GEOMETRI-210.png
+% // latex: 9y=-8x-4
+%% latex: y= \frac {-8x}{9}- \frac{4}{9}
+% %image% KELOMPOK 5_MAT E 2022_GEOMETRI-211.png
+% // latex: y= \frac {-8x}{9}- \frac{4}{9}
+%% maka gradiennya
+%% latex: m=\frac {-8}{9}
+% %image% KELOMPOK 5_MAT E 2022_GEOMETRI-212.png
+% // latex: m=\frac {-8}{9}
+%% karena tegak lurus dengan garis sumbu, maka gradien garis sumbu:
+%% latex: m=\frac {9}{8}
+% %image% KELOMPOK 5_MAT E 2022_GEOMETRI-213.png
+% // latex: m=\frac {9}{8}
+% 
+% 2. Mencari titik koordinat dari titik potong
+%% latex: \frac {x_1+x_2}{2}, \frac {y_1+y_2}{2}
+% %image% KELOMPOK 5_MAT E 2022_GEOMETRI-214.png
+% // latex: \frac {x_1+x_2}{2}, \frac {y_1+y_2}{2}
+%% latex: \frac {(-5)+4}{2}, \frac {4+(-4)}{2}
+% %image% KELOMPOK 5_MAT E 2022_GEOMETRI-215.png
+% // latex: \frac {(-5)+4}{2}, \frac {4+(-4)}{2}
+%% latex: \frac {-1}{2}, 0
+% %image% KELOMPOK 5_MAT E 2022_GEOMETRI-216.png
+% // latex: \frac {-1}{2}, 0
+%% Jadi, titik koordinatnya
+%% latex: (\frac {-1}{2}, 0)
+% %image% KELOMPOK 5_MAT E 2022_GEOMETRI-217.png
+% // latex: (\frac {-1}{2}, 0)
+% 
+% 3. Mencari persamaan garis sumbu
+%% dengan gradien:
+%% latex: m=\frac {9}{8}
+% %image% KELOMPOK 5_MAT E 2022_GEOMETRI-218.png
+% // latex: m=\frac {9}{8}
+%% dan melalui titik:
+%% latex: (\frac {-1}{2}, 0)
+% %image% KELOMPOK 5_MAT E 2022_GEOMETRI-219.png
+% // latex: (\frac {-1}{2}, 0)
+%% latex: (y-y_1)=m(x-x_1)
+% %image% KELOMPOK 5_MAT E 2022_GEOMETRI-220.png
+% // latex: (y-y_1)=m(x-x_1)
+%% latex: (y-0)= \frac {9}{8} (x- \frac{-1}{2})
+% %image% KELOMPOK 5_MAT E 2022_GEOMETRI-221.png
+% // latex: (y-0)= \frac {9}{8} (x- \frac{-1}{2})
+%% latex: y = \frac {9x}{8}- \frac {9}{16}
+% %image% KELOMPOK 5_MAT E 2022_GEOMETRI-222.png
+% // latex: y = \frac {9x}{8}- \frac {9}{16}
+%% Terbukti
+>
+% ** Latihan B
+%% 1. Tentukan persamaan garis sumbu
+%% latex: V(4,1) W(-3,5)
+% %image% KELOMPOK 5_MAT E 2022_GEOMETRI-223.png
+% // latex: V(4,1) W(-3,5)
+>setPlotRange(5):
+ %image% KELOMPOK 5_MAT E 2022_GEOMETRI-224.png
+>V=[4,1]; plotPoint(V):
+ %image% KELOMPOK 5_MAT E 2022_GEOMETRI-225.png
+>W=[-3,5]; plotPoint(W):
+ %image% KELOMPOK 5_MAT E 2022_GEOMETRI-226.png
+>plotSegment(V,W,"VW"):
+ %image% KELOMPOK 5_MAT E 2022_GEOMETRI-227.png
+>p=middlePerpendicular(V,W); plotLine(p,"garis sumbu"):
+ %image% KELOMPOK 5_MAT E 2022_GEOMETRI-228.png
+>V&=[4,1]
+
+                                [4, 1]
+
+>W&=[-3,5]
+
+                               [- 3, 5]
+
+>p&=middlePerpendicular(V,W)
+
+                                       17
+                            [7, - 4, - --]
+                                       2
+
+>$getLineEquation(p,x,y); $solve(%,y) | expand
+ %image% KELOMPOK 5_MAT E 2022_GEOMETRI-229.png
+% // latex: \left[ y=\frac{7\,x}{4}+\frac{17}{8} \right] 
+% 2. Tentukan garis sumbu dari
+%% latex: Q(2,-1) R(-1,2)
+% %image% KELOMPOK 5_MAT E 2022_GEOMETRI-230.png
+% // latex: Q(2,-1) R(-1,2)
+%% Apakah garis sumbu tersebut sejajar dengan
+%% latex: y=3x+\frac {19}{7}
+% %image% KELOMPOK 5_MAT E 2022_GEOMETRI-231.png
+% // latex: y=3x+\frac {19}{7}
+>
+>setPlotRange(3);
+>Q=[2,-1]; plotPoint(Q):
+ %image% KELOMPOK 5_MAT E 2022_GEOMETRI-232.png
+>R=[-1,2]; plotPoint(R):
+ %image% KELOMPOK 5_MAT E 2022_GEOMETRI-233.png
+>plotSegment(Q,R,"QR"):
+ %image% KELOMPOK 5_MAT E 2022_GEOMETRI-234.png
+>p=middlePerpendicular(Q,R); plotLine(p,"garis sumbu"):
+ %image% KELOMPOK 5_MAT E 2022_GEOMETRI-235.png
+>Q&=[2,1]
+
+                                [2, 1]
+
+>R&=[-1,2]
+
+                               [- 1, 2]
+
+>p&=middlePerpendicular(Q,R)
+
+                             [3, - 1, 0]
+
+>$getLineEquation(p,x,y); $solve(%,y) | expand
+ %image% KELOMPOK 5_MAT E 2022_GEOMETRI-236.png
+% // latex: \left[ y=3\,x \right] 
+% Jadi,persamaan garis sumbunya
+%% latex: y=3x
+% %image% KELOMPOK 5_MAT E 2022_GEOMETRI-237.png
+% // latex: y=3x
+%% dan sejajar dengan
+%% latex: y=3x+\frac{19}{7}
+% %image% KELOMPOK 5_MAT E 2022_GEOMETRI-238.png
+% // latex: y=3x+\frac{19}{7}
+% 
+% 3. Tentukan garis sumbu dari
+%% latex: A(2,5) B(3,-2)
+% %image% KELOMPOK 5_MAT E 2022_GEOMETRI-239.png
+% // latex: A(2,5) B(3,-2)
+%% dan tunjukkan hubungan garis sumbu tersebut dengan garis
+%% latex: y=-7x+23
+% %image% KELOMPOK 5_MAT E 2022_GEOMETRI-240.png
+% // latex: y=-7x+23
+>setPlotRange(3):
+ %image% KELOMPOK 5_MAT E 2022_GEOMETRI-241.png
+>A=[2,5]; plotPoint(A):
+ %image% KELOMPOK 5_MAT E 2022_GEOMETRI-242.png
+>B=[3,-2]; plotPoint(B):
+ %image% KELOMPOK 5_MAT E 2022_GEOMETRI-243.png
+>plotSegment(A,B,"AB"):
+ %image% KELOMPOK 5_MAT E 2022_GEOMETRI-244.png
+>p=middlePerpendicular(A,B); plotLine(p,"garis sumbu"):
+ %image% KELOMPOK 5_MAT E 2022_GEOMETRI-245.png
+>A&=[2,5]
+
+                                [2, 5]
+
+>B&=[3,-2]
+
+                               [3, - 2]
+
+>p&=middlePerpendicular(A,B)
+
+                             [- 1, 7, 8]
+
+>$getLineEquation(p,x,y); $solve(%,y) | expand
+ %image% KELOMPOK 5_MAT E 2022_GEOMETRI-246.png
+% // latex: \left[ y=\frac{x}{7}+\frac{8}{7} \right] 
+% Jadi, persamaan garis sumbunya
+%% latex: y=\frac {x}{7}+\frac{8}{7}
+% %image% KELOMPOK 5_MAT E 2022_GEOMETRI-247.png
+% // latex: y=\frac {x}{7}+\frac{8}{7}
+%% dan tegak lurus dengan
+%% latex: y=-7x+23
+% %image% KELOMPOK 5_MAT E 2022_GEOMETRI-248.png
+% // latex: y=-7x+23
+>
+% ** Menentukan persamaan garis bagi sudut
+% 
+% Garis bagi adalah garis yang membagi suatu sudut menjadi dua sudut
+% yang sama besar. Dalam bahasa inggris, garis bagi disebut angle
+% bisector.
+%% Untuk mencari persamaan garis bagi sudut dalam EMT kita dapat menempuh
+% cara-cara berikut:
+%% 1. Mendefinisikan titik-titik koordinat
+%% 2. Menggunakan perintah angleBisector(titik1,titik2,titik3)
+%% 3. Menggunakan getLineEquation
+%% Contoh:
+% 
+% latex: \triangle ABC, {A(-1,2); B(3,1); C(-2,-4)}
+% %image% KELOMPOK 5_MAT E 2022_GEOMETRI-249.png
+% // latex: \triangle ABC, {A(-1,2); B(3,1); C(-2,-4)}
+%% Tentukan garis bagi dari
+%% latex: \angle ABC
+% %image% KELOMPOK 5_MAT E 2022_GEOMETRI-250.png
+% // latex: \angle ABC
+>setPlotRange(5):
+ %image% KELOMPOK 5_MAT E 2022_GEOMETRI-251.png
+>A=[-1,5]; B=[3,1]; C=[-2,-4];
+>plotPoint(A,"A"); plotPoint(B,"B"); plotPoint(C,"C"):
+ %image% KELOMPOK 5_MAT E 2022_GEOMETRI-252.png
+>plotSegment(A,B,"c"); plotSegment(B,C,"a"); plotSegment(A,C,"b"):
+ %image% KELOMPOK 5_MAT E 2022_GEOMETRI-253.png
+>w=angleBisector(A,B,C); plotLine(w,"Garis Bagi"):
+ %image% KELOMPOK 5_MAT E 2022_GEOMETRI-254.png
+>A&=[-1,5]
+
+                               [- 1, 5]
+
+>B&=[3,1]
+
+                                [3, 1]
+
+>C&=[-2,-4]
+
+                              [- 2, - 4]
+
+>w&=angleBisector(A,B,C)
+
+                              [0, 8, 8]
+
+>$getLineEquation(w,x,y)
+ %image% KELOMPOK 5_MAT E 2022_GEOMETRI-255.png
+% // latex: 8\,y=8
+>$solve(%,y) | expand
+ %image% KELOMPOK 5_MAT E 2022_GEOMETRI-256.png
+% // latex: \left[ y=1 \right] 
+% 
+% 
+% ** Latihan C
+%% 1. Tentukan persamaan garis bagi sudut BCA jika
+%% latex: A(3,4) B(-2,4) C(1,3)
+% %image% KELOMPOK 5_MAT E 2022_GEOMETRI-257.png
+% // latex: A(3,4) B(-2,4) C(1,3)
+>
+>setPlotRange(5):
+ %image% KELOMPOK 5_MAT E 2022_GEOMETRI-258.png
+>A=[3,4]; plotPoint(A,"A"):
+ %image% KELOMPOK 5_MAT E 2022_GEOMETRI-259.png
+>B=[-2,4]; plotPoint(B,"B"):
+ %image% KELOMPOK 5_MAT E 2022_GEOMETRI-260.png
+>C=[1,3]; plotPoint(C,"C"): 
+ %image% KELOMPOK 5_MAT E 2022_GEOMETRI-261.png
+>plotSegment(A,B,"c"): // c=AB
+ %image% KELOMPOK 5_MAT E 2022_GEOMETRI-262.png
+>plotSegment(B,C,"a"): // a=BC
+ %image% KELOMPOK 5_MAT E 2022_GEOMETRI-263.png
+>plotSegment(A,C,"b"): // b=AC
+ %image% KELOMPOK 5_MAT E 2022_GEOMETRI-264.png
+>t=angleBisector(A,B,C):
+ %image% KELOMPOK 5_MAT E 2022_GEOMETRI-265.png
+>o=lineIntersection(t,lineThrough(A,B)):
+ %image% KELOMPOK 5_MAT E 2022_GEOMETRI-266.png
+>plotLine(t,"garis Bagi sudut BCA"):
+ %image% KELOMPOK 5_MAT E 2022_GEOMETRI-267.png
+>A&=[3,4]
+
+                                [3, 4]
+
+>B&=[-2,4] 
+
+                               [- 2, 4]
+
+>C&=[1,3]
+
+                                [1, 3]
+
+>t&=angleBisector(B,C,A)
+
+           2 sqrt(10)          sqrt(10)
+        [- ---------- - 3, 1 - --------, 
+            sqrt(5)            sqrt(5)
+     2 sqrt(10)       2 sqrt(10)             sqrt(10)   sqrt(10)
+  (- ---------- - 3) (---------- - 1)   (1 - --------) (-------- + 7)
+      sqrt(5)          sqrt(5)               sqrt(5)    sqrt(5)
+  ----------------------------------- + -----------------------------]
+                   2                                  2
+
+>$getLineEquation(t,x,y)
+ %image% KELOMPOK 5_MAT E 2022_GEOMETRI-268.png
+% // latex: \left(1-\frac{\sqrt{10}}{\sqrt{5}}\right)\,y+\left(-\frac{2\,\sqrt{  10}}{\sqrt{5}}-3\right)\,x=\frac{\left(-\frac{2\,\sqrt{10}}{\sqrt{5}  }-3\right)\,\left(\frac{2\,\sqrt{10}}{\sqrt{5}}-1\right)}{2}+\frac{  \left(1-\frac{\sqrt{10}}{\sqrt{5}}\right)\,\left(\frac{\sqrt{10}}{  \sqrt{5}}+7\right)}{2}
+>$solve(%,y) | expand
+ %image% KELOMPOK 5_MAT E 2022_GEOMETRI-269.png
+% // latex: \left[ y=-\frac{2\,\sqrt{10}\,x}{\sqrt{10}-\sqrt{5}}-\frac{3\,  \sqrt{5}\,x}{\sqrt{10}-\sqrt{5}}+\frac{5\,\sqrt{10}}{\sqrt{10}-  \sqrt{5}} \right] 
+% 2. Tentukan persamaan garis bagi sudut FHG dengan
+%% latex: F(1,5) G(-4,3) H(0,-5)
+% %image% KELOMPOK 5_MAT E 2022_GEOMETRI-270.png
+% // latex: F(1,5) G(-4,3) H(0,-5)
+>
+>setPlotRange(5):
+ %image% KELOMPOK 5_MAT E 2022_GEOMETRI-271.png
+>F=[1,5]; plotPoint(F,"F"):
+ %image% KELOMPOK 5_MAT E 2022_GEOMETRI-272.png
+>G=[-4,3]; plotPoint(G,"G"):
+ %image% KELOMPOK 5_MAT E 2022_GEOMETRI-273.png
+>H=[0,-5]; plotPoint(H,"H"): 
+ %image% KELOMPOK 5_MAT E 2022_GEOMETRI-274.png
+>plotSegment(F,H,"g"):
+ %image% KELOMPOK 5_MAT E 2022_GEOMETRI-275.png
+>plotSegment(H,G,"f"):
+ %image% KELOMPOK 5_MAT E 2022_GEOMETRI-276.png
+>plotSegment(F,G,"h"):
+ %image% KELOMPOK 5_MAT E 2022_GEOMETRI-277.png
+>t=angleBisector(F,G,H):
+ %image% KELOMPOK 5_MAT E 2022_GEOMETRI-278.png
+>o=lineIntersection(t,lineThrough(F,G)):
+ %image% KELOMPOK 5_MAT E 2022_GEOMETRI-279.png
+>plotLine(t,"garis Bagi sudut FGH"):
+ %image% KELOMPOK 5_MAT E 2022_GEOMETRI-280.png
+>F&=[1,5]
+
+                                [1, 5]
+
+>G&=[-4,3] 
+
+                               [- 4, 3]
+
+>H&=[0,5]
+
+                                [0, 5]
+
+>t&=angleBisector(F,H,G)
+
+                                       2         2
+                               (1 - -------) (------- + 1)
+            2            1          sqrt(5)   sqrt(5)
+        [------- + 1, -------, ---------------------------
+         sqrt(5)      sqrt(5)               2
+                                                                 1
+                                                         10 - -------
+                                                              sqrt(5)
+                                                       + ------------]
+                                                          2 sqrt(5)
+
+>$getLineEquation(t,x,y)
+ %image% KELOMPOK 5_MAT E 2022_GEOMETRI-281.png
+% // latex: \frac{y}{\sqrt{5}}+\left(\frac{2}{\sqrt{5}}+1\right)\,x=\frac{  \left(1-\frac{2}{\sqrt{5}}\right)\,\left(\frac{2}{\sqrt{5}}+1\right)  }{2}+\frac{10-\frac{1}{\sqrt{5}}}{2\,\sqrt{5}}
+>$solve(%,y) | expand
+ %image% KELOMPOK 5_MAT E 2022_GEOMETRI-282.png
+% // latex: \left[ y=-\sqrt{5}\,x-2\,x+5 \right] 
+>
+% ** Menentukan persamaan garis berat
+%% Garis berat pada sebuah segitiga adalah garis yang menghubungkan salah
+% satu sudut segitiga dengan titik tengah sisi yang berlawanan. Untuk
+% setiap sebuah segitiga, terdapat tiga garis berat yang menghubungkan
+% salah satu sudut segitiga menuju titik tengah sisi yang berlawanan.
+%% Cara mencari persamaan garis berat menggunakan EMT yaitu:
+%% 1. Mendefinisikan titik-titik koordinat
+%% 2. Menggunakan middlePerpendicullar(titik1,titik2) untuk mencari titik
+% tengah pada sisi berlawanan
+%% 3. Mendefinisikan titik tengah
+%% 4. Menghubungkan titik tengah dengan titik sudut
+%% 5. menggunakan getLineEquation
+% 
+% Tentukan garis berat dari
+%% latex: \triangle ABC, {A(-1,-3); B(0,4); C(3,0)}
+% %image% KELOMPOK 5_MAT E 2022_GEOMETRI-283.png
+% // latex: \triangle ABC, {A(-1,-3); B(0,4); C(3,0)}
+>setPlotRange(5)
+[-5,  5,  -5,  5]
+>A=[-1,-3]; B=[0,4]; C=[3,0];
+>plotPoint(A,"A"); plotPoint(B,"B"); plotPoint(C,"C"):
+ %image% KELOMPOK 5_MAT E 2022_GEOMETRI-284.png
+>plotSegment(A,B,"c"); plotSegment(B,C,"a"); plotSegment(A,C,"b"):
+ %image% KELOMPOK 5_MAT E 2022_GEOMETRI-285.png
+>v=middlePerpendicular(A,B);
+>o=lineIntersection(v, lineThrough(A,B)); plotPoint(o,value=1);
+>plotSegment(o,C,"Garis Berat"):
+ %image% KELOMPOK 5_MAT E 2022_GEOMETRI-286.png
+>A&=[-1,-3]
+
+                              [- 1, - 3]
+
+>B&=[0,4]
+
+                                [0, 4]
+
+>C&=[3,0]
+
+                                [3, 0]
+
+>v&=middlePerpendicular(A,B)
+
+                           [- 1, - 7, - 3]
+
+>o&=lineIntersection(v,lineThrough(A,B))
+
+                                  1  1
+                               [- -, -]
+                                  2  2
+
+>z&=lineThrough(o,C)
+
+                               1  7  3
+                              [-, -, -]
+                               2  2  2
+
+>$getLineEquation(z,x,y)
+ %image% KELOMPOK 5_MAT E 2022_GEOMETRI-287.png
+% // latex: \frac{7\,y}{2}+\frac{x}{2}=\frac{3}{2}
+>$solve(%,y) | expand
+ %image% KELOMPOK 5_MAT E 2022_GEOMETRI-288.png
+% // latex: \left[ y=\frac{3}{7}-\frac{x}{7} \right] 
+% ** Latihan D
+%% 1. Tentukan persamaan garis berat dari titik C dengan
+%% latex: A(5,2),B(-4,-3),C(0,3)
+% %image% KELOMPOK 5_MAT E 2022_GEOMETRI-289.png
+% // latex: A(5,2),B(-4,-3),C(0,3)
+>
+>setPlotRange(5);
+>A=[5,2]; plotPoint(A,"A"):
+ %image% KELOMPOK 5_MAT E 2022_GEOMETRI-290.png
+>B=[-4,-3]; plotPoint(B,"B"):
+ %image% KELOMPOK 5_MAT E 2022_GEOMETRI-291.png
+>C=[0,3]; plotPoint(C,"C"): 
+ %image% KELOMPOK 5_MAT E 2022_GEOMETRI-292.png
+>plotSegment(A,B,"c"): // c=AB
+ %image% KELOMPOK 5_MAT E 2022_GEOMETRI-293.png
+>plotSegment(B,C,"a"): // a=BC
+ %image% KELOMPOK 5_MAT E 2022_GEOMETRI-294.png
+>plotSegment(A,C,"b"): // b=AC
+ %image% KELOMPOK 5_MAT E 2022_GEOMETRI-295.png
+>t=middlePerpendicular(A,B):
+ %image% KELOMPOK 5_MAT E 2022_GEOMETRI-296.png
+>O=lineIntersection(t,lineThrough(A,B)); plotPoint(O,value=1):
+ %image% KELOMPOK 5_MAT E 2022_GEOMETRI-297.png
+>plotSegment(O,C,"garis berat"):
+ %image% KELOMPOK 5_MAT E 2022_GEOMETRI-298.png
+>A&=[5,2]
+
+                                [5, 2]
+
+>B&=[-4,-3]
+
+                              [- 4, - 3]
+
+>C&=[0,3]
+
+                                [0, 3]
+
+>t&=middlePerpendicular(A,B)
+
+                              [9, 5, 2]
+
+>O&=lineIntersection(t,lineThrough(A,B))
+
+                                1    1
+                               [-, - -]
+                                2    2
+
+>$getLineEquation(lineThrough(O,C),x,y) 
+ %image% KELOMPOK 5_MAT E 2022_GEOMETRI-299.png
+% // latex: -\frac{y}{2}-\frac{7\,x}{2}=-\frac{3}{2}
+>$solve(%,y)| expand
+ %image% KELOMPOK 5_MAT E 2022_GEOMETRI-300.png
+% // latex: \left[ y=3-7\,x \right] 
+>
+% 2. Tentukan persamaan garis berat yang melalui ruas garis AC dengan
+%% latex: A(9,1),B(-8,-5),C(0,5)
+% %image% KELOMPOK 5_MAT E 2022_GEOMETRI-301.png
+% // latex: A(9,1),B(-8,-5),C(0,5)
+>setPlotRange(10);
+>A=[9,1]; plotPoint(A,"A"):
+ %image% KELOMPOK 5_MAT E 2022_GEOMETRI-302.png
+>B=[-8,-5]; plotPoint(B,"B"):
+ %image% KELOMPOK 5_MAT E 2022_GEOMETRI-303.png
+>C=[0,5]; plotPoint(C,"C"): 
+ %image% KELOMPOK 5_MAT E 2022_GEOMETRI-304.png
+>plotSegment(A,B,"c"): // c=AB
+ %image% KELOMPOK 5_MAT E 2022_GEOMETRI-305.png
+>plotSegment(B,C,"a"): // a=BC
+ %image% KELOMPOK 5_MAT E 2022_GEOMETRI-306.png
+>plotSegment(A,C,"b"): // b=AC
+ %image% KELOMPOK 5_MAT E 2022_GEOMETRI-307.png
+>t=middlePerpendicular(A,C):
+ %image% KELOMPOK 5_MAT E 2022_GEOMETRI-308.png
+>O=lineIntersection(t,lineThrough(A,C)); plotPoint(O,value=1):
+ %image% KELOMPOK 5_MAT E 2022_GEOMETRI-309.png
+>plotSegment(O,B,"garis berat"):
+ %image% KELOMPOK 5_MAT E 2022_GEOMETRI-310.png
+>A&=[9,1]
+
+                                [9, 1]
+
+>B&=[-8,-5]
+
+                              [- 8, - 5]
+
+>C&=[0,5]
+
+                                [0, 5]
+
+>t&=middlePerpendicular(A,C)
+
+                                      57
+                             [9, - 4, --]
+                                      2
+
+>O&=lineIntersection(t,lineThrough(A,C))
+
+                                 9
+                                [-, 3]
+                                 2
+
+>$getLineEquation(lineThrough(O,B),x,y) 
+ %image% KELOMPOK 5_MAT E 2022_GEOMETRI-311.png
+% // latex: 8\,x-\frac{25\,y}{2}=-\frac{3}{2}
+>$solve(%,y)| expand
+ %image% KELOMPOK 5_MAT E 2022_GEOMETRI-312.png
+% // latex: \left[ y=\frac{16\,x}{25}+\frac{3}{25} \right] 
+>
+% 3. Tentukan persamaan garis berat dari semua titik sudut dengan
+%% latex: A(-18,10),B(-2,-3),C(17,7)
+% %image% KELOMPOK 5_MAT E 2022_GEOMETRI-313.png
+% // latex: A(-18,10),B(-2,-3),C(17,7)
+>setPlotRange(20);
+>A=[-18,10]; plotPoint(A,"A"):
+ %image% KELOMPOK 5_MAT E 2022_GEOMETRI-314.png
+>B=[-2,-3]; plotPoint(B,"B"):
+ %image% KELOMPOK 5_MAT E 2022_GEOMETRI-315.png
+>C=[17,7]; plotPoint(C,"C"): 
+ %image% KELOMPOK 5_MAT E 2022_GEOMETRI-316.png
+>plotSegment(A,B,"c"): // c=AB
+ %image% KELOMPOK 5_MAT E 2022_GEOMETRI-317.png
+>plotSegment(B,C,"a"): // a=BC
+ %image% KELOMPOK 5_MAT E 2022_GEOMETRI-318.png
+>plotSegment(A,C,"b"): // b=AC
+ %image% KELOMPOK 5_MAT E 2022_GEOMETRI-319.png
+>t1=middlePerpendicular(A,B): 
+ %image% KELOMPOK 5_MAT E 2022_GEOMETRI-320.png
+>O1=lineIntersection(t1,lineThrough(A,B)); plotPoint(O1,value=1):
+ %image% KELOMPOK 5_MAT E 2022_GEOMETRI-321.png
+>t2=middlePerpendicular(C,B):
+ %image% KELOMPOK 5_MAT E 2022_GEOMETRI-322.png
+>O2=lineIntersection(t2,lineThrough(C,B)); plotPoint(O2,value=1):
+ %image% KELOMPOK 5_MAT E 2022_GEOMETRI-323.png
+>t3=middlePerpendicular(A,C):
+ %image% KELOMPOK 5_MAT E 2022_GEOMETRI-324.png
+>O3=lineIntersection(t3,lineThrough(A,C)); plotPoint(O3,value=1):
+ %image% KELOMPOK 5_MAT E 2022_GEOMETRI-325.png
+>color(2):
+ %image% KELOMPOK 5_MAT E 2022_GEOMETRI-326.png
+>plotSegment(O1,C,"1"):
+ %image% KELOMPOK 5_MAT E 2022_GEOMETRI-327.png
+>plotSegment(O2,A,"2"):
+ %image% KELOMPOK 5_MAT E 2022_GEOMETRI-328.png
+>plotSegment(O3,B,"3"):
+ %image% KELOMPOK 5_MAT E 2022_GEOMETRI-329.png
+>color(1):
+ %image% KELOMPOK 5_MAT E 2022_GEOMETRI-330.png
+>A&=[-18,10]
+
+                              [- 18, 10]
+
+>B&=[-2,-3]
+
+                              [- 2, - 3]
+
+>C&=[5,-16]
+
+                              [5, - 16]
+
+>t1&=middlePerpendicular(A,B)
+
+                                      411
+                           [- 16, 13, ---]
+                                       2
+
+>O1&=lineIntersection(t1,lineThrough(A,B))
+
+                                     7
+                              [- 10, -]
+                                     2
+
+>t2&=middlePerpendicular(C,B)
+
+                            [7, - 13, 134]
+
+>O2&=lineIntersection(t2,lineThrough(C,B))
+
+                               3    19
+                              [-, - --]
+                               2    2
+
+>t3&=middlePerpendicular(A,C)
+
+                                      143
+                           [- 23, 26, ---]
+                                       2
+
+>O3&=lineIntersection(t3,lineThrough(A,C))
+
+                                13
+                             [- --, - 3]
+                                2
+
+>$getLineEquation(lineThrough(O1,C),x,y) 
+ %image% KELOMPOK 5_MAT E 2022_GEOMETRI-331.png
+% // latex: 15\,y+\frac{39\,x}{2}=-\frac{285}{2}
+>$solve(%,y)| expand
+ %image% KELOMPOK 5_MAT E 2022_GEOMETRI-332.png
+% // latex: \left[ y=-\frac{13\,x}{10}-\frac{19}{2} \right] 
+>
+>$getLineEquation(lineThrough(O2,A),x,y) 
+ %image% KELOMPOK 5_MAT E 2022_GEOMETRI-333.png
+% // latex: -\frac{39\,y}{2}-\frac{39\,x}{2}=156
+>$solve(%,y)| expand
+ %image% KELOMPOK 5_MAT E 2022_GEOMETRI-334.png
+% // latex: \left[ y=-x-8 \right] 
+>$getLineEquation(lineThrough(O3,B),x,y) 
+ %image% KELOMPOK 5_MAT E 2022_GEOMETRI-335.png
+% // latex: \frac{9\,y}{2}=-\frac{27}{2}
+>$solve(%,y)| expand
+ %image% KELOMPOK 5_MAT E 2022_GEOMETRI-336.png
+% // latex: \left[ y=-3 \right] 
+% ** Mencari persamaan garis tinggi
+% 
+% Garis tinggi pada segitiga adalah ruas garis yang ditarik dari sudut
+% segitiga ke sisi yang berlawanan
+%% secara tegak lurus. Dengan kata lain, garis tinggi merupakan jarak
+% vertikal dari salah satu sudut segitiga
+%% ke sisi yang berlawanan, dan garis ini membentuk sudut siku-siku
+% dengan sisi tersebut.
+% 
+% Dengan EMT kita dapat mencari persamaan garis tinggi yaitu dengan
+% cara:
+%% 1. Mendefinisikan titik koordinat
+%% 2. Mendefinisikan g dan menggunakan perintah lineThrough(B,A)
+%% 3. Mendefinisikan h dan menggunakan perintah perpendicular(C,g)
+%% 4. Menggunakan perintah getLineEquation(h,x,y)
+%% 5. Menggunakan perintah solve(%,y) | expand
+%% Contoh:
+%% Tentukan garis tinggi dari
+%% latex: \triangle ABC, A(3, 1); B(0, 0); C(2, -2)
+% %image% KELOMPOK 5_MAT E 2022_GEOMETRI-337.png
+% // latex: \triangle ABC, A(3, 1); B(0, 0); C(2, -2)
+>
+>setPlotRange(3):
+ %image% KELOMPOK 5_MAT E 2022_GEOMETRI-338.png
+>A=[3,1]; plotPoint(A,"A"):
+ %image% KELOMPOK 5_MAT E 2022_GEOMETRI-339.png
+>B=[0,0]; plotPoint(B,"B"):
+ %image% KELOMPOK 5_MAT E 2022_GEOMETRI-340.png
+>C=[2,-2]; plotPoint(C,"C"):
+ %image% KELOMPOK 5_MAT E 2022_GEOMETRI-341.png
+>plotSegment(A,B,"c"): // c=AB
+ %image% KELOMPOK 5_MAT E 2022_GEOMETRI-342.png
+>plotSegment(B,C,"a"): // a=BC
+ %image% KELOMPOK 5_MAT E 2022_GEOMETRI-343.png
+>plotSegment(A,C,"b"): // b=AC
+ %image% KELOMPOK 5_MAT E 2022_GEOMETRI-344.png
+>g=lineThrough(B,A):
+ %image% KELOMPOK 5_MAT E 2022_GEOMETRI-345.png
+>h=perpendicular(C,g):
+ %image% KELOMPOK 5_MAT E 2022_GEOMETRI-346.png
+>I = lineIntersection(g,h); plotPoint(I,value=1):
+ %image% KELOMPOK 5_MAT E 2022_GEOMETRI-347.png
+>plotSegment(C,I,"garis tinggi"):
+ %image% KELOMPOK 5_MAT E 2022_GEOMETRI-348.png
+>A&=[3,1]
+
+                                [3, 1]
+
+>B&=[0,0]
+
+                                [0, 0]
+
+>C&=[2,-2] 
+
+                               [2, - 2]
+
+>g&=lineThrough(B,A)
+
+                             [- 1, 3, 0]
+
+>h&=perpendicular(C,g)
+
+                              [3, 1, 4]
+
+>$getLineEquation(h,x,y)
+ %image% KELOMPOK 5_MAT E 2022_GEOMETRI-349.png
+% // latex: y+3\,x=4
+>$solve(%,y) | expand
+ %image% KELOMPOK 5_MAT E 2022_GEOMETRI-350.png
+% // latex: \left[ y=4-3\,x \right] 
+% Pembuktian menggunakan rumus matematika:
+%% Pembuktian dengan menggunakan rumus matematika:
+%% 1. Mencari persamaan garis AB
+%% latex: \frac {y-1}{0-1} = \frac {x-3}{0-3}
+% %image% KELOMPOK 5_MAT E 2022_GEOMETRI-351.png
+% // latex: \frac {y-1}{0-1} = \frac {x-3}{0-3}
+%% latex: \frac {y-1}{-1} = \frac {x-3}{-3}
+% %image% KELOMPOK 5_MAT E 2022_GEOMETRI-352.png
+% // latex: \frac {y-1}{-1} = \frac {x-3}{-3}
+%% latex: -3y+3 = -x-+3
+% %image% KELOMPOK 5_MAT E 2022_GEOMETRI-353.png
+% // latex: -3y+3 = -x-+3
+%% latex: 3y=x
+% %image% KELOMPOK 5_MAT E 2022_GEOMETRI-354.png
+% // latex: 3y=x
+%% latex: y= \frac {x}{3}
+% %image% KELOMPOK 5_MAT E 2022_GEOMETRI-355.png
+% // latex: y= \frac {x}{3}
+%% maka gradiennya
+%% latex: m=\frac {1}{3}
+% %image% KELOMPOK 5_MAT E 2022_GEOMETRI-356.png
+% // latex: m=\frac {1}{3}
+%% karena tegak lurus dengan garis tinggi, maka gradien garis tinggi:
+%% latex: m=-3
+% %image% KELOMPOK 5_MAT E 2022_GEOMETRI-357.png
+% // latex: m=-3
+% 
+% 2. Mencari persamaan garis sumbu
+%% dengan gradien:
+%% latex: m=-3
+% %image% KELOMPOK 5_MAT E 2022_GEOMETRI-358.png
+% // latex: m=-3
+%% dan melalui titik:
+%% latex: (2,-2)
+% %image% KELOMPOK 5_MAT E 2022_GEOMETRI-359.png
+% // latex: (2,-2)
+%% latex: (y-y_1)=m(x-x_1)
+% %image% KELOMPOK 5_MAT E 2022_GEOMETRI-360.png
+% // latex: (y-y_1)=m(x-x_1)
+%% latex: (y-(-2))= -3 (x-2)
+% %image% KELOMPOK 5_MAT E 2022_GEOMETRI-361.png
+% // latex: (y-(-2))= -3 (x-2)
+%% latex: y+2 = -3x +6
+% %image% KELOMPOK 5_MAT E 2022_GEOMETRI-362.png
+% // latex: y+2 = -3x +6
+%% latex: y=-3x+4
+% %image% KELOMPOK 5_MAT E 2022_GEOMETRI-363.png
+% // latex: y=-3x+4
+%% Terbukti
+>
+% ** Latihan E
+%% 1. Tentukan persamaan tinggi yang diukur dari titik A
+%% latex: A(-2,4), B(-1,1), C(5,-4)
+% %image% KELOMPOK 5_MAT E 2022_GEOMETRI-364.png
+% // latex: A(-2,4), B(-1,1), C(5,-4)
+>
+>setPlotRange(5);
+>A=[-2,4]; plotPoint(A,"A"):
+ %image% KELOMPOK 5_MAT E 2022_GEOMETRI-365.png
+>B=[-1,1]; plotPoint(B,"B"):
+ %image% KELOMPOK 5_MAT E 2022_GEOMETRI-366.png
+>C=[5,-4]; plotPoint(C,"C"):
+ %image% KELOMPOK 5_MAT E 2022_GEOMETRI-367.png
+>plotSegment(A,B,"c"): // c=AB
+ %image% KELOMPOK 5_MAT E 2022_GEOMETRI-368.png
+>plotSegment(B,C,"a"): // a=BC
+ %image% KELOMPOK 5_MAT E 2022_GEOMETRI-369.png
+>plotSegment(A,C,"b"): // b=AC
+ %image% KELOMPOK 5_MAT E 2022_GEOMETRI-370.png
+>g=lineThrough(B,C); plotLine(g,"g"):
+ %image% KELOMPOK 5_MAT E 2022_GEOMETRI-371.png
+>h=perpendicular(A,g):
+ %image% KELOMPOK 5_MAT E 2022_GEOMETRI-372.png
+>I = lineIntersection(g,h); plotPoint(I,value=1):
+ %image% KELOMPOK 5_MAT E 2022_GEOMETRI-373.png
+>plotSegment(A,I,"garis tinggi"):
+ %image% KELOMPOK 5_MAT E 2022_GEOMETRI-374.png
+>A&=[-2,4]
+
+                               [- 2, 4]
+
+>B&=[-1,1]
+
+                               [- 1, 1]
+
+>C&=[5,-4] 
+
+                               [5, - 4]
+
+>g&=lineThrough(B,C)
+
+                              [5, 6, 1]
+
+>h&=perpendicular(A,g)
+
+                            [6, - 5, - 32]
+
+>$getLineEquation(h,x,y)
+ %image% KELOMPOK 5_MAT E 2022_GEOMETRI-375.png
+% // latex: 6\,x-5\,y=-32
+>$solve(%,y) | expand
+ %image% KELOMPOK 5_MAT E 2022_GEOMETRI-376.png
+% // latex: \left[ y=\frac{6\,x}{5}+\frac{32}{5} \right] 
+>
+% 2. Tentukan tinggi segitiga ABC di titik B dengan
+%% latex: A(-4,3), B(0,0), C(2,2)
+% %image% KELOMPOK 5_MAT E 2022_GEOMETRI-377.png
+% // latex: A(-4,3), B(0,0), C(2,2)
+>setPlotRange(5);
+>A=[-4,3]; plotPoint(A,"A"):
+ %image% KELOMPOK 5_MAT E 2022_GEOMETRI-378.png
+>B=[0,0]; plotPoint(B,"B"):
+ %image% KELOMPOK 5_MAT E 2022_GEOMETRI-379.png
+>C=[2,2]; plotPoint(C,"C"):
+ %image% KELOMPOK 5_MAT E 2022_GEOMETRI-380.png
+>plotSegment(A,B,"c"): // c=AB
+ %image% KELOMPOK 5_MAT E 2022_GEOMETRI-381.png
+>plotSegment(B,C,"a"): // a=BC
+ %image% KELOMPOK 5_MAT E 2022_GEOMETRI-382.png
+>plotSegment(A,C,"b"): // b=AC
+ %image% KELOMPOK 5_MAT E 2022_GEOMETRI-383.png
+>g=lineThrough(A,C):
+ %image% KELOMPOK 5_MAT E 2022_GEOMETRI-384.png
+>h=perpendicular(B,g):
+ %image% KELOMPOK 5_MAT E 2022_GEOMETRI-385.png
+>I = lineIntersection(g,h); plotPoint(I,value=1):
+ %image% KELOMPOK 5_MAT E 2022_GEOMETRI-386.png
+>plotSegment(B,I,"garis tinggi"):
+ %image% KELOMPOK 5_MAT E 2022_GEOMETRI-387.png
+>A&=[-4,3]
+
+                               [- 4, 3]
+
+>B&=[0,0]
+
+                                [0, 0]
+
+>C&=[2,2] 
+
+                                [2, 2]
+
+>g&=lineThrough(A,C)
+
+                              [1, 6, 14]
+
+>h&=perpendicular(B,g)
+
+                             [6, - 1, 0]
+
+>$getLineEquation(h,x,y)
+ %image% KELOMPOK 5_MAT E 2022_GEOMETRI-388.png
+% // latex: 6\,x-y=0
+>$solve(%,y) | expand
+ %image% KELOMPOK 5_MAT E 2022_GEOMETRI-389.png
+% // latex: \left[ y=6\,x \right] 
+>
+% 3. Tentukan tinggi segitiga dengan
+%% latex: A(0,2), B(-8,-5), C(6,-7)
+% %image% KELOMPOK 5_MAT E 2022_GEOMETRI-390.png
+% // latex: A(0,2), B(-8,-5), C(6,-7)
+>setPlotRange(8);
+>A=[0,2]; plotPoint(A,"A"):
+ %image% KELOMPOK 5_MAT E 2022_GEOMETRI-391.png
+>B=[-8,-5]; plotPoint(B,"B"):
+ %image% KELOMPOK 5_MAT E 2022_GEOMETRI-392.png
+>C=[6,-7]; plotPoint(C,"C"):
+ %image% KELOMPOK 5_MAT E 2022_GEOMETRI-393.png
+>plotSegment(A,B,"c"): // c=AB
+ %image% KELOMPOK 5_MAT E 2022_GEOMETRI-394.png
+>plotSegment(B,C,"a"): // a=BC
+ %image% KELOMPOK 5_MAT E 2022_GEOMETRI-395.png
+>plotSegment(A,C,"b"): // b=AC
+ %image% KELOMPOK 5_MAT E 2022_GEOMETRI-396.png
+>g=lineThrough(A,C):
+ %image% KELOMPOK 5_MAT E 2022_GEOMETRI-397.png
+>h=perpendicular(B,g):
+ %image% KELOMPOK 5_MAT E 2022_GEOMETRI-398.png
+>I = lineIntersection(g,h); plotPoint(I,value=1):
+ %image% KELOMPOK 5_MAT E 2022_GEOMETRI-399.png
+>plotSegment(B,I,"garis tinggi"):
+ %image% KELOMPOK 5_MAT E 2022_GEOMETRI-400.png
+>A&=[0,2]
+
+                                [0, 2]
+
+>B&=[-8,-5]
+
+                              [- 8, - 5]
+
+>C&=[6,-7] 
+
+                               [6, - 7]
+
+>g&=lineThrough(A,C)
+
+                              [9, 6, 12]
+
+>h&=perpendicular(B,g)
+
+                            [6, - 9, - 3]
+
+>$getLineEquation(h,x,y)
+ %image% KELOMPOK 5_MAT E 2022_GEOMETRI-401.png
+% // latex: 6\,x-9\,y=-3
+>$solve(%,y) | expand
+ %image% KELOMPOK 5_MAT E 2022_GEOMETRI-402.png
+% // latex: \left[ y=\frac{2\,x}{3}+\frac{1}{3} \right] 
+>
+% 
+% * Materi 6
+% ** Menentukan titik pusat dan jari-jari suatu lingkaran
+% 
+% Lingkaran adalah himpunan titik-titik yang berjarak sama terhadap
+% suatu titik tertentu. Jarak tersebut dinamakan jari-jari lingkaran,
+% sedangkan titik tertentu tersebut dinamakan pusat lingkaran. Dengan
+% kata lain:
+%% a. Titik pusat lingkaran adalah titik yang berada di tengah lingkaran
+%% b. Jari-jari lingkaran adalah ruas garis yang menghubungkan titik
+% pusat lingkaran dan titik pada lingkaran
+>load geometry
+Numerical and symbolic geometry.
+>setPlotRange(5); 
+>A=[3,2]; plotPoint(A,"A"); 
+>B=[-1,0]; plotPoint(B,"B");
+>C=[0,3]; plotPoint(C,"C");
+>l=circleThrough(A,B,C); // membuat lingkaran yang melalui titik A,B,C
+>plotCircle(l):
+ %image% KELOMPOK 5_MAT E 2022_GEOMETRI-403.png
+>O=getCircleCenter(l); O // menentukan titik pusat lingkaran
+[1,  1]
+>r=getCircleRadius(l); r // menentukan jari-jari lingkaran
+2.2360679775
+>plotPoint(O, value=1); plotSegment(O,A,"r"):
+ %image% KELOMPOK 5_MAT E 2022_GEOMETRI-404.png
+% Untuk memuktikan hasil tersebut benar dapat kita buktikan sebagai
+% berikut:
+%% 1. Menentukan persamaan lingkaran yang melalui titik tersebut.
+%% Persamaan lingkaran adalah
+%% latex: x^2+y^2+Ax+By+C=0
+% %image% KELOMPOK 5_MAT E 2022_GEOMETRI-405.png
+% // latex: x^2+y^2+Ax+By+C=0
+%% Substitusi titik ke persamaan tersebut
+%% A(3,2):
+%% latex: 3^2+2^2+A(3)+B(2)+C=0
+% %image% KELOMPOK 5_MAT E 2022_GEOMETRI-406.png
+% // latex: 3^2+2^2+A(3)+B(2)+C=0
+%% latex: 9+4+3A+2B+C=0
+% %image% KELOMPOK 5_MAT E 2022_GEOMETRI-407.png
+% // latex: 9+4+3A+2B+C=0
+%% latex: 3A+2B+C=-13.....(1)
+% %image% KELOMPOK 5_MAT E 2022_GEOMETRI-408.png
+% // latex: 3A+2B+C=-13.....(1)
+%% B(-1,0):
+%% latex: (-1)^2+(0)^2+A(-1)+B(0)+C=0
+% %image% KELOMPOK 5_MAT E 2022_GEOMETRI-409.png
+% // latex: (-1)^2+(0)^2+A(-1)+B(0)+C=0
+%% latex: 1+0-A+C=0
+% %image% KELOMPOK 5_MAT E 2022_GEOMETRI-410.png
+% // latex: 1+0-A+C=0
+%% latex: -A+C=-1.....(2)
+% %image% KELOMPOK 5_MAT E 2022_GEOMETRI-411.png
+% // latex: -A+C=-1.....(2)
+%% C(0,3):
+%% latex: (0)^2+(3)^2+A(0)+B(3)+C=0
+% %image% KELOMPOK 5_MAT E 2022_GEOMETRI-412.png
+% // latex: (0)^2+(3)^2+A(0)+B(3)+C=0
+%% latex: 0+9+3B+C=0
+% %image% KELOMPOK 5_MAT E 2022_GEOMETRI-413.png
+% // latex: 0+9+3B+C=0
+%% latex: 3B+C=-9.....(3)
+% %image% KELOMPOK 5_MAT E 2022_GEOMETRI-414.png
+% // latex: 3B+C=-9.....(3)
+%% Eliminasi C dari persamaan (1) dan (2)
+%% latex: 3A+2B+C=-13
+% %image% KELOMPOK 5_MAT E 2022_GEOMETRI-415.png
+% // latex: 3A+2B+C=-13
+%% latex: -A+C=-1
+% %image% KELOMPOK 5_MAT E 2022_GEOMETRI-416.png
+% // latex: -A+C=-1
+%% diperoleh
+%% latex: 4A+2B=-12....(4)
+% %image% KELOMPOK 5_MAT E 2022_GEOMETRI-417.png
+% // latex: 4A+2B=-12....(4)
+%% Eliminasi C dari persamaan (1) dan (3)
+%% latex: 3A+2B+C=-13
+% %image% KELOMPOK 5_MAT E 2022_GEOMETRI-418.png
+% // latex: 3A+2B+C=-13
+%% latex: 3B+C=-9
+% %image% KELOMPOK 5_MAT E 2022_GEOMETRI-419.png
+% // latex: 3B+C=-9
+%% latex: 3A-B=-4.....(5)
+% %image% KELOMPOK 5_MAT E 2022_GEOMETRI-420.png
+% // latex: 3A-B=-4.....(5)
+%% Eliminasi B dari persamaan (4) dan (5)
+%% latex: 4A+2B=-12
+% %image% KELOMPOK 5_MAT E 2022_GEOMETRI-421.png
+% // latex: 4A+2B=-12
+%% latex: 3A-B=-4
+% %image% KELOMPOK 5_MAT E 2022_GEOMETRI-422.png
+% // latex: 3A-B=-4
+%% diperoleh
+%% latex: 10A=-20
+% %image% KELOMPOK 5_MAT E 2022_GEOMETRI-423.png
+% // latex: 10A=-20
+%% latex: A=-2
+% %image% KELOMPOK 5_MAT E 2022_GEOMETRI-424.png
+% // latex: A=-2
+%% Substiusi A=-2 ke persamaan (2)
+%% latex: -(-2)+C=-1
+% %image% KELOMPOK 5_MAT E 2022_GEOMETRI-425.png
+% // latex: -(-2)+C=-1
+%% latex: C=-3
+% %image% KELOMPOK 5_MAT E 2022_GEOMETRI-426.png
+% // latex: C=-3
+%% Substitusi C=-3 ke persamaan (3)
+%% latex: 3B+(-3)=-9
+% %image% KELOMPOK 5_MAT E 2022_GEOMETRI-427.png
+% // latex: 3B+(-3)=-9
+%% latex: B=-2
+% %image% KELOMPOK 5_MAT E 2022_GEOMETRI-428.png
+% // latex: B=-2
+%% Jadi diperoleh persamaan lingkaran yang melalui 3 titik tersebut yaitu
+%% latex: x^2+y^2-2x-2y-3=0
+% %image% KELOMPOK 5_MAT E 2022_GEOMETRI-429.png
+% // latex: x^2+y^2-2x-2y-3=0
+% 
+% 2. Menghitung titik pusat dengan rumus:
+%% latex: (\frac{-A}{2}, \frac{-B}{2})
+% %image% KELOMPOK 5_MAT E 2022_GEOMETRI-430.png
+% // latex: (\frac{-A}{2}, \frac{-B}{2})
+%% latex: (\frac{-(-2)}{2}, \frac{-(-2)}{2})
+% %image% KELOMPOK 5_MAT E 2022_GEOMETRI-431.png
+% // latex: (\frac{-(-2)}{2}, \frac{-(-2)}{2})
+%% latex: (1,1)
+% %image% KELOMPOK 5_MAT E 2022_GEOMETRI-432.png
+% // latex: (1,1)
+% 
+% 3. Menghitung jari-jari dengan rumus
+%% latex: r= \sqrt{\frac{1}{4}A^2+\frac{1}{4}B^2-C}
+% %image% KELOMPOK 5_MAT E 2022_GEOMETRI-433.png
+% // latex: r= \sqrt{\frac{1}{4}A^2+\frac{1}{4}B^2-C}
+%% latex: r= \sqrt{\frac{1}{4}(-2)^2+\frac{1}{4}(-2)^2-(-3)}
+% %image% KELOMPOK 5_MAT E 2022_GEOMETRI-434.png
+% // latex: r= \sqrt{\frac{1}{4}(-2)^2+\frac{1}{4}(-2)^2-(-3)}
+%% latex: r= \sqrt{\frac{4}{4}+\frac{4}{4}+3}
+% %image% KELOMPOK 5_MAT E 2022_GEOMETRI-435.png
+% // latex: r= \sqrt{\frac{4}{4}+\frac{4}{4}+3}
+%% latex: r= \sqrt{5}
+% %image% KELOMPOK 5_MAT E 2022_GEOMETRI-436.png
+% // latex: r= \sqrt{5}
+>sqrt(5)
+2.2360679775
+% Jadi terbukti bahwa fungsi tersebut benar
+>
+% ** Latihan
+%% Diketahui sebuah lingkaran melalui tiga titik dengan koordinat (3,
+% –1), (5, 3), dan (6, 2). Tentukan pusat lingkaran, dan jari-jari
+% lingkaran!
+>A=[3,-1]; B=[5,3]; C=[6,2]; //mendefinsikan titik
+>setPlotRange(6);
+>plotPoint(A,"A"); plotPoint(B,"B"); plotPoint(C,"C");
+>c=circleThrough(A,B,C);
+>plotCircle(c):
+ %image% KELOMPOK 5_MAT E 2022_GEOMETRI-437.png
+>O=getCircleCenter(c); O
+[4,  1]
+>r=getCircleRadius(c); r
+2.2360679775
+% Jadi, titik pusat lingkaran tersebut terletak pada (4,1) dan panjang
+% jari jari lingkaran tersebut adalah 2,236067 atau akar 5
+%% ---
+%% Tentukan titik pusat dan jari-jari lingkaran yang melalui tiga titik
+% berikut ini O(0, 0), P(-2, 4), dan Q(-1, 7)
+>O&=[0,0]; P&=[-2,4]; Q&=[-1,7];
+>c&=circleThrough(O,P,Q);
+>O&=getCircleCenter(c); $O
+ %image% KELOMPOK 5_MAT E 2022_GEOMETRI-438.png
+% // latex: \left[ 3 , 4 \right] 
+>r&=getCircleRadius(c); $r
+ %image% KELOMPOK 5_MAT E 2022_GEOMETRI-439.png
+% // latex: 5
+% Jadi, titik pusat lingkaran tersebut terletak pada titik (3,4) dan
+% panjang jari-jari lingkara tersebut adalah 5
+>
+% * subtopik 7 
+% ** Menentukan Persamaan lingkaran yang melalui tiga titik
+% 
+% Untuk menentukan persamaan lingkaran melalui 3 titik, dapat digunakan
+% persamaan lingkaran
+%% latex: (x-a)^2+(y-b)^2=r^2
+% %image% KELOMPOK 5_MAT E 2022_GEOMETRI-440.png
+% // latex: (x-a)^2+(y-b)^2=r^2
+%% dimana (a,b) adalah pusat lingkaran dan r jari-jari lingkaran
+%% atau bentuk umum persamaan lingkaran
+%% latex: x^2 + y^2 + Ax + By + C = 0.
+% %image% KELOMPOK 5_MAT E 2022_GEOMETRI-441.png
+% // latex: x^2 + y^2 + Ax + By + C = 0.
+> load geometry
+Numerical and symbolic geometry.
+>A &= [3,-1]; B &= [5,3]; C &= [6,2]; // menentukan tiga titik A, B, C 
+>c &= circleThrough(A,B,C);
+>$getCircleEquation(c,x,y), //mencari persamaan lingkaran
+ %image% KELOMPOK 5_MAT E 2022_GEOMETRI-442.png
+% // latex: \left(y-1\right)^2+\left(x-4\right)^2=5
+>$expand(%)
+ %image% KELOMPOK 5_MAT E 2022_GEOMETRI-443.png
+% // latex: y^2-2\,y+x^2-8\,x+17=5
+% Jadi, didaptkan persamaan lingkaran yang melalui 3 titik tersebut
+% adalah
+%% latex: x^2+y^2-8x-2y+12=0
+% %image% KELOMPOK 5_MAT E 2022_GEOMETRI-444.png
+% // latex: x^2+y^2-8x-2y+12=0
+>
+% ---
+%% Untuk membuktikan hasil tersebut persamaan lingkaran melalui 3 titik
+% dapat dicari dengan cara:
+%% 1. Memisalkan bentuk umum persamaan lingkaran, yaitu
+%% latex: x^2 + y^2 + Ax + By + C = 0
+% %image% KELOMPOK 5_MAT E 2022_GEOMETRI-445.png
+% // latex: x^2 + y^2 + Ax + By + C = 0
+%% 2. Substitusi ketiga titik koordinat pada pemisalan bentuk umum
+% persamaan lingkaran pada langkah pertama
+%% 3. Akan diperoleh tiga persamaan dengan tiga variabel
+%% 4. Tentukan nilai ketiga variabel (A, B daan C)
+%% 5. Substitusikan nilia variabel yang sudah diperoleh ke bentuk umum
+% persamaan lingkaran
+%% 6. Diperoleh bentuk umum persamaan lingkaran
+% 
+% Sehingga contoh tersebut dapat diselesaikan sebagai berikut:
+%% 1. Substitusi titik (3,-1) pada bentuk umum persamaan lingkaran.
+%% latex: x^2 + y^2 + Ax + By + C = 0
+% %image% KELOMPOK 5_MAT E 2022_GEOMETRI-446.png
+% // latex: x^2 + y^2 + Ax + By + C = 0
+%% latex: 3^2+(-1)^2+A(3)+B(-1)+ C=0
+% %image% KELOMPOK 5_MAT E 2022_GEOMETRI-447.png
+% // latex: 3^2+(-1)^2+A(3)+B(-1)+ C=0
+%% latex: 3A-B+C=-10.....(1)
+% %image% KELOMPOK 5_MAT E 2022_GEOMETRI-448.png
+% // latex: 3A-B+C=-10.....(1)
+% 
+% 2. Substitusi titik (5,3) pada bentuk umum persamaan lingkaran.
+%% latex: x^2 + y^2 + Ax + By + c = 0
+% %image% KELOMPOK 5_MAT E 2022_GEOMETRI-449.png
+% // latex: x^2 + y^2 + Ax + By + c = 0
+%% latex: 5^2+(3)^2+A(5)+B(3)+C=0
+% %image% KELOMPOK 5_MAT E 2022_GEOMETRI-450.png
+% // latex: 5^2+(3)^2+A(5)+B(3)+C=0
+%% latex: 5A+3B+C=-34.....(2)
+% %image% KELOMPOK 5_MAT E 2022_GEOMETRI-451.png
+% // latex: 5A+3B+C=-34.....(2)
+% 
+% 3. Substitusi titik (6,2) pada bentuk umum persamaan lingkaran.
+%% latex: x^2 + y^2 + Ax + By + C = 0
+% %image% KELOMPOK 5_MAT E 2022_GEOMETRI-452.png
+% // latex: x^2 + y^2 + Ax + By + C = 0
+%% latex: 6^2+(2)^2+A(6)+B(2)+ C=0
+% %image% KELOMPOK 5_MAT E 2022_GEOMETRI-453.png
+% // latex: 6^2+(2)^2+A(6)+B(2)+ C=0
+%% latex: 6A+2B+C=-40.....(3)
+% %image% KELOMPOK 5_MAT E 2022_GEOMETRI-454.png
+% // latex: 6A+2B+C=-40.....(3)
+% 
+% 4. Eliminasi C dari persamaan (1) dan (2)
+%% latex: 3A-B+C=-10
+% %image% KELOMPOK 5_MAT E 2022_GEOMETRI-455.png
+% // latex: 3A-B+C=-10
+%% latex: 5A+3B+C=-34
+% %image% KELOMPOK 5_MAT E 2022_GEOMETRI-456.png
+% // latex: 5A+3B+C=-34
+%% diperoleh
+%% latex: -2A-4B=24
+% %image% KELOMPOK 5_MAT E 2022_GEOMETRI-457.png
+% // latex: -2A-4B=24
+%% latex: A+2B=-12.....(4)
+% %image% KELOMPOK 5_MAT E 2022_GEOMETRI-458.png
+% // latex: A+2B=-12.....(4)
+% 
+% 5. Eliminasi C dari pesamaan (2) dan (3)
+%% latex: 5A+3B+C=-34
+% %image% KELOMPOK 5_MAT E 2022_GEOMETRI-459.png
+% // latex: 5A+3B+C=-34
+%% latex: 6A+2B+C=-40
+% %image% KELOMPOK 5_MAT E 2022_GEOMETRI-460.png
+% // latex: 6A+2B+C=-40
+%% diperoleh
+%% latex: -A+B=6
+% %image% KELOMPOK 5_MAT E 2022_GEOMETRI-461.png
+% // latex: -A+B=6
+%% latex: A-B=-6.....(5)
+% %image% KELOMPOK 5_MAT E 2022_GEOMETRI-462.png
+% // latex: A-B=-6.....(5)
+% 
+% 6. Cari nilai A dan B dengan mengeliminasi persamaan (4) dan (5)
+%% latex: A+2B=-12
+% %image% KELOMPOK 5_MAT E 2022_GEOMETRI-463.png
+% // latex: A+2B=-12
+%% latex: A-B=-6
+% %image% KELOMPOK 5_MAT E 2022_GEOMETRI-464.png
+% // latex: A-B=-6
+%% diperoleh
+%% latex: 3B=-6
+% %image% KELOMPOK 5_MAT E 2022_GEOMETRI-465.png
+% // latex: 3B=-6
+%% latex: B=-2
+% %image% KELOMPOK 5_MAT E 2022_GEOMETRI-466.png
+% // latex: B=-2
+%% sehingga,
+%% latex: A-(-2)=-6
+% %image% KELOMPOK 5_MAT E 2022_GEOMETRI-467.png
+% // latex: A-(-2)=-6
+%% latex: A=-8
+% %image% KELOMPOK 5_MAT E 2022_GEOMETRI-468.png
+% // latex: A=-8
+% 
+% 7. Substitusi niali a dan b ke persamaan 1
+%% latex: 3(-8)-(-2)+C=-10
+% %image% KELOMPOK 5_MAT E 2022_GEOMETRI-469.png
+% // latex: 3(-8)-(-2)+C=-10
+%% latex: C=12
+% %image% KELOMPOK 5_MAT E 2022_GEOMETRI-470.png
+% // latex: C=12
+% 
+% Diperoleh persamaan lingkaran:
+%% latex: x^2 + y^2 + Ax + By + c = 0
+% %image% KELOMPOK 5_MAT E 2022_GEOMETRI-471.png
+% // latex: x^2 + y^2 + Ax + By + c = 0
+%% latex: x^2+y^2-8x-2y+12=0
+% %image% KELOMPOK 5_MAT E 2022_GEOMETRI-472.png
+% // latex: x^2+y^2-8x-2y+12=0
+% 
+% Karena hasilnya sama, maka terbukti
+>
+% Mencari persamaan lingkaran dengan mencari titik pusat dan
+% jari-jarinya terlebih dahulu
+>c &= circleThrough(A,B,C); $c  // (titik pusat dan jari-jari) lingkaran yang melalui A, B, C
+ %image% KELOMPOK 5_MAT E 2022_GEOMETRI-473.png
+% // latex: \left[ 4 , 1 , \sqrt{5} \right] 
+% Persaman umum lingkaran adalah
+%% latex: (x-a)^2+(y-b)^2=r^2
+% %image% KELOMPOK 5_MAT E 2022_GEOMETRI-474.png
+% // latex: (x-a)^2+(y-b)^2=r^2
+%% dimana (a,b) adalah pusat lingkaran dan r jari-jari lingkaran
+%% Maka diperoleh persmaan lingkaran yang melalui 3 titik tersebut
+% adalah:
+%% latex: (x-4)^2+(y-1)^2= (\sqrt5)^2
+% %image% KELOMPOK 5_MAT E 2022_GEOMETRI-475.png
+% // latex: (x-4)^2+(y-1)^2= (\sqrt5)^2
+%% latex: (x-4)^2+(y-1)^2= 5
+% %image% KELOMPOK 5_MAT E 2022_GEOMETRI-476.png
+% // latex: (x-4)^2+(y-1)^2= 5
+% 
+% ** latihan
+%% Carilah persamaan lingkaran yang melalui titik A (0,2), B (3,3) dan C
+% (6,2) !
+>A &= [0,2]; B &= [3,3]; C &= [6,2]; // menentukan tiga titik A, B, C 
+>c &= circleThrough(A,B,C);
+>$getCircleEquation(c,x,y), //mencari persamaan lingkaran
+ %image% KELOMPOK 5_MAT E 2022_GEOMETRI-477.png
+% // latex: \left(y+2\right)^2+\left(x-3\right)^2=25
+% ---
+%% Tentukan persamaan lingkaran yang melalui titik (1,1), (2,-1), dan
+% (3,2)!
+>A &= [1,1]; B &= [2,-1]; C &= [3,2]; // menentukan tiga titik A, B, C 
+>c &= circleThrough(A,B,C);
+>
+>$getCircleEquation(c,x,y), //mencari persamaan lingkaran
+ %image% KELOMPOK 5_MAT E 2022_GEOMETRI-478.png
+% // latex: \left(y-\frac{1}{2}\right)^2+\left(x-\frac{5}{2}\right)^2=\frac{5}{  2}
+>
+>
+% 
+% * Materi 9 
+% ** Menentukan persamaan dan menggambar parabola yang ditentukan titik
+%% ** fokus dan garis arahnya
+% 
+% Parabola adalah kedudukan titik-titik yang jaraknya ke suatu ttik
+% tertentu(titik api/titik focus)dan jaraknya ke suatu garis tertentu
+% (direktriks/garis arah) adalah sama.
+% 
+% Untuk menemukan persamaan parabola yang ditentukan titik fokus dan
+% garis arahnya akan diilustrasikan gambar dari kurva parabola.Misal
+% titik fokus(p,0), titik puncak O(0,0), garis direktriks(garis arah)
+% yaitu garis g kemudian pilih titik R(-p,y) pada garis y, kemudian
+% pilih sembarang titik P(x,y) yang terdapat dalam parabola.
+%% image: Parabola1.JPG
+% 
+% sesuai definisi parabola,jarak titik P ke titik fokus(|PF|) sama
+% dengan jarak titik P ke titik R(|PR|)
+%% latex: |PF| = |PR|
+% %image% KELOMPOK 5_MAT E 2022_GEOMETRI-479.png
+% // latex: |PF| = |PR|
+%% latex: \sqrt{(x-p)^2+(y-0)^2}=\sqrt{(x-(-p))^2+(y-y)^2}
+% %image% KELOMPOK 5_MAT E 2022_GEOMETRI-480.png
+% // latex: \sqrt{(x-p)^2+(y-0)^2}=\sqrt{(x-(-p))^2+(y-y)^2}
+%% latex: \sqrt{(x-p)^2+y^2}=\sqrt{(x-p)^2+(0)^2}
+% %image% KELOMPOK 5_MAT E 2022_GEOMETRI-481.png
+% // latex: \sqrt{(x-p)^2+y^2}=\sqrt{(x-p)^2+(0)^2}
+%% latex: \sqrt{(x-p)^2+y^2}=\sqrt{(x-p)^2}
+% %image% KELOMPOK 5_MAT E 2022_GEOMETRI-482.png
+% // latex: \sqrt{(x-p)^2+y^2}=\sqrt{(x-p)^2}
+%% latex: (x-p)^2+y^2=(x-p)^2
+% %image% KELOMPOK 5_MAT E 2022_GEOMETRI-483.png
+% // latex: (x-p)^2+y^2=(x-p)^2
+%% latex: x^2-2px+p^2+y^2=x^2+2px+p^2
+% %image% KELOMPOK 5_MAT E 2022_GEOMETRI-484.png
+% // latex: x^2-2px+p^2+y^2=x^2+2px+p^2
+%% latex: y^2=2px+2px
+% %image% KELOMPOK 5_MAT E 2022_GEOMETRI-485.png
+% // latex: y^2=2px+2px
+%% latex: y^2=4px
+% %image% KELOMPOK 5_MAT E 2022_GEOMETRI-486.png
+% // latex: y^2=4px
+%% sehingga persamaan parabola adalah y^2 = 4px dengan titik puncak
+% O(0,0) dengan titik fokus F(p,0) akan mempresentasikan parabola
+% terbuka ke kanan (arah sumbu x positif).
+% 
+% 
+% 
+% 
+>load geometry
+Numerical and symbolic geometry.
+>A&=[-1,-1]; B&=[2,0]; C&=[1,2];
+>A=[-1,1]; B=[2,0]; C=[1,2];
+>r&=(lineThrough(A,B)); $r // garis yang melalui A dan B
+ %image% KELOMPOK 5_MAT E 2022_GEOMETRI-487.png
+% // latex: \left[ -1 , 3 , -2 \right] 
+>$getLineEquation(r,x,y); $solve(%,y) // persamaan garis r yang dinyatakan dalam x dan y
+ %image% KELOMPOK 5_MAT E 2022_GEOMETRI-488.png
+% // latex: \left[ y=\frac{x-2}{3} \right] 
+% Menentukan persamaan tempat kedudukan titik-titik yang berjarak sama
+% ke titik C dan ke garis AB
+>p &= getHesseForm(lineThrough(A,B),x,y,C)-distance([x,y],C); $p='0
+ %image% KELOMPOK 5_MAT E 2022_GEOMETRI-489.png
+% // latex: \frac{3\,y-x+2}{\sqrt{10}}-\sqrt{\left(2-y\right)^2+\left(1-x  \right)^2}=0
+% Selanjutnya kita akan menggambar persamaan tersebut
+>setPlotRange(3); // mendefinisikan bidang koordinat
+>A=[-1,1]; B=[2,0]; C=[1,2];
+>plotPoint(A,"A"); plotPoint(B,"B"); plotPoint(C,"C"); // Memplot titik-titik koordinat
+>plotLine(lineThrough(A,B));
+>plot2d(p,level=0,add=1,contourcolor=5): // membuat plot grafik dua dimensi dari data yang ada
+ %image% KELOMPOK 5_MAT E 2022_GEOMETRI-490.png
+>akar &= solve(getHesseForm(lineThrough(A,B),x,y,C)^2-distance([x,y],C)^2,y)
+
+        [y = - 3 x - sqrt(70) sqrt(9 - 2 x) + 26, 
+                              y = - 3 x + sqrt(70) sqrt(9 - 2 x) + 26]
+
+% Solusinya adalah
+% 
+% maxima: akar[1]
+% %image% KELOMPOK 5_MAT E 2022_GEOMETRI-491.png
+% // latex: y=-3\,x-\sqrt{70}\,\sqrt{9-2\,x}+26
+%% maxima: akar[2]
+% %image% KELOMPOK 5_MAT E 2022_GEOMETRI-492.png
+% // latex: y=-3\,x+\sqrt{70}\,\sqrt{9-2\,x}+26
+>plot2d(&rhs(akar[1]),add=1):
+ %image% KELOMPOK 5_MAT E 2022_GEOMETRI-493.png
+>function g(x) &= rhs(akar[1]); $'g(x)= g(x)// fungsi yang mendefinisikan kurva di atas
+ %image% KELOMPOK 5_MAT E 2022_GEOMETRI-494.png
+% // latex: g\left(x\right)=-3\,x-\sqrt{70}\,\sqrt{9-2\,x}+26
+% Untuk membuktikan bahwa persamaan parabola benar, kita dapat mengambil
+% sebarang titik pada kurva tersebut, misal titik T.
+>T &=[-1, g(-1)]; // ambil sebarang titik pada kurva tersebut
+>dTC &= distance(T,C); $fullratsimp(dTC), $float(%) // jarak T ke C
+ %image% KELOMPOK 5_MAT E 2022_GEOMETRI-495.png
+% // latex: 2.135605779339061
+ %image% KELOMPOK 5_MAT E 2022_GEOMETRI-496.png
+>U &= projectToLine(T,lineThrough(A,B)); $U // proyeksi T pada garis AB 
+ %image% KELOMPOK 5_MAT E 2022_GEOMETRI-497.png
+% // latex: \left[ \frac{80-3\,\sqrt{11}\,\sqrt{70}}{10} , \frac{20-\sqrt{11}\,  \sqrt{70}}{10} \right] 
+>dU2AB &= distance(T,U); $fullratsimp(dU2AB), $float(%) // jatak T ke AB
+ %image% KELOMPOK 5_MAT E 2022_GEOMETRI-498.png
+% // latex: 2.135605779339061
+ %image% KELOMPOK 5_MAT E 2022_GEOMETRI-499.png
+% Dari pembuktian diatas TERBUKTI jarak T ke C sama dengan jarak T ke AB
+% 
+% 
+% ** Latihan 1
+%% Jika terdapat garis melalui titik A(4,3) dan B(2,-2) dengan titik
+% fokus C(5,2), tentukan persamaan parabola dan parabola yang terbentuk
+>A&=[4,3]; B&=[2,-2]; C&=[5,2];
+>r&=(lineThrough(A,B)); $r
+ %image% KELOMPOK 5_MAT E 2022_GEOMETRI-500.png
+% // latex: \left[ 5 , -2 , 14 \right] 
+>$getLineEquation(r,x,y); $solve(%,y) // persamaan garis r dinyatakan dalam x dan y
+ %image% KELOMPOK 5_MAT E 2022_GEOMETRI-501.png
+% // latex: \left[ y=\frac{5\,x-14}{2} \right] 
+% Menentukan persamaan tempat kedudukan titik-titik yang berjarak sama
+% ke titik C dan ke garis AB
+>p &=getHesseForm(lineThrough(A,B),x,y,C)-distance([x,y],C); $p='0
+ %image% KELOMPOK 5_MAT E 2022_GEOMETRI-502.png
+% // latex: \frac{-2\,y+5\,x-14}{\sqrt{29}}-\sqrt{\left(2-y\right)^2+\left(5-x  \right)^2}=0
+>akar &= solve(getHesseForm(lineThrough(A,B),x,y,C)^2-distance([x,y],C)^2,y)
+
+             - sqrt(203) sqrt(10 x - 43) - 10 x + 86
+        [y = ---------------------------------------, 
+                               25
+                                sqrt(203) sqrt(10 x - 43) - 10 x + 86
+                            y = -------------------------------------]
+                                                 25
+
+% solusinya adalah
+% 
+% maxima: akar[1]
+% %image% KELOMPOK 5_MAT E 2022_GEOMETRI-503.png
+% // latex: y=-\frac{\sqrt{203}\,\sqrt{10\,x-43}+10\,x-86}{25}
+%% maxima: akar[2]
+% %image% KELOMPOK 5_MAT E 2022_GEOMETRI-504.png
+% // latex: y=\frac{\sqrt{203}\,\sqrt{10\,x-43}-10\,x+86}{25}
+% 
+% Selanjutnya kita akan menggambar persamaan tersebut
+>setPlotRange(0,20,-10,10); // mendefinisikan bidang koordinat
+>A=[4,3]; B=[2,-2]; C=[5,2];
+>plotPoint(A,"A"); plotPoint(B,"B"); plotPoint(C,"C"); // memplot titik-titik koordinat
+>plotLine(lineThrough(A,B));
+>plot2d(p,level=0,add=1,contourcolor=4):
+ %image% KELOMPOK 5_MAT E 2022_GEOMETRI-505.png
+% ** Latihan 2
+% 
+% Jika terdapat garis melalui titik O(7,0) dan P(-5,3) dengan titik
+% fokus Q(1,-2),tentukan persamaan parabola dan parabola yang terbentuk
+>O&=[7,0]; P&=[-5,3]; Q&=[1,-2];
+>r&=(lineThrough(O,P)); $r
+ %image% KELOMPOK 5_MAT E 2022_GEOMETRI-506.png
+% // latex: \left[ -3 , -12 , -21 \right] 
+>$getLineEquation(r,x,y); $solve(%,y) // Persamaan garis r dinyatakan dalam x dan y
+ %image% KELOMPOK 5_MAT E 2022_GEOMETRI-507.png
+% // latex: \left[ y=\frac{7-x}{4} \right] 
+% Menentukan persamaan tempat kedudukan titik-titik yang berjarak sama
+% ke titik Q dan ke garis OP
+>p &= getHesseForm(lineThrough(O,P),x,y,Q)-distance([x,y],Q); $p='0
+ %image% KELOMPOK 5_MAT E 2022_GEOMETRI-508.png
+% // latex: \frac{-12\,y-3\,x+21}{3\,\sqrt{17}}-\sqrt{\left(-y-2\right)^2+  \left(1-x\right)^2}=0
+>akar &= solve(getHesseForm(lineThrough(O,P),x,y,Q)^2-distance([x,y],Q)^2,y)
+
+        [y = 4 x - 2 sqrt(119) sqrt(8 - x) - 62, 
+                               y = 4 x + 2 sqrt(119) sqrt(8 - x) - 62]
+
+% Solusinya adalah
+%% maxima: akar[1]
+% %image% KELOMPOK 5_MAT E 2022_GEOMETRI-509.png
+% // latex: y=4\,x-2\,\sqrt{119}\,\sqrt{8-x}-62
+%% maxima: akar[2]
+% %image% KELOMPOK 5_MAT E 2022_GEOMETRI-510.png
+% // latex: y=4\,x+2\,\sqrt{119}\,\sqrt{8-x}-62
+%% Selanjutnya kita akan menggambar persamaan tersebut
+>setPlotRange(25); // mendefinisikan bidang koordinat
+>O=[7,0]; P=[-5,3]; Q=[1,-2];
+>plotPoint(O,"O"); plotPoint(P,"P"); plotPoint(Q,"Q"); // memplot titik-titik koordinat
+>plotLine(lineThrough(O,P));
+>plot2d(p,level=0,add=1,contourcolor=3):
+ %image% KELOMPOK 5_MAT E 2022_GEOMETRI-511.png
+>
+% 
+% * Materi 10
+% ** Menentukan Persamaan dan Menggambar Ellips yang 
+%% ** Diketahui Titik Fokusnya
+% 
+% Elips merupakan salah satu bagian dari kerucut yang dihasilkan ketika
+% sebuah bidang memotong kerucut secara miring, tapi tidak sampai
+% memotong alasnya
+>load geometry
+Numerical and symbolic geometry.
+% Mencari persamaan ellips, dengan cara menghitung luas segitiga dengan
+% panjang sisi a, b, dan c, pertama kita meletakkan titik-titik pada
+% (0,0), (a,0), dan (x,y).
+% 
+% latex: x^2+y^2=b^2, \quad (x-a)^2+y^2=c
+% %image% KELOMPOK 5_MAT E 2022_GEOMETRI-512.png
+% // latex: x^2+y^2=b^2, \quad (x-a)^2+y^2=c
+% 
+% 
+% untuk x dan y
+% 
+>Hasil &= solve([x^2+y^2=b^2,(x-a)^2+y^2=c^2],[x,y])
+
+                2    2    2
+             - c  + b  + a
+       [[x = --------------, y = 
+                  2 a
+          4      2  2      2  2    4      2  2    4
+  sqrt(- c  + 2 b  c  + 2 a  c  - b  + 2 a  b  - a )
+- --------------------------------------------------], 
+                         2 a
+        2    2    2
+     - c  + b  + a
+[x = --------------, y = 
+          2 a
+        4      2  2      2  2    4      2  2    4
+sqrt(- c  + 2 b  c  + 2 a  c  - b  + 2 a  b  - a )
+--------------------------------------------------]]
+                       2 a
+
+% 2.Menjabarkan hasil y
+>Hasily &= y with Hasil[2][2]
+
+                  4      2  2      2  2    4      2  2    4
+          sqrt(- c  + 2 b  c  + 2 a  c  - b  + 2 a  b  - a )
+          --------------------------------------------------
+                                 2 a
+
+% 3.Mendapatkan Rumus Heron
+%% Rumus Heron pertama kali ditemukan oleh Heron dari Alexandria. Rumus
+% Heron digunakan untuk menentukan luas segitiga jika panjang semua
+% sisinya atau untuk mencari luas segi empat . Rumus mencari luas ini
+% tidak bergantung pada sudut suatu segitiga tetapi bergantung pada
+% panjang semua sisi segitiga.
+>function F(a,b,c) &= sqrt(factor((Hasily*a/2)^2))
+
+       sqrt((- c + b + a) (c - b + a) (c + b - a) (c + b + a))
+       -------------------------------------------------------
+                                  4
+
+>$solve(diff(F(a,b,c)^2,c)=0,c)
+ %image% KELOMPOK 5_MAT E 2022_GEOMETRI-513.png
+% // latex: \left[ c=-\sqrt{b^2+a^2} , c=\sqrt{b^2+a^2} , c=0 \right] 
+% 
+% 4.Mencari himpunan semua titik di mana b+c=d untuk d adalah konstanta.
+>p1 &= subst(d-c,b,Hasil[2])// subtitusi kan b=d-c di hasil 2
+
+                    2    2    2
+             (d - c)  - c  + a
+        [x = ------------------, y = 
+                    2 a
+               4      2        2      2        2    4      2  2    4
+ sqrt(- (d - c)  + 2 c  (d - c)  + 2 a  (d - c)  - c  + 2 a  c  - a )
+ --------------------------------------------------------------------]
+                                 2 a
+
+% 
+% 5.Membuat fungsi
+>function fx(a,c,d) &= rhs(p1[1]); $fx(a,c,d)// rhs = ambil hasil di ruas kanan
+ %image% KELOMPOK 5_MAT E 2022_GEOMETRI-514.png
+% // latex: \frac{\left(d-c\right)^2-c^2+a^2}{2\,a}
+>function fy(a,c,d) &= rhs(p1[2]);$fy(a,c,d)// rhs = ambil hasil di ruas kanan
+ %image% KELOMPOK 5_MAT E 2022_GEOMETRI-515.png
+% // latex: \frac{\sqrt{-\left(d-c\right)^4+2\,c^2\,\left(d-c\right)^2+2\,a^2\,  \left(d-c\right)^2-c^4+2\,a^2\,c^2-a^4}}{2\,a}
+% 
+% 6.Menggambar himpunan tersebut. (mendapatkan sebuah ellips)
+>plot2d(&fx(3,x,5),&fy(3,x,5),xmin=1,xmax=4,square=1):
+ %image% KELOMPOK 5_MAT E 2022_GEOMETRI-516.png
+>$((fx(a,c,d)-a/2)^2/a^2+fy(a,c,d)^2/b^2 with [a=d/2,b=sqrt(d^2-a^2)/2])
+ %image% KELOMPOK 5_MAT E 2022_GEOMETRI-517.png
+% // latex: \frac{4\,\left(\frac{\left(d-c\right)^2+\frac{d^2}{4}-c^2}{d}-  \frac{d}{4}\right)^2}{d^2}+\frac{4\,\left(-\left(d-c\right)^4+\frac{  d^2\,\left(d-c\right)^2}{2}+2\,c^2\,\left(d-c\right)^2-\frac{d^4}{16  }+\frac{c^2\,d^2}{2}-c^4\right)}{d^2\,\left(d^2-a^2\right)}
+>$ratsimp(%)//menyederhanakan
+ %image% KELOMPOK 5_MAT E 2022_GEOMETRI-518.png
+% // latex: \frac{7\,d^4-16\,c\,d^3+\left(16\,c^2-16\,a^2\right)\,d^2+64\,a^2\,  c\,d-64\,a^2\,c^2}{4\,d^4-4\,a^2\,d^2}
+% 
+% 7.Mendapatkan persamaan umum untuk ellips, yaitu
+% 
+% latex: \frac{(x-x_p)^2}{a^2}+\frac{(y-y_p)^2}{b^2}=1,
+% %image% KELOMPOK 5_MAT E 2022_GEOMETRI-519.png
+% // latex: \frac{(x-x_p)^2}{a^2}+\frac{(y-y_p)^2}{b^2}=1,
+% 
+% Di mana (xp, yp) adalah titik pusat, dan a dan b adalah setengah dari
+% sumbu-sumbunya.
+>reset();
+% Cara mendapatkan rumus ellips dengan pembutian secara matematis 
+% 
+>
+% Misal kedua titik tetap tersebut F1(-c,0) dan F2(c,0) dan jumlah jarak
+% yang tetap tersebut 2a. Maka untuk sembarang titik P(x,y) pada tepat
+% kedudukan memenuhi:
+% 
+% latex: |F_1P|+|F_2P|=2a
+% %image% KELOMPOK 5_MAT E 2022_GEOMETRI-520.png
+% // latex: |F_1P|+|F_2P|=2a
+% 
+% latex: \sqrt{(x-(-c))^2+(y-0)^2}+\sqrt{(x-c)^2+(y-0)^2}=2a
+% %image% KELOMPOK 5_MAT E 2022_GEOMETRI-521.png
+% // latex: \sqrt{(x-(-c))^2+(y-0)^2}+\sqrt{(x-c)^2+(y-0)^2}=2a
+%% latex: \sqrt{(x+c)^2+y^2}+\sqrt{(x-c)^2+y^2}=2a
+% %image% KELOMPOK 5_MAT E 2022_GEOMETRI-522.png
+% // latex: \sqrt{(x+c)^2+y^2}+\sqrt{(x-c)^2+y^2}=2a
+%% latex: 2a-\sqrt{(x-c)^2+y^2}=\sqrt{(x+c)^2+y^2}
+% %image% KELOMPOK 5_MAT E 2022_GEOMETRI-523.png
+% // latex: 2a-\sqrt{(x-c)^2+y^2}=\sqrt{(x+c)^2+y^2}
+%% latex: (2a-\sqrt{(x-c)^2+y^2})^2=(\sqrt{(x+c)^2+y^2})^2
+% %image% KELOMPOK 5_MAT E 2022_GEOMETRI-524.png
+% // latex: (2a-\sqrt{(x-c)^2+y^2})^2=(\sqrt{(x+c)^2+y^2})^2
+%% latex: 4a^2-4a\sqrt{(x-c)^2+y^2}+((x-c)^2+y^2)=(x+c)^2+y^2
+% %image% KELOMPOK 5_MAT E 2022_GEOMETRI-525.png
+% // latex: 4a^2-4a\sqrt{(x-c)^2+y^2}+((x-c)^2+y^2)=(x+c)^2+y^2
+%% latex: 4a^2-4a\sqrt{(x-c)^2+y^2}+x^2-2cx+c^2+y^2=x^2+2cx+c^2+y^2
+% %image% KELOMPOK 5_MAT E 2022_GEOMETRI-526.png
+% // latex: 4a^2-4a\sqrt{(x-c)^2+y^2}+x^2-2cx+c^2+y^2=x^2+2cx+c^2+y^2
+%% latex: 4a^2-4a\sqrt{(x-c)^2+y^2}-2cx=2cx
+% %image% KELOMPOK 5_MAT E 2022_GEOMETRI-527.png
+% // latex: 4a^2-4a\sqrt{(x-c)^2+y^2}-2cx=2cx
+%% latex: 4a^2-4cx=4a\sqrt{(x-c)^2+y^2}
+% %image% KELOMPOK 5_MAT E 2022_GEOMETRI-528.png
+% // latex: 4a^2-4cx=4a\sqrt{(x-c)^2+y^2}
+%% latex: a^2-cx=a\sqrt{(x-c)^2+y^2}
+% %image% KELOMPOK 5_MAT E 2022_GEOMETRI-529.png
+% // latex: a^2-cx=a\sqrt{(x-c)^2+y^2}
+%% latex: a\sqrt{(x-c)^2+y^2}=a^2-cx
+% %image% KELOMPOK 5_MAT E 2022_GEOMETRI-530.png
+% // latex: a\sqrt{(x-c)^2+y^2}=a^2-cx
+%% latex: (a\sqrt{(x-c)^2+y^2})^2=(a^2-cx)^2
+% %image% KELOMPOK 5_MAT E 2022_GEOMETRI-531.png
+% // latex: (a\sqrt{(x-c)^2+y^2})^2=(a^2-cx)^2
+%% latex: a^2((x-c)^2+y^2)=a^4-2ca^2x+c^2x^2
+% %image% KELOMPOK 5_MAT E 2022_GEOMETRI-532.png
+% // latex: a^2((x-c)^2+y^2)=a^4-2ca^2x+c^2x^2
+%% latex: a^2(x^2-2cx+c^2+y^2)=a^4-2ca^2x+c^2x^2
+% %image% KELOMPOK 5_MAT E 2022_GEOMETRI-533.png
+% // latex: a^2(x^2-2cx+c^2+y^2)=a^4-2ca^2x+c^2x^2
+%% latex: a^2x^2-2ca^2x+c^2a^2+a^2y^2=a^4-2ca^2x+c^2x^2
+% %image% KELOMPOK 5_MAT E 2022_GEOMETRI-534.png
+% // latex: a^2x^2-2ca^2x+c^2a^2+a^2y^2=a^4-2ca^2x+c^2x^2
+%% latex: a^2x^2-c^2x^2+a^2y^2=a^4+c^2x^2
+% %image% KELOMPOK 5_MAT E 2022_GEOMETRI-535.png
+% // latex: a^2x^2-c^2x^2+a^2y^2=a^4+c^2x^2
+%% latex: a^2x^2-c^2x^2+a^2y^2=a^4-c^2a^2
+% %image% KELOMPOK 5_MAT E 2022_GEOMETRI-536.png
+% // latex: a^2x^2-c^2x^2+a^2y^2=a^4-c^2a^2
+%% latex: (a^2-c^2)x^2+a^2y^2=a^2(a^2-c^2)
+% %image% KELOMPOK 5_MAT E 2022_GEOMETRI-537.png
+% // latex: (a^2-c^2)x^2+a^2y^2=a^2(a^2-c^2)
+% 
+% Dengan memisalkan
+%% latex: b^2=a^2-c^2
+% %image% KELOMPOK 5_MAT E 2022_GEOMETRI-538.png
+% // latex: b^2=a^2-c^2
+% 
+% Diperoleh:
+% 
+% latex: b^2x^2+a^2y^2=a^2b^2
+% %image% KELOMPOK 5_MAT E 2022_GEOMETRI-539.png
+% // latex: b^2x^2+a^2y^2=a^2b^2
+%% latex: \frac{b^2x^2}{a^2b^2}+\frac{a^2y^2}{a^2b^2}=\frac{a^2b^2}{a^2b^2}
+% %image% KELOMPOK 5_MAT E 2022_GEOMETRI-540.png
+% // latex: \frac{b^2x^2}{a^2b^2}+\frac{a^2y^2}{a^2b^2}=\frac{a^2b^2}{a^2b^2}
+%% latex: \frac{x^2}{a^2}+\frac{y^2}{b^2}=1
+% %image% KELOMPOK 5_MAT E 2022_GEOMETRI-541.png
+% // latex: \frac{x^2}{a^2}+\frac{y^2}{b^2}=1
+>
+% 
+% * Menggambar Ellips Jika Diketahui Dua Titik Fokus
+% 
+% Untuk menggambar ellips , langkah pertama yaitu dengan menggunakan
+% "load(draw)"
+>$load(draw):
+% "Draw" adalah sistem antarmuka dari Maxima-Gnuplot.
+% 
+% Ada tiga fungsi utama yang digunakan pada tingkat Maxima, yaitu:
+%% "draw2d", "draw3d", dan "draw".
+% 
+% Perintah "ellipse (<xp>, <yp>, <a>, <b>, <ang1>, <ang2>)" menggambar
+%% sebuah elips yang berpusat di "[<xp>, <yp>]" dengan sumbu semi
+%% horizontal dan vertikal sebesar <a> dan <b>, berturut-turut, dimulai
+%% dari sudut <ang1> sejauh sudut <ang2>.
+% 
+% Soal 1
+% 
+% Sebuah elips memiliki fokus di (0,-2) dan (0,2) serta melalui titik
+% (0, 6). Tentukan persamaan elips tersebut dan gambarkan.
+% 
+% Penyelesaian
+% 
+% Titik Fokus
+%% F1 = (-c, 0) = (2, 0)
+%% F2 = (c, 0) = (2, 0)
+% 
+% Melalui titik (0, 6)
+% 
+% latex: d_1 = \sqrt{(x+c)^2+y^2}
+% %image% KELOMPOK 5_MAT E 2022_GEOMETRI-542.png
+% // latex: d_1 = \sqrt{(x+c)^2+y^2}
+>d1 &= sqrt((0+(2))^2+(6)^2); $d1 // d1 = jarak F1 ke titik (0,6)
+ %image% KELOMPOK 5_MAT E 2022_GEOMETRI-543.png
+% // latex: 2\,\sqrt{10}
+% latex: d_2 = \sqrt{(x-c)^2+y^2}
+% %image% KELOMPOK 5_MAT E 2022_GEOMETRI-544.png
+% // latex: d_2 = \sqrt{(x-c)^2+y^2}
+>d2 &= sqrt((0-2)^2+(6)^2); $d2 // d2 = jarak F2 ke titik (0,6)
+ %image% KELOMPOK 5_MAT E 2022_GEOMETRI-545.png
+% // latex: 2\,\sqrt{10}
+% Diketahui
+% 
+% latex: d_1+d_2=2a
+% %image% KELOMPOK 5_MAT E 2022_GEOMETRI-546.png
+% // latex: d_1+d_2=2a
+% 
+>a &= (d1+d2)/2; $a // menentukan nilai a
+ %image% KELOMPOK 5_MAT E 2022_GEOMETRI-547.png
+% // latex: 2\,\sqrt{10}
+>xp &= (2+2)/2 // titik pusat ellips xp
+
+                                  2
+
+>yp &= (0-0)/2 // titik pusat ellips yp
+
+                                  0
+
+% Titik pusat ellips (xp, yp) = (2, 0)
+>c &= (2+2)/2 // jarak fokus ke pusat
+
+                                  2
+
+>b &= sqrt(a^2-c^2) // menentukan nilai b
+
+                                  6
+
+>$(x-xp)^2/a^2+(y-yp)^2/b^2=1 // persamaan ellips
+ %image% KELOMPOK 5_MAT E 2022_GEOMETRI-548.png
+% // latex: \frac{y^2}{36}+\frac{\left(x-2\right)^2}{40}=1
+% Selanjutnya, kita akan menggambar ellips menggunakan fungsi "draw2d"
+>$draw2d(ellipse(2, 0, 6, 6, 360, -360)): // menggambar ellips
+>reset();
+>
+% * Materi 11 
+% ** Melakukan Berbagai Perhitungan Geometris, seperti Jarak Dua Titik 
+%% ** (Panjang Ruas Garis), Luas Segitiga, Keliling Segitiga, 
+%% ** Luas Lingkaran, Keliling Lingkaran, dan sebagainya.
+% 
+% Pada Sub bab kali ini akan dibahas:
+%% 1. jarak dua titik (panjang ruas garis)
+%% 2. luas segitiga dan keliling segitiga
+%% 3. luas lingkaran dan keliling lingkaran
+%% 4. perhitungan geometri lainnya
+>load geometry
+Numerical and symbolic geometry.
+% ** Jarak dua titik
+% 
+% Jarak antara dua titik adalah panjang ruas garis yang menghubungkan
+% kedua titik tersebut.
+%% Jika diketahui dua titik pada koordinat kartesius, misal A(x1,y1) dan
+% B(x2,y2), maka jarak antara titik A dan B adalah
+% 
+% latex: AB = \sqrt{(x_2-x_1)^2 + (y_2-y_1)^2}
+% %image% KELOMPOK 5_MAT E 2022_GEOMETRI-549.png
+% // latex: AB = \sqrt{(x_2-x_1)^2 + (y_2-y_1)^2}
+% 
+% sebagai contoh digambar suatu bidang koordinat
+>setPlotRange(-1,5,-1,5):
+ %image% KELOMPOK 5_MAT E 2022_GEOMETRI-550.png
+% kemudian tentukan dua titik yang akan dihitung jaraknya
+>A=[0,4]; plotPoint(A,"A");
+>B=[4,2]; plotPoint(B,"B");
+>C=[0,2]; plotPoint (C,"C"):
+ %image% KELOMPOK 5_MAT E 2022_GEOMETRI-551.png
+% hitung jarak antara titik A dan titik B
+>plotSegment(A,B);
+>plotSegment(A,C);
+>plotSegment(C,B):
+ %image% KELOMPOK 5_MAT E 2022_GEOMETRI-552.png
+% ** Latihan
+% 
+% 1. Diketahui dua buah titik P(2,4) dan Q(1,3). Tentukanlah panjang
+% garis PQ.
+>setPlotRange(-1,7,-1,7):
+ %image% KELOMPOK 5_MAT E 2022_GEOMETRI-553.png
+>P=[4,6]; plotPoint(P,"P");
+>Q=[1,2]; plotPoint(Q,"Q"):
+ %image% KELOMPOK 5_MAT E 2022_GEOMETRI-554.png
+>distance(P, Q)
+5
+>plotSegment(P,Q):
+ %image% KELOMPOK 5_MAT E 2022_GEOMETRI-555.png
+% 2. Diketahui dua buah titik R(5,2) dan S(0,4). Tentukanlah panjang
+% garis RS.
+>setPlotRange(-1,7,-1,7);
+>R=[5,2]; plotPoint(R,"R");
+>S=[0,4]; plotPoint(S,"S");
+>distance(R, S)
+5.38516480713
+>plotSegment(R,S):
+ %image% KELOMPOK 5_MAT E 2022_GEOMETRI-556.png
+% ** Luas dan Keliling Segitiga
+% 
+%    Terdapat cukup banyak bangun datar yang bisa dihitung luasnya namun
+% pada kesempatan kali ini kita akan mempelajari luas dari bangun datar
+% sedderhana yaitu segitiga. Segitiga dipilih menjadi topik kali ini
+% bukan tanpa alasan namun karena bangun datar dengan sisi-n teratur
+% paling tidak terbentuk dari segitiga sama sisi.
+%% Selanjutnya sebelum kita ke rumus dari kedua bangun datar tersebut
+% kita akan mencari tahu dulu apa itu luas. Luas adalah sebuah ukuran
+% yang digunakan untuk mengukur seberapa besar atau seberapa banyak
+% ruang atau wilayah yang ditempati oleh suatu objek atau bentuk dalam
+% ruang dua atau tiga dimensi dan kali ini akan berfokus pada ruang dua
+% dimensi terlebih dahulu. Maka dari itu ketika disediakan sebuah
+% persegi atau segiempat kita bisa mengukur luasnya dengan:
+% 
+% Segitiga memiliki beberapa jenis, ada segitiga siku-siku, segitiga
+% sama sisi, segitiga sama kaki, dan segitiga sembarang.
+%% Untuk menghitung luas dari segitiga siku-siku, segitiga sama sisi dan
+% segitiga sama kaki menggunakan rumus :
+% 
+% latex: L_{\triangle}= \frac{1}{2}alas.tinggi
+% %image% KELOMPOK 5_MAT E 2022_GEOMETRI-557.png
+% // latex: L_{\triangle}= \frac{1}{2}alas.tinggi
+% 
+% Sedangkan untuk mencari luas dari segitiga sembarang dapat menggunakan
+% rumus :
+% 
+% latex: L = \sqrt{s(s-a)(s-b)(s-c)}\quad \text{ dengan } s=\frac{(a+b+c)}{2}
+% %image% KELOMPOK 5_MAT E 2022_GEOMETRI-558.png
+% // latex: L = \sqrt{s(s-a)(s-b)(s-c)}\quad \text{ dengan } s=\frac{(a+b+c)}{2}
+% 
+% Sebagai contoh digambar sebuah segitiga sembarang.
+>setPlotRange(-1,7,-1,7):
+ %image% KELOMPOK 5_MAT E 2022_GEOMETRI-559.png
+% dipilih tiga titik sembarang.
+>A=[4,6]; plotPoint(A,"A");
+>B=[1,2]; plotPoint(B,"B");
+>C=[5,2]; plotPoint(C,"C"):
+ %image% KELOMPOK 5_MAT E 2022_GEOMETRI-560.png
+% kemudian menentukan tiga segmen garis.
+>plotSegment(A,B,"c"); // c=AB
+>plotSegment(B,C,"a"); // a=BC
+>plotSegment(A,C,"b"): // b=AC
+ %image% KELOMPOK 5_MAT E 2022_GEOMETRI-561.png
+% menentukan masing-masing panjang dari a, b, dan c.
+>distance (B, C)
+4
+>distance (A, C)
+4.12310562562
+>distance (A, B)
+5
+>areaTriangle(A,B,C):
+ %image% KELOMPOK 5_MAT E 2022_GEOMETRI-562.png
+>areaTriangle(A,B,C)
+8
+>setPlotRange(0,6,0,6) // mendefinisikan bidang koordinat
+[0,  6,  0,  6]
+% Segitiga Siku-Siku
+>A=[1,1]; plotPoint (A,"A");
+>B=[1,4]; plotPoint (B,"B"); 
+>C=[5,1]; plotPoint (C,"C");
+>plotSegment (A,B,"c"); // c=AB
+>plotSegment (B,C,"a"); // a=BC
+>plotSegment (C,A,"b"): // b=CD
+ %image% KELOMPOK 5_MAT E 2022_GEOMETRI-563.png
+>b=distance (A, C)
+4
+>c=distance (A, B)
+3
+>a=distance (B,C)
+5
+>Luas:=(distance (A, C)*distance (A, B))/2
+6
+>areaTriangle (A,B,C)
+6
+>KelilingSegitiga:= b+c+a
+12
+% ** Latihan
+% 
+% 1. Diketahui sebuah segitiga PQR dengan titik P(2,5), Q(2,1), dan
+% R(6,4)
+%% Hitunglah luas dari segitiga PQR tersebut.
+>setPlotRange(-1,7,-1,7):
+ %image% KELOMPOK 5_MAT E 2022_GEOMETRI-564.png
+>P=[2,5]; plotPoint(P,"P");
+>Q=[2,1]; plotPoint(Q,"Q");
+>R=[6,4]; plotPoint(R,"R"):
+ %image% KELOMPOK 5_MAT E 2022_GEOMETRI-565.png
+>plotSegment(P,Q,"r"); // r=PQ
+>plotSegment(Q,R,"p"); // p=QR
+>plotSegment(P,R,"q"): // q=PR
+ %image% KELOMPOK 5_MAT E 2022_GEOMETRI-566.png
+>distance (Q, R)
+5
+>distance (P, Q)
+4
+>distance (R, P)
+4.12310562562
+>areaTriangle(R,Q,P)
+8
+>Luas:=(distance (R, P)*distance(Q, R))/2
+10.307764064
+% 2. Diketahui sebuah segitiga DEF dengan titik D(1,5), E(1,0), dan
+% F(3,0)
+%% Hitunglah luas dari segitiga DEF tersebut.
+>setPlotRange(-1,7,-1,7);
+>D=[1,5]; plotPoint(D,"D");
+>E=[1,0]; plotPoint(E,"E");
+>F=[3,0]; plotPoint(F,"F");
+>plotSegment(D,E,"f"); // f=DE
+>plotSegment(E,F,"d"); // d=EF
+>plotSegment(D,F,"e"): // e=DF
+ %image% KELOMPOK 5_MAT E 2022_GEOMETRI-567.png
+>distance (D, E)
+5
+>distance (E, F)
+2
+>areaTriangle(D,E,F)
+5
+% ** Luas dan keliling lingkaran
+% 
+% Luas lingkaran adalah luasan daerah pada lingkaran tersebut.
+%% Luas pada sebuah lingkaran memiliki rumus :
+% 
+% latex: L=\pi.r^2
+% %image% KELOMPOK 5_MAT E 2022_GEOMETRI-568.png
+% // latex: L=\pi.r^2
+% 
+% sedangkan untuk keliling lingkaran memiliki rumus :
+% 
+% latex: K=2.\pi.r
+% %image% KELOMPOK 5_MAT E 2022_GEOMETRI-569.png
+% // latex: K=2.\pi.r
+>setPlotRange(-0.5,2.5,-0.5,2.5);
+>A=[1,0]; plotPoint(A,"A");
+>B=[0,1]; plotPoint(B,"B");
+>C=[2,2]; plotPoint(C,"C"):
+ %image% KELOMPOK 5_MAT E 2022_GEOMETRI-570.png
+>c=circleThrough(A,B,C):
+ %image% KELOMPOK 5_MAT E 2022_GEOMETRI-571.png
+>plotCircle(c):
+ %image% KELOMPOK 5_MAT E 2022_GEOMETRI-572.png
+>r=getCircleRadius(c)
+1.17851130198
+>LuasLingkaran:=pi*r^2
+4.36332312999
+>KelilingLingkaran:=2*pi*r
+7.40480489693
+% ** Latihan
+% 
+% Diketahui sebuah lingkaran yang melalui titik G(1,2), H(3,5), dan
+% I(5,2). Hitunglah luas dan keliling lingkaran tersebut.
+>setPlotRange(-1,7,-1,7):
+ %image% KELOMPOK 5_MAT E 2022_GEOMETRI-573.png
+>G=[1,2]; plotPoint(G,"G");
+>H=[3,5]; plotPoint(H,"H");
+>I=[5,2]; plotPoint(I,"I"):
+ %image% KELOMPOK 5_MAT E 2022_GEOMETRI-574.png
+>c=circleThrough(G,H,I):
+ %image% KELOMPOK 5_MAT E 2022_GEOMETRI-575.png
+>plotCircle(c):
+ %image% KELOMPOK 5_MAT E 2022_GEOMETRI-576.png
+>r=getCircleRadius(c)
+2.16666666667
+>LuasLingkaran:=pi*r^2
+14.7480321794
+>KelilingLingkaran:=2*pi*r
+13.6135681656
+% ** Perhitungan Geometri lainnya
+% 
+% Perhitungan sudut pada bangun datar
+%%    Perhitungan sudut dalam konteks bangun datar dan antara dua garis
+% melibatkan pengukuran besarnya sudut antara dua garis atau sudut dalam
+% suatu bangun datar. Sudut diukur dalam derajat (°) atau radian (rad)
+% tergantung pada preferensi dan konteks pengukuran yang digunakan. Dan
+% dalam kesempatan kali ini kita akan menggunakan sudut derajat (°).
+% Contoh:
+%% latex: S=((n-2).180)-(k)
+% %image% KELOMPOK 5_MAT E 2022_GEOMETRI-577.png
+% // latex: S=((n-2).180)-(k)
+% 
+% dimana S adalah sudut yang akan ditentukan dalam derajat (°)
+%%        n adalah jumlah sudut yang ada pada bangun dtar tersebut
+%%        dan k adalah jumlah sududt segitiga yang diketahui
+%% contoh:
+%% Andi ingin membuat segitiga menggunakan kawat dan dia ingin membuat
+% segitiga siku-siku dan dia telah menentukan bahwa salah satu sudut
+% selain siku-sikunya adalah 30° maka berapakah sudut yang belkum
+% diketahuinya?
+>
+% ** Geometri Bumi
+% 
+% Dalam buku catatan ini, kami ingin melakukan beberapa perhitungan
+% sferis. Fungsi-fungsi tersebut terdapat dalam file "spherical.e" di
+% folder contoh. Kita perlu memuat file itu terlebih dahulu.
+>load "spherical.e";
+% Untuk memasukkan posisi geografis, kami menggunakan vektor dengan dua
+% koordinat dalam radian (utara dan timur, nilai negatif untuk selatan
+% dan barat). Berikut koordinat Kampus UNY pusat.
+>UNY=[rad(-7,-46.17),rad(110,22.39)]
+[-0.135603,  1.92638]
+% Anda dapat mencetak posisi ini dengan sposprint (cetak posisi
+% spherical).
+>sposprint(UNY) // posisi garis lintang dan garis bujur UNY
+S 7°46.170' E 110°22.390'
+% Mari kita tambahkan dua kota lagi, Solo dan Semarang.
+>Solo=[rad(-7,-34.333),rad(110,49.683)]; Semarang=[rad(-6,-59.05),rad(110,24.533)];
+>sposprint(Solo), sposprint(Semarang),
+S 7°34.333' E 110°49.683'
+S 6°59.050' E 110°24.533'
+% Pertama kita menghitung vektor dari satu ke yang lain pada bola ideal.
+% Vektor ini [pos,jarak] dalam radian. Untuk menghitung jarak di bumi,
+% kita kalikan dengan jari-jari bumi pada garis lintang 7°.
+>br=svector(UNY,Solo); degprint(br[1]), br[2]*rearth(7°)->km // perkiraan jarak UNY-Solo
+66°23'43.70''
+54.7764836559
+% Ini adalah perkiraan yang baik. Rutinitas berikut menggunakan
+% perkiraan yang lebih baik. Pada jarak yang begitu pendek hasilnya
+% hampir sama.
+>esdist(UNY,Semarang)->" km", // perkiraan jarak UNY-Semarang
+87.5069716842 km
+% Ada fungsi untuk heading, dengan mempertimbangkan bentuk elips bumi.
+% Sekali lagi, kami mencetak dengan cara yang canggih.
+>sdegprint(esdir(UNY,Solo))
+     66.40°
+% Sudut segitiga melebihi 180° pada bola.
+>asum=sangle(Solo,UNY,Semarang)+sangle(UNY,Solo,Semarang)+sangle(UNY,Semarang,Solo); degprint(asum)
+180°0'10.91''
+% Ini dapat digunakan untuk menghitung luas segitiga. Catatan: Untuk
+% segitiga kecil, ini tidak akurat karena kesalahan pengurangan dalam
+% asum-pi.
+>(asum-pi)*rearth(48°)^2->" km^2", // perkiraan luas segitiga UNY-Solo-Semarang,
+2142.91458761 km^2
+% Ada fungsi untuk ini, yang menggunakan garis lintang rata-rata
+% segitiga untuk menghitung jari-jari bumi, dan menangani kesalahan
+% pembulatan untuk segitiga yang sangat kecil.
+>esarea(Solo,UNY,Semarang)->" km^2", //perkiraan yang sama dengan fungsi esarea()
+2150.62504635 km^2
+% Kita juga dapat menambahkan vektor ke posisi. Sebuah vektor berisi
+% heading dan jarak, keduanya dalam radian. Untuk mendapatkan vektor,
+% kami menggunakan vektor. Untuk menambahkan vektor ke posisi, kami
+% menggunakan vektor sadd.
+>v=svector(UNY,Solo); sposprint(saddvector(UNY,v)), sposprint(Solo),
+S 7°34.333' E 110°49.683'
+S 7°34.333' E 110°49.683'
+% Fungsi-fungsi ini mengasumsikan bola yang ideal. Hal yang sama di
+% bumi.
+>sposprint(esadd(UNY,esdir(UNY,Solo),esdist(UNY,Solo))), sposprint(Solo),
+S 7°34.333' E 110°49.683'
+S 7°34.333' E 110°49.683'
+>load "spherical.e";
+% Mari kita beralih ke contoh yang lebih besar, Merapi Jogja dan Monas
+% Jakarta (menggunakan Google Earth untuk mencari koordinatnya).
+>Merapi=[rad(-7,-22.33),rad(110,15.00)]; Monas=[rad(-6,17.50),rad(106,81.1944)];
+>sposprint(Merapi), sposprint(Monas)
+S 7°22.330' E 110°15.000'
+S 5°42.500' E 107°21.194'
+% Menurut Google Earth, jaraknya adalah 429,66 km. Kami mendapatkan
+% pendekatan yang baik.
+>esdist(Merapi,Monas)->" km", // perkiraan jarak Merapi Jogja - Monas Jakarta
+370.027986205 km
+% Judulnya sama dengan judul yang dihitung di Google Earth.
+>degprint(esdir(Merapi,Monas))
+299°51'45.84''
+% Namun, kita tidak lagi mendapatkan posisi target yang tepat, jika kita
+% menambahkan heading dan jarak ke posisi semula. Hal ini terjadi,
+% karena kita tidak menghitung fungsi invers secara tepat, tetapi
+% mengambil perkiraan jari-jari bumi di sepanjang jalan.
+>sposprint(esadd(Merapi,esdir(Merapi,Monas),esdist(Merapi,Monas)))
+S 5°42.500' E 107°21.195'
+% Namun, kesalahannya tidak besar.
+>sposprint(Monas),
+S 5°42.500' E 107°21.194'
+% Tentu kita tidak bisa berlayar dengan tujuan yang sama dari satu
+% tujuan ke tujuan lainnya, jika kita ingin menempuh jalur terpendek.
+% Bayangkan, Anda terbang NE mulai dari titik mana pun di bumi. Kemudian
+% Anda akan berputar ke kutub utara. Lingkaran besar tidak mengikuti
+% heading yang konstan!
+% 
+% Perhitungan berikut menunjukkan bahwa kami jauh dari tujuan yang
+% benar, jika kami menggunakan pos yang sama selama perjalanan kami.
+>dist=esdist(Merapi,Monas); hd=esdir(Merapi,Monas);
+% Sekarang kita tambahkan 10 kali sepersepuluh dari jarak, menggunakan
+% pos ke Monas, kita sampai di Merapi.
+>p=Merapi; loop 1 to 10; p=esadd(p,hd,dist/10); end;
+% Hasilnya jauh.
+>sposprint(p), skmprint(esdist(p,Monas))
+S 5°42.969' E 107°20.921'
+     1.006km
+% Sebagai contoh lain, mari kita ambil dua titik di bumi pada garis
+% lintang yang sama.
+>P1=[30°,10°]; P2=[30°,50°];
+% Jalur terpendek dari P1 ke P2 bukanlah lingkaran garis lintang 30°,
+% melainkan jalur terpendek yang dimulai 10° lebih jauh ke utara di P1.
+>sdegprint(esdir(P1,P2))
+     79.69°
+% Tapi, jika kita mengikuti pembacaan kompas ini, kita akan berputar ke
+% kutub utara! Jadi kita harus menyesuaikan arah kita di sepanjang
+% jalan. Untuk tujuan kasar, kami menyesuaikannya pada 1/10 dari total
+% jarak.
+>p=P1;  dist=esdist(P1,P2); ...
+>  loop 1 to 10; dir=esdir(p,P2); sdegprint(dir), p=esadd(p,dir,dist/10); end;
+     79.69°
+     81.67°
+     83.71°
+     85.78°
+     87.89°
+     90.00°
+     92.12°
+     94.22°
+     96.29°
+     98.33°
+% Jaraknya tidak tepat, karena kita akan menambahkan sedikit kesalahan,
+% jika kita mengikuti heading yang sama terlalu lama.
+>skmprint(esdist(p,P2))
+     0.203km
+% Kami mendapatkan perkiraan yang baik, jika kami menyesuaikan pos
+% setelah setiap 1/100 dari total jarak dari Merapi ke Monas.
+>p=Merapi; dist=esdist(Merapi,Monas); ...
+>  loop 1 to 100; p=esadd(p,esdir(p,Monas),dist/100); end;
+>skmprint(esdist(p,Monas))
+     0.000km
+% Untuk keperluan navigasi, kita bisa mendapatkan urutan posisi GPS di
+% sepanjang lingkaran besar menuju Monas dengan fungsi navigasi.
+>load spherical; v=navigate(Merapi,Monas,10); ...
+>loop 1 to rows(v); sposprint(v[#]), end;
+S 7°22.330' E 110°15.000'
+S 7°12.393' E 109°57.565'
+S 7°2.445' E 109°40.144'
+S 6°52.487' E 109°22.734'
+S 6°42.518' E 109°5.337'
+S 6°32.539' E 108°47.952'
+S 6°22.550' E 108°30.578'
+S 6°12.551' E 108°13.216'
+S 6°2.543' E 107°55.865'
+S 5°52.526' E 107°38.524'
+S 5°42.500' E 107°21.194'
+>function testplot ...
+$useglobal;
+$plotearth;
+$plotpos(Merapi,"Merapi"); plotpos(Monas,"Monas");
+$plotposline(v);
+$endfunction
+>plot3d("testplot",angle=25, height=6,>own,>user,zoom=4):
+ %image% KELOMPOK 5_MAT E 2022_GEOMETRI-578.png
+>plot3d("testplot",angle=25,height=6,distance=5,own=1,anaglyph=1,zoom=4):
+ %image% KELOMPOK 5_MAT E 2022_GEOMETRI-579.png
+>
+>function testplot ...
+$useglobal;
+$plotearth;
+$plotpos(UNY,"UNY Pusat"); plotpos(Monas,"Monas");
+$plotposline(v);
+$endfunction
+>plot3d("testplot",angle=25, height=6,>own,>user,zoom=4):
+ %image% KELOMPOK 5_MAT E 2022_GEOMETRI-580.png
+>
+
